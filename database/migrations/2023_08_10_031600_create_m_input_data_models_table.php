@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('m_input_data_models', function (Blueprint $table) {
-            $table->id('id_akun', 11);
+            $table->id();
             $table->string('npm', 50)->unique();
             $table->string('nama_lengkap', 100);
             $table->string('prodi', 100);

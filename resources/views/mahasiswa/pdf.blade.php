@@ -153,62 +153,27 @@
     {{ session('message_error') }}
 </div>
 @endif
-
-
 <div class="row">
    <div class="col-12">
       <div class="card">
          <div class="card-header py-3">
-            <h4 class="card-title mb-0 text-dark">Data Mahasiswa</h4>
+            <h4 class="card-title mb-0 text-dark">Details File Mahasiswa</h4>
             <div class="toolbar">
-                <a href="{{ route('form') }}" class="btn btn-primary">
-                    <i class="bi bi-plus-lg"></i> Tambah Data
+                <a onclick="showDetails({{ $mahasiswa->id }})" class="btn btn-primary">
+                    Kembali
                 </a>
             </div>
          </div>
          <div class="card-body">
-            <div class="table-responsive">
-               <table class="table table-bordered" id="table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                  <thead style="background-color: #F1F1F1;">
-                     <tr>
-                        <th class="text-center" width="5%">No</th>
-                        <th class="text-center">Nama</th>
-                        <th class="text-center">NPM</th>
-                        <th class="text-center" width="18%">Aksi</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                    @php
-                        $no = 1;
-                    @endphp
-                    @foreach ($DataMahasiswa as $mahasiswa)
-                    <tr>
-                        <th class="text-center">{{ $no++ }}</th>
-                        <td>{{ $mahasiswa->nama_lengkap }}</td>
-                        <td>{{ $mahasiswa->npm }}</td>
-                        <td class="text-center text-light">
-                            <div class="btn-group" style="height: 35px; width: 90px;">
-                                <button class="bg-warning w-50  rounded-left text-light border-0" onclick="showDetails({{ $mahasiswa->id }})">X</button>
-                                <button class="bg-primary w-50  border-0" onclick="edits({{ $mahasiswa->id }})"><i class="bi text-light bi-pencil-square"></i></button>
-                                <button onclick="deleteMahasiswa('{{ route('mahasiswa.delete', ['id' => $mahasiswa->id]) }}')" class="bg-danger border-0 w-50 rounded-right"><i class="bi text-light bi-trash3"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                  </tbody>
-               </table>
+            <div class="table-responsive d-flex justify-content-center">
+               {{-- <img class="rounded-circle w-50" src="{{ asset('storage/file-upload/' . $mahasiswa->file_name) }}" alt="Ijazah Sklh"> --}}
+               {{-- <img class="rounded-circle w-50" src="{{ $fileUrl }}" alt=""> --}}
+               <embed src="{{ $fileUrl }}" type="application/pdf" width="100%" height="700px">
             </div>
          </div>
       </div>
    </div>
 </div>
-<div class="modal fade" id="modal-popout" role="dialog">
-   <div class="modal-dialog modal-dialog-popout">
-      <div class="modal-content">
-         <div id="content_modal"></div>
-      </div>
-   </div>
-</div></div>
 <footer class="footer">
 	<div class="container-fluid">
 		<div class="row text-custom" style="font-weight: 400;">
@@ -265,22 +230,7 @@
 	});
 </script>
 <script type="text/javascript">
-	toastr.options = {
-		"closeButton": true,
-		"debug": false,
-		"progressBar": true,
-		"preventDuplicates": false,
-		"positionClass": "toast-top-right",
-		"onclick": null,
-		"showDuration": "400",
-		"hideDuration": "1000",
-		"timeOut": "2500",
-		"extendedTimeOut": "1000",
-		"showEasing": "swing",
-		"hideEasing": "linear",
-		"showMethod": "fadeIn",
-		"hideMethod": "fadeOut"
-	}
+
 
 
 	function logout() {
@@ -300,54 +250,10 @@
 			}
 		});
 	}
-    function deleteMahasiswa(url) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Data tidak akan bisa dikembalikan !",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = url;
-            }
-        });
-    }
+
 
 
 </script>
-<script type="text/javascript">
-    var table;
-    $(document).ready(function() {
-        table = $('#table').DataTable({
-            lengthMenu: [
-                [10, 50, 100, -1],
-                [10, 50, 100, 'Semua'],
-            ],
-            stateSave: true,
-            language: {
-                search: '<span>Cari:</span> _INPUT_',
-                searchPlaceholder: 'Masukan pencarian...',
-                infoEmpty: "Menampilkan 0 data",
-                zeroRecords: "Tidak Ada Data",
-                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
-                lengthMenu: 'Tampilkan: _MENU_',
-                paginate: {
-                    'first': 'First',
-                    'last': 'Last',
-                    'next': '&rarr;',
-                    'previous': '&larr;'
-                }
-            },
-        })
-    });
-
-
-</script>
-
 <script>
     function showDetails(id) {
         window.location.href = "/mahasiswa/details/" + id;
@@ -355,11 +261,7 @@
 </script>
 
 
-<script>
-    function edits(id) {
-        window.location.href = "/mahasiswa/edit/" + id;
-    }
-</script>
+
 
 
 

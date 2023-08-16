@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="https://codeseven.github.io/toastr/toastr.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
     <!-- Custom Css -->
     <link rel="stylesheet" href="https://egov.phicos.co.id/lampung/unila/assets/css/style.css">
     <style type="text/css">
@@ -143,8 +144,8 @@
                 </div>
             </div>
             <div class="card-body">
-                <form action="{{ route('inputdata') }}" method="post" id="form-main" enctype="multipart/form-data">
-                    @csrf
+                <form action="{{ route('update.mahasiswa', ['id' => @$mahasiswa->id]) }}" method="post" id="form-main form-update" enctype="multipart/form-data">
+                    {{ csrf_field() }}
                     <input type="hidden" class="iid" name="iid" value="">
                     <input type="hidden" name="id" id="id" value="">
                     <input type="hidden" name="id_akun" id="id_akun" value="">
@@ -153,25 +154,25 @@
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="npm">NPM</label>
-                                    <input type="number" class="form-control form-control" name="npm" id="npm" onkeypress="return cek_nomor(event)" required>
+                                    <input type="number" class="form-control form-control" name="npm" id="npm" value="{{ $mahasiswa->npm }}" onkeypress="return cek_nomor(event)" required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="kel">Kelas/Kelompok</label>
-                                    <input type="text" class="form-control form-control" name="kelas" id="kelas"  required>
+                                    <input type="text" class="form-control form-control" name="kelas" id="kelas" value="{{ $mahasiswa->kelas }}"  required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="nama">Nama Lengkap</label>
-                                    <input type="text" class="form-control form-control" name="nama_lengkap" id="nama_lengkap"  required>
+                                    <input type="text" class="form-control form-control" name="nama_lengkap" id="nama_lengkap" value="{{ $mahasiswa->nama_lengkap }}"  required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="jenis_pendaftaran">Jenis Pendaftaran</label>
-                                    <select class="form-control form-control" name="jenis_pendaftaran" id="jenis_pendaftaran" required>
+                                    <select class="form-control form-control" name="jenis_pendaftaran" id="jenis_pendaftaran" value="{{ $mahasiswa->jenis_pendaftaran }}" required>
                                         <option selected>-Pilih Jenis Pendaftaran-</option>
-                                        <option value="1" >Peserta Didik Baru</option>
-                                        <option value="2" >Lintas Jalur</option>
-                                        <option value="3" >Pindahan</option>
+                                        <option {{ $mahasiswa->jenis_pendaftaran == '1' ? 'selected' : '' }} value="1" >Peserta Didik Baru</option>
+                                        <option {{ $mahasiswa->jenis_pendaftaran == '2' ? 'selected' : '' }} value="2" >Lintas Jalur</option>
+                                        <option {{ $mahasiswa->jenis_pendaftaran == '3' ? 'selected' : '' }} value="3" >Pindahan</option>
                                     </select>
                                 </div>
                             </div>
@@ -179,87 +180,87 @@
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="program_studi">Program Studi</label>
                                     <select class="form-control form-control" name="prodi" id="prodi" required>
-                                        <option value="">-Pilih Program Studi-</option>
-                                                                                    <option value="1" >S2 Teknologi Pendidikan</option>
-                                                                                    <option value="2" >S2 Manajemen Pendidikan</option>
-                                                                                    <option value="3" >S2 Pend. IPS</option>
-                                                                                    <option value="4" >S2 Pend. Bahasa Indonesia</option>
-                                                                                    <option value="5" >S1 Bimbingan Konseling</option>
-                                                                                    <option value="6" >S1 Pend. Jasmani & Kesehatan</option>
-                                                                                    <option value="7" >S1 Pend. Guru Sekolah Dasar</option>
-                                                                                    <option value="8" >S2 Pend. Guru SD</option>
-                                                                                    <option value="9" >S1 Pend. Guru PAUD</option>
-                                                                                    <option  value="10" >S1 Pend. Ekonomi</option>
-                                                                                    <option value="11" >S1 Pend. Geografi</option>
-                                                                                    <option value="12" >S1 Pend. Kewarganegaraan</option>
-                                                                                    <option value="13" >S1 Pend. Sejarah</option>
-                                                                                    <option value="14" >S1 Pend. Matematika</option>
-                                                                                    <option value="15" >S1 Pend. Biologi</option>
-                                                                                    <option value="16" >S1 Pend. Kimia</option>
-                                                                                    <option value="17" >S1 Pend. Fisika</option>
-                                                                                    <option value="18" >S1 Pend. Bahasa Indonesia</option>
-                                                                                    <option value="19" >S1 Pend. Bahasa Inggris</option>
-                                                                                    <option value="20" >S1 Pend. Seni Tari</option>
-                                                                                    <option value="21" >S2 Pendidikan Bahasa Inggris</option>
-                                                                                    <option value="22" >S2 Pendidikan Keguruan Guru SD</option>
-                                                                                    <option value="23" >S1 Pendidikan Bahasa Perancis</option>
-                                                                                    <option value="24" >S2 Pendidikan Fisika</option>
-                                                                                    <option value="25" >S2 Pendidikan Matematika</option>
-                                                                                    <option value="26" >S2 Keguruan IPA</option>
-                                                                                    <option value="27" >S2 Pendidikan Bahasa Lampung</option>
-                                                                                    <option value="28" >S1 Pendidikan Teknologi Informasi</option>
-                                                                                    <option value="29" >S1 Pendidikan Musik</option>
-                                                                            </select>
+                                        <option selected>-Pilih Program Studi-</option>
+                                        <option {{ $mahasiswa->prodi == '1' ? 'selected' : '' }} value="1" >S2 Teknologi Pendidikan</option>
+                                        <option {{ $mahasiswa->prodi == '2' ? 'selected' : '' }} value="2" >S2 Manajemen Pendidikan</option>
+                                        <option {{ $mahasiswa->prodi == '3' ? 'selected' : '' }} value="3" >S2 Pend. IPS</option>
+                                        <option {{ $mahasiswa->prodi == '4' ? 'selected' : '' }} value="4" >S2 Pend. Bahasa Indonesia</option>
+                                        <option {{ $mahasiswa->prodi == '5' ? 'selected' : '' }} value="5" >S1 Bimbingan Konseling</option>
+                                        <option value="6" >S1 Pend. Jasmani & Kesehatan</option>
+                                        <option value="7" >S1 Pend. Guru Sekolah Dasar</option>
+                                        <option value="8" >S2 Pend. Guru SD</option>
+                                        <option value="9" >S1 Pend. Guru PAUD</option>
+                                        <option value="10" >S1 Pend. Ekonomi</option>
+                                        <option value="11" >S1 Pend. Geografi</option>
+                                        <option value="12" >S1 Pend. Kewarganegaraan</option>
+                                        <option value="13" >S1 Pend. Sejarah</option>
+                                        <option value="14" >S1 Pend. Matematika</option>
+                                        <option value="15" >S1 Pend. Biologi</option>
+                                        <option value="16" >S1 Pend. Kimia</option>
+                                        <option value="17" >S1 Pend. Fisika</option>
+                                        <option value="18" >S1 Pend. Bahasa Indonesia</option>
+                                        <option value="19" >S1 Pend. Bahasa Inggris</option>
+                                        <option value="20" >S1 Pend. Seni Tari</option>
+                                        <option value="21" >S2 Pendidikan Bahasa Inggris</option>
+                                        <option value="22" >S2 Pendidikan Keguruan Guru SD</option>
+                                        <option value="23" >S1 Pendidikan Bahasa Perancis</option>
+                                        <option value="24" >S2 Pendidikan Fisika</option>
+                                        <option value="25" >S2 Pendidikan Matematika</option>
+                                        <option value="26" >S2 Keguruan IPA</option>
+                                        <option value="27" >S2 Pendidikan Bahasa Lampung</option>
+                                        <option value="28" >S1 Pendidikan Teknologi Informasi</option>
+                                        <option value="29" >S1 Pendidikan Musik</option>
+                                    </select>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="jalur_pendaftaran">Jalur Pendaftaran</label>
-                                    <input type="text" class="form-control form-control" name="jalur_pendaftaran" id="jalur_pendaftaran"  required>
+                                    <input type="text" class="form-control form-control" name="jalur_pendaftaran" id="jalur_pendaftaran" value="{{ $mahasiswa->jalur_pendaftaran }}"  required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="konsentrasi">Konsentrasi</label>
-                                    <input type="text" class="form-control form-control" name="konsentrasi" id="konsentrasi"  required>
+                                    <input type="text" class="form-control form-control" name="konsentrasi" id="konsentrasi" value="{{ $mahasiswa->konsentrasi }}"  required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="gelombang">Gelombang</label>
-                                    <input type="text" class="form-control form-control" name="gelombang" id="gelombang"  required>
+                                    <input type="text" class="form-control form-control" name="gelombang" id="gelombang" value="{{ $mahasiswa->gelombang }}"  required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="periode_masuk">Periode Masuk</label>
-                                    <input type="text" class="form-control form-control" name="periode_masuk" id="periode_masuk" required>
+                                    <input type="text" class="form-control form-control" name="periode_masuk" id="periode_masuk" value="{{ $mahasiswa->periode_masuk }}" required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="tanggal_masuk">Tanggal Masuk</label>
-                                    <input type="date" class="form-control form-control" name="tanggal_masuk" id="tanggal_masuk"  required>
+                                    <input type="date" class="form-control form-control" name="tanggal_masuk" id="tanggal_masuk" value="{{ $mahasiswa->tanggal_masuk }}"  required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="tahun_kurikulum">Tahun Kurikulum</label>
-                                    <input type="number" class="form-control form-control" name="tahun_kurikulum" id="tahun_kurikulum"  required>
+                                    <input type="number" class="form-control form-control" name="tahun_kurikulum" id="tahun_kurikulum" value="{{ $mahasiswa->tahun_kurikulum }}"  required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="nomor_tes">Nomor Tes</label>
-                                    <input type="text" class="form-control form-control" name="nomor_tes" onkeypress="return cek_nomor(event)" id="nomor_tes"  required>
+                                    <input type="text" class="form-control form-control" name="nomor_tes" id="nomor_tes" value="{{ $mahasiswa->nomor_tes }}"  required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="sistem_kuliah">Sistem Kuliah</label>
-                                    <input type="text" class="form-control form-control" name="sistem_kuliah" id="sistem_kuliah"  required>
+                                    <input type="text" class="form-control form-control" name="sistem_kuliah" id="sistem_kuliah" value="{{ $mahasiswa->sistem_kuliah }}" required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="beasiswa">Beasiswa</label>
-                                    <input type="text" class="form-control form-control" name="beasiswa" id="beasiswa"  required>
+                                    <input type="text" class="form-control form-control" name="beasiswa" id="beasiswa" value="{{ $mahasiswa->beasiswa }}" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="stat">Status</label>
-                                    <input type="text" class="form-control form-control" name="status" id="stat" required>
+                                    <input type="text" class="form-control form-control" name="status" id="stat" value="{{ $mahasiswa->status }}" required>
                                 </div>
                             </div>
                             <div class="text-center">
@@ -269,7 +270,7 @@
                     </div>
                 </form>
                 <br>
-                <div class="tabbed-card" id="form-second" style="display: none;">
+                <div class="tabbed-card" id="form-second" style="display: block;">
                     <ul class="pull-right nav nav-tabs border-tab nav-primary" id="top-tab" role="tablist">
                         <li class="nav-item" id="li-info"><a class="nav-link active" id="informasi-umum-tab" data-toggle="tab" href="#informasi-umum" role="tab" aria-controls="informasi-umum" aria-selected="false" data-original-title="" title="">Informasi Umum</a></li>
                         <li class="nav-item" id="li-domisili"><a class="nav-link" id="domisili-tab" data-toggle="tab" href="#domisili" role="tab" aria-controls="domisili" aria-selected="true" data-original-title="" title="">Domisili</a></li>
@@ -280,7 +281,7 @@
                     </ul><br>
                     <div class="tab-content" id="top-tabContent">
                         <div class="tab-pane fade active show" id="informasi-umum" role="tabpanel" aria-labelledby="pills-clrhome-tab1">
-                            <form action="{{ route('inputmahasiswa') }}" method="POST" id="form-info" enctype="multipart/form-data">
+                            <form action="{{ route('update.mahasiswa', ['id' => @$mahasiswa_umum->informasi_umum_id]) }}" method="POST" id="form-info form-update" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" class="iid" name="iid" value="">
                                 <input type="hidden" name="id" id="id" value="">
@@ -292,116 +293,116 @@
                                                 <label for="jenis_kelamin">Jenis Kelamin</label>
                                                 <select class="form-control form-control" name="jenis_kelamin">
                                                     <option selected>-Pilih Jenis Kelamin-</option>
-                                                    <option value="Laki-Laki" >Laki-Laki</option>
-                                                    <option value="Perempuan" >Perempuan</option>
+                                                    <option {{ $mahasiswa_umum->jenis_kelamin == 'Laki-Laki' ? 'selected' : '' }} value="Laki-Laki" >Laki-Laki</option>
+                                                    <option {{ $mahasiswa_umum->jenis_kelamin == 'Perempuan' ? 'selected' : '' }} value="Perempuan" >Perempuan</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="email">Email Pribadi</label>
-                                                <input type="email" class="form-control form-control" name="email"  >
+                                                <input type="email" class="form-control form-control" value="{{ $mahasiswa_umum->email }}" name="email">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="tempat_lahir">Tempat Lahir</label>
-                                                <input type="text" class="form-control form-control" name="tempat_lahir"  >
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->tempat_lahir }}" name="tempat_lahir"  >
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="status_nikah">Status Nikah</label>
-                                                <input type="text" class="form-control form-control" name="status_nikah"  >
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->status_nikah }}" name="status_nikah"  >
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="tanggal_lahir">Tanggal Lahir</label>
-                                                <input type="date" class="form-control form-control" name="tanggal_lahir"  >
+                                                <input type="date" class="form-control form-control" value="{{ $mahasiswa_umum->tanggal_lahir }}" name="tanggal_lahir"  >
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="nik">NIK</label>
-                                                <input type="text" class="form-control form-control" name="nik"  onkeypress="return cek_nomor(event)">
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->nik }}" name="nik"  >
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="agama">Agama</label>
                                                 <select class="form-control form-control" name="agama" >
-                                                    <option value="">-Pilih Agama-</option>
-                                                    <option value="Islam" >Islam</option>
-                                                    <option value="Kristen" >Kristen</option>
-                                                    <option value="Hindu" >Hindu</option>
-                                                    <option value="Budha" >Budha</option>
-                                                    <option value="Katolik" >Katolik</option>
+                                                    <option selected>-Pilih Agama-</option>
+                                                    <option {{ $mahasiswa_umum->agama == 'Islam' ? 'selected' : '' }} value="Islam" >Islam</option>
+                                                    <option {{ $mahasiswa_umum->agama == 'Kristen' ? 'selected' : '' }} value="Kristen" >Kristen</option>
+                                                    <option {{ $mahasiswa_umum->agama == 'Hindu' ? 'selected' : '' }} value="Hindu" >Hindu</option>
+                                                    <option {{ $mahasiswa_umum->agama == 'Budha' ? 'selected' : '' }} value="Budha" >Budha</option>
+                                                    <option {{ $mahasiswa_umum->agama == 'Katolik' ? 'selected' : '' }} value="Katolik" >Katolik</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="no_kk">No.KK</label>
-                                                <input type="text" class="form-control form-control" name="no_kk" >
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->no_kk }}" name="no_kk" >
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="suku">Suku</label>
-                                                <input type="text" class="form-control form-control" name="suku">
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->suku }}" name="suku">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="no_kps">No.KPS</label>
-                                                <input type="text" class="form-control form-control" name="no_kps"   >
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->no_kps }}" name="no_kps"   >
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="gol_darah">Golongan Darah</label>
-                                                <input type="text" class="form-control form-control" name="golongan_darah">
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->golongan_darah }}" name="golongan_darah">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="pekerjaan">Pekerjaan</label>
-                                                <input type="text" class="form-control form-control" name="pekerjaan" >
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->pekerjaan }}" name="pekerjaan" >
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="berat_badan">Berat Badan(kg)</label>
-                                                <input type="number" class="form-control form-control" name="berat_badan"  >
+                                                <input type="number" class="form-control form-control" value="{{ $mahasiswa_umum->berat_badan }}" name="berat_badan"  >
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="penghasilan">Penghasilan</label>
-                                                <input type="text" class="form-control form-control" name="penghasilan" >
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->penghasilan }}" name="penghasilan" >
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="tinggi_badan">Tinggi Badan(cm)</label>
-                                                <input type="number" class="form-control form-control" name="tinggi_badan"  >
+                                                <input type="number" class="form-control form-control" value="{{ $mahasiswa_umum->tinggi_badan }}" name="tinggi_badan"  >
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="instansi">Instansi Pekerjaan</label>
-                                                <input type="text" class="form-control form-control" name="instansi_pekerjaan"  >
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->instansi_pekerjaan }}" name="instansi_pekerjaan"  >
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="telp">No. Telepon</label>
-                                                <input type="text" class="form-control form-control" name="no_telp"  >
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->no_telp }}" name="no_telp"  >
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="transportasi">Transportasi</label>
-                                                <input type="text" class="form-control form-control" name="transport">
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->transport }}" name="transport">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="no_hp">No. HP</label>
-                                                <input type="text" class="form-control form-control" name="no_hp" >
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->no_hp }}" name="no_hp" >
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="akta_kelahiran">Akta Kelahiran</label>
-                                                <input type="text" class="form-control form-control" name="akta_kelahiran" >
+                                                <input type="text" class="form-control form-control" value="{{ $mahasiswa_umum->akta_kelahiran }}" name="akta_kelahiran" >
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="email_kampus">Email Kampus</label>
-                                                <input type="email" class="form-control form-control" name="email_kampus"  >
+                                                <input type="email" class="form-control form-control" value="{{ $mahasiswa_umum->email_kampus }}" name="email_kampus"  >
                                             </div>
                                         </div>
                                         <div class="text-center">
@@ -412,7 +413,7 @@
                             </form>
                         </div>
                         <div class="tab-pane fade" id="domisili" role="tabpanel" aria-labelledby="pills-clrhome-tab1">
-                            <form action="{{ route('inputdomisili') }}" method="POST" id="form-domisili" enctype="multipart/form-data">
+                            <form action="{{ route('update.mahasiswa', @$mahasiswa_domisili->domisili_model_id) }}" method="POST" id="form-domisili form-update" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" class="iid" name="iid" value="">
                                 <input type="hidden" name="id" id="id" value="">
@@ -422,61 +423,61 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="alamat">Alamat</label>
-                                                <input type="text" class="form-control form-control" name="alamat" id="alamat" value="">
+                                                <input type="text" class="form-control form-control" name="alamat" value="{{ $mahasiswa_domisili->alamat }}" id="alamat" value="">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="kota">Kota</label>
-                                                <input type="text" class="form-control form-control" name="kota" id="kota" value="">
+                                                <input type="text" class="form-control form-control" name="kota" id="kota" value="{{ $mahasiswa_domisili->kota }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="rt">RT</label>
-                                                <input type="text" class="form-control form-control" name="rt" id="rt" value="">
+                                                <input type="text" class="form-control form-control" name="rt" id="rt" value="{{ $mahasiswa_domisili->rt }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="kecamatan">Kecamatan</label>
-                                                <input type="text" class="form-control form-control" name="kecamatan" id="kecamatan" value="">
+                                                <input type="text" class="form-control form-control" name="kecamatan" id="kecamatan" value="{{ $mahasiswa_domisili->kecamatan }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="rw">RW</label>
-                                                <input type="text" class="form-control form-control" name="rw" id="rw" value="" >
+                                                <input type="text" class="form-control form-control" name="rw" id="rw" value="{{ $mahasiswa_domisili->rw }}" >
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="negara">Kewarganegaraan</label>
                                                 <select class="form-control form-control" name="kewarganegaraan" id="negara">
                                                     <option selected>-Pilih Kewarganegaraan-</option>
-                                                    <option value="WNI" >WNI</option>
-                                                    <option value="WNA" >WNA</option>
+                                                    <option {{ $mahasiswa_domisili->kewarganegaraan == 'WNI' ? 'selected' : '' }} value="WNI" >WNI</option>
+                                                    <option {{ $mahasiswa_domisili->kewarganegaraan == 'WNA' ? 'selected' : '' }} value="WNA" >WNA</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="dusun">Dusun</label>
-                                                <input type="text" class="form-control form-control" name="dusun" id="dusun" value="">
+                                                <input type="text" class="form-control form-control" name="dusun" id="dusun" value="{{ $mahasiswa_domisili->dusun }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="kode_pos">Kode Pos</label>
-                                                <input type="text" class="form-control form-control" name="kode_pos" id="kode_pos" value="">
+                                                <input type="text" class="form-control form-control" name="kode_pos" id="kode_pos" value="{{ $mahasiswa_domisili->kode_pos }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="desa">Desa/Kelurahan</label>
-                                                <input type="text" class="form-control form-control" name="kelurahan" value="">
+                                                <input type="text" class="form-control form-control" name="kelurahan" value="{{ $mahasiswa_domisili->kelurahan }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="status_tinggal">Status Tinggal</label>
-                                                <input type="text" class="form-control form-control" name="status_tinggal" id="status_tinggal" value="">
+                                                <input type="text" class="form-control form-control" name="status_tinggal" id="status_tinggal" value="{{ $mahasiswa_domisili->status_tinggal }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="propinsi">Propinsi</label>
-                                                <input type="text" class="form-control form-control" name="propinsi" id="propinsi" value="">
+                                                <input type="text" class="form-control form-control" name="propinsi" id="propinsi" value="{{ $mahasiswa_domisili->propinsi }}">
                                             </div>
                                         </div>
                                         <div class="text-center">
@@ -487,7 +488,7 @@
                             </form>
                         </div>
                         <div class="tab-pane fade" id="orang-tua" role="tabpanel" aria-labelledby="pills-clrcontact-tab1">
-                            <form action="{{ route('inputortu') }}" method="POST" id="form-ortu" enctype="multipart/form-data">
+                            <form action="{{ route('update.mahasiswa', @$mahasiswa_ortu->mahasiswa_ortu_model_id ) }}" method="POST" id="form-ortu form-update" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 @csrf
                                 <input type="hidden" class="iid" name="iid" value="">
@@ -859,6 +860,7 @@
 <script src="https://codeseven.github.io/toastr/toastr.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery.repeater@1.2.1/jquery.repeater.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 	// Navbar sticky onscroll
@@ -877,213 +879,48 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#form-main').submit(function(event) {
-            event.preventDefault();
+$(document).ready(function() {
+    $('.form-update').submit(function(event) {
+        event.preventDefault();
 
-            $.ajax({
-                url: "{{ route('inputdata') }}",
-                method: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(response) {
-                    if (response.message === 'Data 1') {
-                        $('#form-second').show();
-                        toastr.success('Data Berhasil disimpan', 'Berhasil')
-                    } else {
-                        toastr.error('Data Mahasiswa tidak boleh sama','Gagal')
-                    }
-                },
-                    error: function() {
-                        Swal.fire({
-                            position: 'center',
-                            title: 'Error!',
-                            text: 'Masukan Data Terlebih Dahulu',
-                            icon: 'info',
-                            timer: 2400,
-                            showConfirmButton: false,
-                            timerProgressBar: true,
-                        });
-                    }
-            });
+        var form = $(this);
+        var formData = new FormData(form[0]);
+        var id = form.data('id'); // Mengambil nilai ID dari atribut data formulir yang diklik
+
+        $.ajax({
+            url: "{{ route('update.mahasiswa', ['id' => $mahasiswa->id], ['id' => $mahasiswa_umum->informasi_umum_id ]) }}",
+            method: "POST",
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                if (response.message === 'Update') {
+                    toastr.success('Data Berhasil diupdate', 'Berhasil')
+                } else {
+                    toastr.error('Data tidak boleh sama', 'Gagal')
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    position: 'center',
+                    title: 'Error!',
+                    text: 'Masukan Data Terlebih Dahulu',
+                    icon: 'info',
+                    timer: 2400,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                });
+            }
         });
     });
-
-    $(document).ready(function() {
-        $('#form-info').submit(function(event) {
-            event.preventDefault();
-
-            $.ajax({
-                url: "{{ route('inputmahasiswa') }}",
-                method: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(response) {
-                    if (response.message === 'Data 2') {
-                        toastr.success('Data Berhasil disimpan', 'Berhasil')
-                    } else {
-                        toastr.error('Data Informasi Umum tidak boleh sama!', 'Gagal')
-                    }
-                },
-                    error: function() {
-                        Swal.fire({
-                            position: 'center',
-                            title: 'Error!',
-                            text: 'Masukan Data Terlebih Dahulu',
-                            icon: 'info',
-                            timer: 2400,
-                            showConfirmButton: false,
-                            timerProgressBar: true,
-                        });
-                    }
-            });
-        });
-    });
-
-    $(document).ready(function() {
-        $('#form-domisili').submit(function(event) {
-            event.preventDefault();
-
-            $.ajax({
-                url: "{{ route('inputdomisili') }}",
-                method: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(response) {
-                    if (response.message === 'Data 3') {
-                        toastr.success('Data Berhasil disimpan', 'Berhasil')
-                    } else {
-                        toastr.error('Data tidak boleh sama', 'Gagal')
-                    }
-                },
-                    error: function() {
-                        Swal.fire({
-                            position: 'center',
-                            title: 'Error!',
-                            text: 'Masukan Data Terlebih Dahulu',
-                            icon: 'info',
-                            timer: 2400,
-                            showConfirmButton: false,
-                            timerProgressBar: true,
-                        });
-                    }
-            });
-        });
-    });
-
-    $(document).ready(function() {
-        $('#form-ortu').submit(function(event) {
-            event.preventDefault();
-
-            $.ajax({
-                url: "{{ route('inputortu') }}",
-                method: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(response) {
-                    if (response.message === 'Data 4') {
-                        toastr.success('Data Berhasil disimpan', 'Berhasil')
-                    } else {
-                        toastr.error('Data tidak boleh sama', 'Gagal')
-                    }
-                },
-                    error: function() {
-                        Swal.fire({
-                            position: 'center',
-                            title: 'Error!',
-                            text: 'Masukan Data Terlebih Dahulu',
-                            icon: 'info',
-                            timer: 2400,
-                            showConfirmButton: false,
-                            timerProgressBar: true,
-                        });
-                    }
-            });
-        });
-    });
-
-    $(document).ready(function() {
-        $('#form-wali').submit(function(event) {
-            event.preventDefault();
-
-            $.ajax({
-                url: "{{ route('inputwali') }}",
-                method: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(response) {
-                    if (response.message === 'Data 5') {
-                        toastr.success('Data Berhasil disimpan', 'Berhasil')
-                    } else {
-                        toastr.error('Data tidak boleh sama', 'Gagal')
-                    }
-                },
-                    error: function() {
-                        Swal.fire({
-                            position: 'center',
-                            title: 'Error!',
-                            text: 'Masukan Data Terlebih Dahulu',
-                            icon: 'info',
-                            timer: 2400,
-                            showConfirmButton: false,
-                            timerProgressBar: true,
-                        });
-                    }
-            });
-        });
-    });
-
-
-
-    $(document).ready(function() {
-        $('#form-sekolah').submit(function(event) {
-            event.preventDefault();
-
-            $.ajax({
-                url: "{{ route('inputsekolah') }}",
-                method: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(response) {
-                    if (response.message === 'Data 6') {
-                        toastr.success('Data Berhasil disimpan', 'Berhasil')
-                    } else {
-                        toastr.error('Data tidak boleh sama', 'Gagal')
-                    }
-                },
-                    error: function() {
-                        Swal.fire({
-                            position: 'center',
-                            title: 'Error!',
-                            text: 'Masukan Data Terlebih Dahulu',
-                            icon: 'info',
-                            timer: 2400,
-                            showConfirmButton: false,
-                            timerProgressBar: true,
-                        });
-                    }
-            });
-        });
-    });
+});
 
 
 
 
 
 </script>
-
 <script>
     function cek_nomor(evt) {
         var charCode = (evt.which) ? evt.which : event.keyCode;
@@ -1093,6 +930,12 @@
         }
         return true;
     }
+</script>
+
+<script>
+    @if (session()->has('success'))
+    toastr.success('{{ session('success') }}', 'Berhasil')
+    @endif
 </script>
 
 <script type="text/javascript">

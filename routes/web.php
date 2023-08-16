@@ -4,6 +4,7 @@ use App\Models\AlumniModel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EmployeeController;
+use App\Models\MInputDataModel;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +43,25 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-Route::post('/inputdata', [EmployeeController::class, 'inputdata'])->name('inputdata');
 
-Route::get('/mahasiswa/delete/{id_akun}', [EmployeeController::class, 'delete'])->name('mahasiswa.delete');
+Route::post('/inputdata', [EmployeeController::class, 'inputdata'])->name('inputdata');
+Route::post('/inputdata/general/', [EmployeeController::class, 'inputmahasiswa'])->name('inputmahasiswa');
+Route::post('/inputdata/domisili/', [EmployeeController::class, 'inputdomisili'])->name('inputdomisili');
+Route::post('/inputdata/ortu/', [EmployeeController::class, 'inputortu'])->name('inputortu');
+Route::post('/inputdata/wali/', [EmployeeController::class, 'inputwali'])->name('inputwali');
+Route::post('/inputdata/sekolah/', [EmployeeController::class, 'inputsekolah'])->name('inputsekolah');
+Route::post('/inputdata/sekolahperguruan/', [EmployeeController::class, 'inputsekolahperguruan'])->name('inputsekolahperguruan');
+
+
+Route::get('/mahasiswa/delete/{id}', [EmployeeController::class, 'delete'])->name('mahasiswa.delete');
+
+Route::get('/mahasiswa/details/{id}', [EmployeeController::class, 'details'])->name('details');
+Route::get('/mahasiswa/edit/{id}', [EmployeeController::class, 'edits'])->name('edits');
+Route::post('/mahasiswa/post/{id}', [EmployeeController::class, 'update'])->name('update.mahasiswa');
+
+
+Route::get('/mahasiswa/details/file/{id}/{type}', [EmployeeController::class, 'detailFile'])->name('details.file');
+
+
 
 Route::post('/importexcel', [EmployeeController::class, 'importexcel'])->name('importexcel');
