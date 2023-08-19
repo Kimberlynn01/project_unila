@@ -168,7 +168,7 @@
                                 <div class="col-sm-6">
                                     <label for="jenis_pendaftaran">Jenis Pendaftaran</label>
                                     <select class="form-control form-control form-main" name="jenis_pendaftaran" id="jenis_pendaftaran" required>
-                                        <option value="0">-Pilih Jenis Pendaftaran-</option>
+                                        <option selected>-Pilih Jenis Pendaftaran-</option>
                                         <option value="1" >Peserta Didik Baru</option>
                                         <option value="2" >Lintas Jalur</option>
                                         <option value="3" >Pindahan</option>
@@ -179,7 +179,7 @@
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="program_studi">Program Studi</label>
                                     <select class="form-control form-control form-main" name="prodi" id="prodi" required>
-                                        <option value="">-Pilih Program Studi-</option>
+                                        <option selected>-Pilih Program Studi-</option>
                                                                                     <option value="1" >S2 Teknologi Pendidikan</option>
                                                                                     <option value="2" >S2 Manajemen Pendidikan</option>
                                                                                     <option value="3" >S2 Pend. IPS</option>

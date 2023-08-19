@@ -169,7 +169,7 @@
                                 <div class="col-sm-6">
                                     <label for="jenis_pendaftaran">Jenis Pendaftaran</label>
                                     <select class="form-control form-control" name="jenis_pendaftaran" id="jenis_pendaftaran" value="{{ $mahasiswa->jenis_pendaftaran }}" required>
-                                        <option selected>-Pilih Jenis Pendaftaran-</option>
+                                        <option >-Pilih Jenis Pendaftaran-</option>
                                         <option {{ $mahasiswa->jenis_pendaftaran == '1' ? 'selected' : '' }} value="1" >Peserta Didik Baru</option>
                                         <option {{ $mahasiswa->jenis_pendaftaran == '2' ? 'selected' : '' }} value="2" >Lintas Jalur</option>
                                         <option {{ $mahasiswa->jenis_pendaftaran == '3' ? 'selected' : '' }} value="3" >Pindahan</option>
@@ -180,7 +180,7 @@
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="program_studi">Program Studi</label>
                                     <select class="form-control form-control" name="prodi" id="prodi" required>
-                                        <option selected>-Pilih Program Studi-</option>
+                                        <option>-Pilih Program Studi-</option>
                                         <option {{ $mahasiswa->prodi == 'S2 Teknologi Pendidikan' ? 'selected' : '' }} value="S2 Teknologi Pendidikan" >S2 Teknologi Pendidikan</option>
                                         <option {{ $mahasiswa->prodi == 'S2 Manajemen Pendidikan' ? 'selected' : '' }} value="S2 Manajemen Pendidikan" >S2 Manajemen Pendidikan</option>
                                         <option {{ $mahasiswa->prodi == 'S2 Pend. IPS' ? 'selected' : '' }} value="S2 Pend. IPS" >S2 Pend. IPS</option>
