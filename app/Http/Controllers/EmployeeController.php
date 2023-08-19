@@ -189,6 +189,7 @@ class EmployeeController extends Controller
 
     public function inputsekolah(Request $request) {
 
+
         try {
             $validateData = $request->validate([
                 'pendidikan_asal' => 'required',
@@ -208,7 +209,7 @@ class EmployeeController extends Controller
                     $fileName = time() . '_' . $file->getClientOriginalName();
                     $fileType = $file->getClientOriginalExtension();
 
-                    $file->storeAs('file-upload', $fileName);
+                    $file->storeAs('file-upload', $fileName, 'public');
 
                     $validateData['file_name'] = $fileName;
                     $validateData['file_type'] = $fileType;
@@ -232,7 +233,7 @@ class EmployeeController extends Controller
             'nim_asal' => 'required',
             'ipk_asal' => 'required',
             'sks_asal' => 'required',
-            'surat_rekon_pindah' => 'required',
+            'surat_rekom_pindah' => 'required',
             'transkrip_pindah' => 'required',
         ]);
         Mahasiswa_PerguruanTinggiModels::create($validateData);
@@ -267,11 +268,11 @@ class EmployeeController extends Controller
     public function detailFile($id, $type) {
         $mahasiswa_sekolah = Mahasiswa_SekolahModel::findOrFail($id);
         $mahasiswa = MInputDataModel::where('id',$id)->first();
-        $filePath = 'file-upload/' . $mahasiswa_sekolah->file_name;
+        $filePath =  'file-upload/' . $mahasiswa_sekolah->file_name;
         $fileUrl = asset('storage/' . $filePath);
 
         if ($type === 'image') {
-            return view('mahasiswa.image', compact('fileUrl', 'mahasiswa_sekolah', 'mahasiswa'));
+            return view('mahasiswa.image', compact('fileUrl', 'mahasiswa_sekolah', 'mahasiswa', 'filePath'));
         } elseif ($type === 'pdf') {
             return view('mahasiswa.pdf', compact('fileUrl', 'mahasiswa_sekolah', 'mahasiswa'));
         }
@@ -301,33 +302,65 @@ class EmployeeController extends Controller
         $mahasiswa_umum = InformasiUmum::where('informasi_umum_id', $id)->first();
         $mahasiswa_domisili = DomisiliModel::where('domisili_model_id', $id)->first();
         $mahasiswa_ortu = Mahasiswa_ortuModel::where('mahasiswa_ortu_model_id', $id)->first();
+        $mahasiswa_wali = Mahasiswa_wali::where('mahasiswa_wali_id', $id)->first();
+        $mahasiswa_sekolah = Mahasiswa_SekolahModel::where('mahasiswa__sekolah_model_id', $id)->first();
+        $mahasiswa_perguruan = Mahasiswa_PerguruanTinggiModels::where('mahasiswa_perguruan_id', $id)->first();
 
-        if (!$mahasiswa_umum || !$mahasiswa) {
+        if (!$mahasiswa_umum || !$mahasiswa || !$mahasiswa_domisili || !$mahasiswa_ortu || !$mahasiswa_sekolah || !$mahasiswa_perguruan) {
             $mahasiswa = new MInputDataModel();
             $mahasiswa_umum = new InformasiUmum();
             $mahasiswa_domisili = new DomisiliModel();
             $mahasiswa_ortu = new Mahasiswa_ortuModel();
+            $mahasiswa_wali = new Mahasiswa_wali();
+            $mahasiswa_sekolah = new Mahasiswa_SekolahModel();
+            $mahasiswa_perguruan = new Mahasiswa_PerguruanTinggiModels();
         }
 
-        return view('mahasiswa.edit', compact('mahasiswa', 'mahasiswa_umum', 'mahasiswa_domisili', 'mahasiswa_ortu'));
+
+
+        return view('mahasiswa.edit', compact('mahasiswa', 'mahasiswa_umum', 'mahasiswa_domisili', 'mahasiswa_ortu', 'mahasiswa_wali', 'mahasiswa_sekolah', 'mahasiswa_perguruan'));
     }
 
     public function update(Request $request, $id)
     {
+        $mahasiswa_sekolah = Mahasiswa_SekolahModel::findOrFail($id);
         $mahasiswa = MInputDataModel::find($id);
-        $mahasiswa_umum =InformasiUmum::where('informasi_umum_id' , $id)->first();
-        $mahasiswa_domisili = DomisiliModel::where('domisili_model_id' , $id)->first();
+        $mahasiswa_umum = InformasiUmum::where('informasi_umum_id', $id)->first();
+        $mahasiswa_domisili = DomisiliModel::where('domisili_model_id', $id)->first();
         $mahasiswa_ortu = Mahasiswa_ortuModel::where('mahasiswa_ortu_model_id', $id)->first();
+        $mahasiswa_wali = Mahasiswa_wali::where('mahasiswa_wali_id', $id)->first();
+        $mahasiswa_sekolah = Mahasiswa_SekolahModel::where('mahasiswa__sekolah_model_id', $id)->first();
+        $mahasiswa_perguruan = Mahasiswa_PerguruanTinggiModels::where('mahasiswa_perguruan_id', $id)->first();
+
+
+        if ($request->hasFile('image')) {
+            Storage::delete('file-upload/' . $mahasiswa_sekolah->file_name);
+
+            $file = $request->file('image');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $fileType = $file->getClientOriginalExtension();
+
+            $file->storeAs('file-upload', $fileName, 'public');
+
+            $validateData['file_name'] = $fileName;
+            $validateData['file_type'] = $fileType;
+            $mahasiswa_sekolah->update($validateData);
+        }
+
+
+
 
         $mahasiswa->update($request->all());
         $mahasiswa_umum->update($request->all());
         $mahasiswa_domisili->update($request->all());
         $mahasiswa_ortu->update($request->all());
+        $mahasiswa_wali->update($request->all());
+        $mahasiswa_sekolah->update($request->all());
+        $mahasiswa_perguruan->update($request->all());
 
-        // return redirect()->back()->with(['success', 'Data Berhasil Di Edits']);
-
-        return response()->json(['message', 'Data Update']);
+        return response()->json(['message' => 'Data Success Update']);
     }
+
 
 
 

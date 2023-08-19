@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('informasi_umum', function (Blueprint $table) {
             $table->id('informasi_umum_id');
             $table->string('jenis_kelamin');
-            $table->string('email')->require();
+            $table->string('email');
             $table->string('tempat_lahir');
             $table->string('status_nikah');
             $table->date('tanggal_lahir');

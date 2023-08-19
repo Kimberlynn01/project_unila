@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DosenController;
 use App\Models\AlumniModel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -39,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/form', function() {
         return view('mahasiswa.form');
     })->name('form');
+
+    Route::get('/dosen', [DosenController::class, 'DosenShow'])->name('dosen');
 });
 
 

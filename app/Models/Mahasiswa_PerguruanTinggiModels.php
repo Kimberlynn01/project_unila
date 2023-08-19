@@ -16,7 +16,7 @@ class Mahasiswa_PerguruanTinggiModels extends Model
     'nim_asal',
     'ipk_asal',
     'sks_asal',
-    'surat_rekon_pindah',
+    'surat_rekom_pindah',
     'transkrip_pindah',
     ];
     public function mahasiswa() {

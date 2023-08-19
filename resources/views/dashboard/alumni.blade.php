@@ -121,7 +121,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('alumni') }}" class="waves-effect active">
+                    <a href="{{  route('alumni') }}" class="waves-effect ">
                         <i class="bi bi-people m-0"></i>
                         <span>Alumni</span>
                     </a>
@@ -133,7 +133,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="back/dosen" class="waves-effect ">
+                    <a href="{{ route('dosen') }}" class="waves-effect ">
                         <i class='bi bi-person-badge-fill'></i>
                         <span>Dosen</span>
                     </a>

@@ -140,7 +140,7 @@
             <div class="card-header py-3">
                 <h4 class="card-title mb-0 text-dark">Form Mahasiswa</h4>
                 <div class="toolbar">
-                    <a href="{{ route('mahasiswa') }}"><button type="button" class="btn btn-primary ">Kembali</button></a>
+                    <button type="button" onclick="back()" class="btn btn-primary ">Kembali</button>
                 </div>
             </div>
             <div class="card-body">
@@ -181,11 +181,11 @@
                                     <label for="program_studi">Program Studi</label>
                                     <select class="form-control form-control" name="prodi" id="prodi" required>
                                         <option selected>-Pilih Program Studi-</option>
-                                        <option {{ $mahasiswa->prodi == '1' ? 'selected' : '' }} value="1" >S2 Teknologi Pendidikan</option>
-                                        <option {{ $mahasiswa->prodi == '2' ? 'selected' : '' }} value="2" >S2 Manajemen Pendidikan</option>
-                                        <option {{ $mahasiswa->prodi == '3' ? 'selected' : '' }} value="3" >S2 Pend. IPS</option>
-                                        <option {{ $mahasiswa->prodi == '4' ? 'selected' : '' }} value="4" >S2 Pend. Bahasa Indonesia</option>
-                                        <option {{ $mahasiswa->prodi == '5' ? 'selected' : '' }} value="5" >S1 Bimbingan Konseling</option>
+                                        <option {{ $mahasiswa->prodi == 'S2 Teknologi Pendidikan' ? 'selected' : '' }} value="S2 Teknologi Pendidikan" >S2 Teknologi Pendidikan</option>
+                                        <option {{ $mahasiswa->prodi == 'S2 Manajemen Pendidikan' ? 'selected' : '' }} value="S2 Manajemen Pendidikan" >S2 Manajemen Pendidikan</option>
+                                        <option {{ $mahasiswa->prodi == 'S2 Pend. IPS' ? 'selected' : '' }} value="S2 Pend. IPS" >S2 Pend. IPS</option>
+                                        <option {{ $mahasiswa->prodi == 'S2 Pend. Bahasa Indonesia' ? 'selected' : '' }} value="S2 Pend. Bahasa Indonesia" >S2 Pend. Bahasa Indonesia</option>
+                                        <option {{ $mahasiswa->prodi == 'S1 Bimbingan Konseling' ? 'selected' : '' }} value="5" >S1 Bimbingan Konseling</option>
                                         <option value="6" >S1 Pend. Jasmani & Kesehatan</option>
                                         <option value="7" >S1 Pend. Guru Sekolah Dasar</option>
                                         <option value="8" >S2 Pend. Guru SD</option>
@@ -264,7 +264,7 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit">Simpan</button>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit update-form">Simpan</button>
                             </div>
                         </div>
                     </div>
@@ -281,7 +281,7 @@
                     </ul><br>
                     <div class="tab-content" id="top-tabContent">
                         <div class="tab-pane fade active show" id="informasi-umum" role="tabpanel" aria-labelledby="pills-clrhome-tab1">
-                            <form action="{{ route('update.mahasiswa', ['id' => @$mahasiswa_umum->informasi_umum_id]) }}" method="POST" id="form-info form-update" enctype="multipart/form-data">
+                            <form action="{{ route('update.mahasiswa', ['id' => @$mahasiswa_umum->informasi_umum_id]) }}" method="POST" id="form-info" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" class="iid" name="iid" value="">
                                 <input type="hidden" name="id" id="id" value="">
@@ -406,14 +406,14 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit">Simpan</button>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit update-form">Simpan</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="tab-pane fade" id="domisili" role="tabpanel" aria-labelledby="pills-clrhome-tab1">
-                            <form action="{{ route('update.mahasiswa', @$mahasiswa_domisili->domisili_model_id) }}" method="POST" id="form-domisili form-update" enctype="multipart/form-data">
+                            <form action="{{ route('update.mahasiswa', @$mahasiswa_domisili->domisili_model_id) }}" method="POST" id="form-domisili" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" class="iid" name="iid" value="">
                                 <input type="hidden" name="id" id="id" value="">
@@ -481,14 +481,14 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit" >Simpan</button>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit update-form" >Simpan</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="tab-pane fade" id="orang-tua" role="tabpanel" aria-labelledby="pills-clrcontact-tab1">
-                            <form action="{{ route('update.mahasiswa', @$mahasiswa_ortu->mahasiswa_ortu_model_id ) }}" method="POST" id="form-ortu form-update" enctype="multipart/form-data">
+                            <form action="{{ route('update.mahasiswa', @$mahasiswa_ortu->mahasiswa_ortu_model_id ) }}" method="POST" id="form-ortu" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 @csrf
                                 <input type="hidden" class="iid" name="iid" value="">
@@ -501,113 +501,113 @@
                                                 <h5>Biodata Ayah</h5>
                                                 <br>
                                                 <label for="nama_ayah">Nama Lengkap</label>
-                                                <input type="text" class="form-control form-control" name="nama_ayah" id="nama_ayah" value="">
+                                                <input type="text" class="form-control form-control" name="nama_ayah" id="nama_ayah" value="{{ $mahasiswa_ortu->nama_ayah }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <h5>Biodata Ibu</h5>
                                                 <br>
                                                 <label for="nama_ibu">Nama Lengkap</label>
-                                                <input type="text" class="form-control form-control" name="nama_ibu" id="nama_ibu" value="">
+                                                <input type="text" class="form-control form-control" name="nama_ibu" id="nama_ibu" value="{{ $mahasiswa_ortu->nama_ibu }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="nik_ayah">NIK</label>
-                                                <input type="text" class="form-control form-control" name="nik_ayah" id="nik_ayah" value="" >
+                                                <input type="text" class="form-control form-control" name="nik_ayah" id="nik_ayah" value="{{ $mahasiswa_ortu->nik_ayah }}" >
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="nik_ibu">NIK</label>
-                                                <input type="text" class="form-control form-control" name="nik_ibu" id="nik_ibu" value="">
+                                                <input type="text" class="form-control form-control" name="nik_ibu" id="nik_ibu" value="{{ $mahasiswa_ortu->nik_ibu }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="tanggal_lahir_ayah">Tanggal Lahir</label>
-                                                <input type="date" class="form-control form-control" name="tgl_lahir_ayah" id="tanggal_lahir_ayah" value="">
+                                                <input type="date" class="form-control form-control" name="tgl_lahir_ayah" id="tanggal_lahir_ayah" value="{{ $mahasiswa_ortu->tgl_lahir_ayah }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="tanggal_lahir_ibu">Tanggal Lahir</label>
-                                                <input type="date" class="form-control form-control" name="tgl_lahir_ibu" id="tanggal_lahir_ibu" value="">
+                                                <input type="date" class="form-control form-control" name="tgl_lahir_ibu" id="tanggal_lahir_ibu" value="{{ $mahasiswa_ortu->tgl_lahir_ibu }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="status_hidup_ayah">Status Hidup</label>
-                                                <input type="text" class="form-control form-control" name="status_hidup_ayah" id="status_hidup_ayah" value="">
+                                                <input type="text" class="form-control form-control" name="status_hidup_ayah" id="status_hidup_ayah" value="{{ $mahasiswa_ortu->status_hidup_ayah }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="status_hidup_ibu">Status Hidup</label>
-                                                <input type="text" class="form-control form-control" name="status_hidup_ibu" id="status_hidup_ibu" value="">
+                                                <input type="text" class="form-control form-control" name="status_hidup_ibu" id="status_hidup_ibu" value="{{ $mahasiswa_ortu->status_hidup_ibu }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="status_kerabat_ayah">Status Kekerabatan</label>
-                                                <input type="text" class="form-control form-control" name="status_kerabatan_ayah" id="status_kerabat_ayah" value="">
+                                                <input type="text" class="form-control form-control" name="status_kerabatan_ayah" id="status_kerabat_ayah" value="{{ $mahasiswa_ortu->status_kerabatan_ayah }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="status_kerabat_ibu">Status Kekerabatan</label>
-                                                <input type="text" class="form-control form-control" name="status_kerabatan_ibu" id="status_kerabat_ibu" value="">
+                                                <input type="text" class="form-control form-control" name="status_kerabatan_ibu" id="status_kerabat_ibu" value="{{ $mahasiswa_ortu->status_kerabatan_ibu }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="pendidikan_ayah">Pendidikan Terakhir</label>
-                                                <input type="text" class="form-control form-control" name="pendidikan_ayah" id="pendidikan_ayah" value="">
+                                                <input type="text" class="form-control form-control" name="pendidikan_ayah" id="pendidikan_ayah" value="{{ $mahasiswa_ortu->pendidikan_ayah }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="pendidikan_ibu">Pendidikan Terakhir</label>
-                                                <input type="text" class="form-control form-control" name="pendidikan_ibu" id="pendidikan_ibu" value="">
+                                                <input type="text" class="form-control form-control" name="pendidikan_ibu" id="pendidikan_ibu" value="{{ $mahasiswa_ortu->pendidikan_ibu }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="pekerjaan_ayah">Pekerjaan</label>
-                                                <input type="text" class="form-control form-control" name="pekerjaan_ayah" id="pekerjaan_ayah" value="">
+                                                <input type="text" class="form-control form-control" name="pekerjaan_ayah" id="pekerjaan_ayah" value="{{ $mahasiswa_ortu->pekerjaan_ayah }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="pekerjaan_ibu">Pekerjaan</label>
-                                                <input type="text" class="form-control form-control" name="pekerjaan_ibu" id="pekerjaan_ibu" value="">
+                                                <input type="text" class="form-control form-control" name="pekerjaan_ibu" id="pekerjaan_ibu" value="{{ $mahasiswa_ortu->pekerjaan_ibu }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="penghasilan_ayah">Penghasilan</label>
-                                                <input type="text" class="form-control form-control" name="penghasilan_ayah" id="penghasilan_ayah" value="">
+                                                <input type="text" class="form-control form-control" name="penghasilan_ayah" id="penghasilan_ayah" value="{{ $mahasiswa_ortu->penghasilan_ayah }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="penghasilan_ibu">Penghasilan</label>
-                                                <input type="text" class="form-control form-control" name="penghasilan_ibu" id="penghasilan_ibu" value="">
+                                                <input type="text" class="form-control form-control" name="penghasilan_ibu" id="penghasilan_ibu" value="{{ $mahasiswa_ortu->penghasilan_ibu }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="alamat_ayah">Alamat</label>
-                                                <input type="text" class="form-control form-control" name="alamat_ayah" id="alamat_ayah" value="">
+                                                <input type="text" class="form-control form-control" name="alamat_ayah" id="alamat_ayah" value="{{ $mahasiswa_ortu->alamat_ayah }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="alamat_ibu">Alamat</label>
-                                                <input type="text" class="form-control form-control" name="alamat_ibu" id="alamat_ibu" value="">
+                                                <input type="text" class="form-control form-control" name="alamat_ibu" id="alamat_ibu" value="{{ $mahasiswa_ortu->alamat_ibu }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="no_telp_ayah">No. Telepon</label>
-                                                <input type="text" class="form-control form-control" name="no_telp_ayah" id="no_telp_ayah" value="" >
+                                                <input type="text" class="form-control form-control" name="no_telp_ayah" id="no_telp_ayah" value="{{ $mahasiswa_ortu->no_telp_ayah }}" >
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="no_telp_ibu">No. Telepon</label>
-                                                <input type="text" class="form-control form-control" name="no_telp_ibu" id="no_telp_ibu" value="">
+                                                <input type="text" class="form-control form-control" name="no_telp_ibu" id="no_telp_ibu" value="{{ $mahasiswa_ortu->no_telp_ibu }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="email_ayah">Email</label>
-                                                <input type="email" class="form-control form-control" name="email_ayah" id="email_ayah" value="">
+                                                <input type="email" class="form-control form-control" name="email_ayah" id="email_ayah" value="{{ $mahasiswa_ortu->email_ayah }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="email_ibu">Email</label>
-                                                <input type="email" class="form-control form-control" name="email_ibu" id="email_ibu" value="">
+                                                <input type="email" class="form-control form-control" name="email_ibu" id="email_ibu" value="{{ $mahasiswa_ortu->email_ibu }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -621,14 +621,14 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit">Simpan</button>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit update-form">Simpan</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="tab-pane fade" id="wali" role="tabpanel" aria-labelledby="pills-clrcontact-tab1">
-                            <form action="{{ route('inputwali') }}" method="post" id="form-wali" enctype="multipart/form-data">
+                            <form action="{{ route('update.mahasiswa', $mahasiswa_wali->mahasiswa_wali_id ) }}" method="post" id="form-wali" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" class="iid" name="iid" value="">
                                 <input type="hidden" name="id" id="id" value="">
@@ -638,57 +638,57 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="nama_wali">Nama Lengkap</label>
-                                                <input type="text" class="form-control form-control" name="nama_wali" id="nama_wali" value="">
+                                                <input type="text" class="form-control form-control" name="nama_wali" id="nama_wali" value="{{ $mahasiswa_wali->nama_wali }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="pekerjaan_wali">Pekerjaan</label>
-                                                <input type="text" class="form-control form-control" name="pekerjaan_wali" id="pekerjaan_wali" value="">
+                                                <input type="text" class="form-control form-control" name="pekerjaan_wali" id="pekerjaan_wali" value="{{ $mahasiswa_wali->pekerjaan_wali }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="nik_wali">NIK</label>
-                                                <input type="text" class="form-control form-control" name="nik_wali" id="nik_wali" value="">
+                                                <input type="text" class="form-control form-control" name="nik_wali" id="nik_wali" value="{{ $mahasiswa_wali->nik_wali }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="penghasilan_wali">Penghasilan</label>
-                                                <input type="text" class="form-control form-control" name="penghasilan_wali" id="penghasilan_wali" value="">
+                                                <input type="text" class="form-control form-control" name="penghasilan_wali" id="penghasilan_wali" value="{{ $mahasiswa_wali->penghasilan_wali }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="tanggal_lahir_wali">Tanggal Lahir</label>
-                                                <input type="date" class="form-control form-control" name="tgl_lahir_wali" id="tanggal_lahir_wali" value="">
+                                                <input type="date" class="form-control form-control" name="tgl_lahir_wali" id="tanggal_lahir_wali" value="{{ $mahasiswa_wali->tgl_lahir_wali }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="alamat_wali">Alamat</label>
-                                                <input type="text" class="form-control form-control" name="alamat_wali" id="alamat_wali" value="">
+                                                <input type="text" class="form-control form-control" name="alamat_wali" id="alamat_wali" value="{{ $mahasiswa_wali->alamat_wali }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="status_hidup_wali">Status Hidup</label>
-                                                <input type="text" class="form-control form-control" name="status_hidup_wali" id="status_hidup_wali" value="">
+                                                <input type="text" class="form-control form-control" name="status_hidup_wali" id="status_hidup_wali" value="{{ $mahasiswa_wali->status_hidup_wali }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="no_telp_wali">No. Telepon</label>
-                                                <input type="text" class="form-control form-control" name="no_telp_wali" id="no_telp_wali" value="">
+                                                <input type="text" class="form-control form-control" name="no_telp_wali" id="no_telp_wali" value="{{ $mahasiswa_wali->no_telp_wali }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="status_kerabat_wali">Status Kekerabatan</label>
-                                                <input type="text" class="form-control form-control" name="status_kerabatan_wali" id="status_kerabat_wali" value="">
+                                                <input type="text" class="form-control form-control" name="status_kerabatan_wali" id="status_kerabat_wali" value="{{ $mahasiswa_wali->status_kerabatan_wali }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="email_wali">Email</label>
-                                                <input type="text" class="form-control form-control" name="email_wali" id="email_wali" value="">
+                                                <input type="text" class="form-control form-control" name="email_wali" id="email_wali" value="{{ $mahasiswa_wali->email_wali }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="pendidikan_wali">Pendidikan Terakhir</label>
-                                                <input type="text" class="form-control form-control" name="pendidikan_wali" id="pendidikan_wali" value="">
+                                                <input type="text" class="form-control form-control" name="pendidikan_wali" id="pendidikan_wali" value="{{ $mahasiswa_wali->pendidikan_wali }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="aktivasi_wali">Aktivasi?</label>
@@ -696,14 +696,14 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit">Simpan</button>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit update-form">Simpan</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="tab-pane fade" id="sekolah" role="tabpanel" aria-labelledby="pills-clrcontact-tab1">
-                            <form action="{{ route('inputsekolah') }}" method="post" id="form-sekolah" enctype="multipart/form-data">
+                            <form action="{{ route('update.mahasiswa', $mahasiswa_sekolah->mahasiswa__sekolah_model_id ) }}" method="post" id="form-sekolah" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" class="iid" name="iid" value="">
                                 <input type="hidden" name="id" id="id" value="">
@@ -713,58 +713,58 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="pendidikan_asal">Pendidikan Asal</label>
-                                                <input type="text" class="form-control form-control" name="pendidikan_asal" id="pendidikan_asal" value="">
+                                                <input type="text" class="form-control form-control" name="pendidikan_asal" id="pendidikan_asal" value="{{ $mahasiswa_sekolah->pendidikan_asal }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="alamat_sekolah">Alamat Sekolan</label>
-                                                <input type="text" class="form-control form-control" name="alamat_sekolah" id="alamat_sekolah" value="">
+                                                <input type="text" class="form-control form-control" name="alamat_sekolah" id="alamat_sekolah" value="{{ $mahasiswa_sekolah->alamat_sekolah }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="propinsi_sekolah">Propinsi Sekolah</label>
-                                                <input type="text" class="form-control form-control" name="propinsi_sekolah" id="propinsi_sekolah" value="">
+                                                <input type="text" class="form-control form-control" name="propinsi_sekolah" id="propinsi_sekolah" value="{{ $mahasiswa_sekolah->propinsi_sekolah }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="telp_sekolah">Telepon Sekolah</label>
-                                                <input type="text" class="form-control form-control" name="telp_sekolah" id="telp_sekolah" value="" >
+                                                <input type="text" class="form-control form-control" name="telp_sekolah" id="telp_sekolah" value="{{ $mahasiswa_sekolah->telp_sekolah }}" >
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="kota_sekolah">Kota Sekolah</label>
-                                                <input type="text" class="form-control form-control" name="kota_sekolah" id="kota_sekolah" value="">
+                                                <input type="text" class="form-control form-control" name="kota_sekolah" id="kota_sekolah" value="{{ $mahasiswa_sekolah->kota_sekolah }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="nomor_ijasah">Nomor Ijasah Sekolah</label>
-                                                <input type="text" class="form-control form-control" name="nomor_ijasah_sekolah" id="nomor_ijasah" value="">
+                                                <input type="text" class="form-control form-control" name="nomor_ijasah_sekolah" id="nomor_ijasah" value="{{ $mahasiswa_sekolah->nomor_ijasah_sekolah }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="sekolah">Sekolah</label>
-                                                <input type="text" class="form-control form-control" name="sekolah" id="sekolah" value="">
+                                                <input type="text" class="form-control form-control" name="sekolah" id="sekolah" value="{{ $mahasiswa_sekolah->sekolah }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="file_ijasah">File Ijasah Sekolah</label>
-                                                <input type="file" class="form-control form-control" name="image" id="image" accept=".jpg,.jpeg,.png,.pdf,.gif">
+                                                <input type="file" class="form-control form-control" name="image" id="image" accept=".jpg,.jpeg,.png,.pdf,.gif" value="{{ $mahasiswa_sekolah->file_name }}"  >
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="nisn">NISN</label>
-                                                <input type="text" class="form-control form-control" name="nisn" id="nisn" value="">
+                                                <input type="text" class="form-control form-control" name="nisn" id="nisn" value="{{ $mahasiswa_sekolah->nisn }}" required>
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit">Simpan</button>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit update-form">Simpan</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="tab-pane fade" id="perguruan-tinggi" role="tabpanel" aria-labelledby="pills-clrcontact-tab1">
-                            <form action="{{ route('inputsekolahperguruan') }}" method="post" id="form-perguruan" enctype="multipart/form-data">
+                            <form action="{{ route('update.mahasiswa', $mahasiswa_perguruan->mahasiswa_perguruan_id ) }}" method="post" id="form-perguruan" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" class="iid" name="iid" value="">
                                 <input type="hidden" name="id" id="id" value="">
@@ -774,41 +774,41 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="perguruan_tinggi_asal">Perguruan Tinggi Asal</label>
-                                                <input type="text" class="form-control form-control" name="perguruan_tinggi_asal" id="perguruan_tinggi_asal" value="">
+                                                <input type="text" class="form-control form-control" name="perguruan_tinggi_asal" id="perguruan_tinggi_asal" value="{{ $mahasiswa_perguruan->perguruan_tinggi_asal }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="sks_asal">SKS Asal(diakui)</label>
-                                                <input type="text" class="form-control form-control" name="sks_asal" id="sks_asal" value="">
+                                                <input type="text" class="form-control form-control" name="sks_asal" id="sks_asal" value="{{ $mahasiswa_perguruan->sks_asal }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="program_studi_asal">Program Studi Asal</label>
-                                                <input type="text" class="form-control form-control" name="prodi_asal" id="program_studi_asal" value="">
+                                                <input type="text" class="form-control form-control" name="prodi_asal" id="program_studi_asal" value="{{ $mahasiswa_perguruan->prodi_asal }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="surat_rekom_pindah">Surat Rekom. Pindah</label>
-                                                <input type="text" class="form-control form-control" name="surat_rekon_pindah" id="surat_rekom_pindah" value="">
+                                                <input type="text" class="form-control form-control" name="surat_rekom_pindah" id="surat_rekom_pindah" value="{{ $mahasiswa_perguruan->surat_rekom_pindah }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="nim_asal">NIM Asal</label>
-                                                <input type="text" class="form-control form-control" name="nim_asal" id="nim_asal" value="">
+                                                <input type="text" class="form-control form-control" name="nim_asal" id="nim_asal" value="{{ $mahasiswa_perguruan->nim_asal }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="transkrip_asal">Transkrip Asal</label>
-                                                <input type="text" class="form-control form-control" name="transkrip_pindah" id="transkrip_asal" value="">
+                                                <input type="text" class="form-control form-control" name="transkrip_pindah" id="transkrip_asal" value="{{ $mahasiswa_perguruan->transkrip_pindah }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="ipk_asal">IPK Asal</label>
-                                                <input type="text" class="form-control form-control" name="ipk_asal" id="ipk_asal" value="">
+                                                <input type="text" class="form-control form-control" name="ipk_asal" id="ipk_asal" value="{{ $mahasiswa_perguruan->ipk_asal }}">
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit">Simpan</button>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light btn-submit update-form">Simpan</button>
                                         </div>
                                     </div>
                                 </div>
@@ -879,47 +879,6 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('.form-update').submit(function(event) {
-        event.preventDefault();
-
-        var form = $(this);
-        var formData = new FormData(form[0]);
-        var id = form.data('id'); // Mengambil nilai ID dari atribut data formulir yang diklik
-
-        $.ajax({
-            url: "{{ route('update.mahasiswa', ['id' => $mahasiswa->id], ['id' => $mahasiswa_umum->informasi_umum_id ]) }}",
-            method: "POST",
-            data: formData,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(response) {
-                if (response.message === 'Update') {
-                    toastr.success('Data Berhasil diupdate', 'Berhasil')
-                } else {
-                    toastr.error('Data tidak boleh sama', 'Gagal')
-                }
-            },
-            error: function() {
-                Swal.fire({
-                    position: 'center',
-                    title: 'Error!',
-                    text: 'Masukan Data Terlebih Dahulu',
-                    icon: 'info',
-                    timer: 2400,
-                    showConfirmButton: false,
-                    timerProgressBar: true,
-                });
-            }
-        });
-    });
-});
-
-
-
-
-
 </script>
 <script>
     function cek_nomor(evt) {
@@ -992,6 +951,25 @@ $(document).ready(function() {
 			}
 		});
 	}
+
+    function back() {
+        Swal.fire({
+			title: "Keluar dari Form",
+			text: "Anda akan kehilangan data yang belum tersimpan",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#ea1c18",
+			confirmButtonText: "Ya",
+			cancelButtonText: "Batal",
+			closeOnConfirm: false,
+			closeOnCancel: true
+		}).then((result) => {
+			if (result.value) {
+				window.location.href = '{{ route('mahasiswa') }}';
+			}
+		});
+    }
+
 </script>
 
 

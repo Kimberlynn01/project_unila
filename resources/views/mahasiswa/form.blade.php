@@ -139,7 +139,7 @@
             <div class="card-header py-3">
                 <h4 class="card-title mb-0 text-dark">Form Mahasiswa</h4>
                 <div class="toolbar">
-                    <a href="{{ route('mahasiswa') }}"><button type="button" class="btn btn-primary ">Kembali</button></a>
+                    <button  type="button" onclick="back()" class="btn-back btn btn-primary ">Kembali</button>
                 </div>
             </div>
             <div class="card-body">
@@ -153,22 +153,22 @@
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="npm">NPM</label>
-                                    <input type="number" class="form-control form-control" name="npm" id="npm" onkeypress="return cek_nomor(event)" required>
+                                    <input type="number" class="form-control form-control form-main" name="npm" id="npm" onkeypress="return cek_nomor(event)" required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="kel">Kelas/Kelompok</label>
-                                    <input type="text" class="form-control form-control" name="kelas" id="kelas"  required>
+                                    <input type="text" class="form-control form-control form-main" name="kelas" id="kelas"  required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="nama">Nama Lengkap</label>
-                                    <input type="text" class="form-control form-control" name="nama_lengkap" id="nama_lengkap"  required>
+                                    <input type="text" class="form-control form-control form-main" name="nama_lengkap" id="nama_lengkap"  required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="jenis_pendaftaran">Jenis Pendaftaran</label>
-                                    <select class="form-control form-control" name="jenis_pendaftaran" id="jenis_pendaftaran" required>
-                                        <option selected>-Pilih Jenis Pendaftaran-</option>
+                                    <select class="form-control form-control form-main" name="jenis_pendaftaran" id="jenis_pendaftaran" required>
+                                        <option value="0">-Pilih Jenis Pendaftaran-</option>
                                         <option value="1" >Peserta Didik Baru</option>
                                         <option value="2" >Lintas Jalur</option>
                                         <option value="3" >Pindahan</option>
@@ -178,7 +178,7 @@
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="program_studi">Program Studi</label>
-                                    <select class="form-control form-control" name="prodi" id="prodi" required>
+                                    <select class="form-control form-control form-main" name="prodi" id="prodi" required>
                                         <option value="">-Pilih Program Studi-</option>
                                                                                     <option value="1" >S2 Teknologi Pendidikan</option>
                                                                                     <option value="2" >S2 Manajemen Pendidikan</option>
@@ -213,53 +213,53 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="jalur_pendaftaran">Jalur Pendaftaran</label>
-                                    <input type="text" class="form-control form-control" name="jalur_pendaftaran" id="jalur_pendaftaran"  required>
+                                    <input type="text" class="form-control form-control form-main" name="jalur_pendaftaran" id="jalur_pendaftaran"  required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="konsentrasi">Konsentrasi</label>
-                                    <input type="text" class="form-control form-control" name="konsentrasi" id="konsentrasi"  required>
+                                    <input type="text" class="form-control form-control form-main" name="konsentrasi" id="konsentrasi"  required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="gelombang">Gelombang</label>
-                                    <input type="text" class="form-control form-control" name="gelombang" id="gelombang"  required>
+                                    <input type="text" class="form-control form-controlform-main" name="gelombang" id="gelombang"  required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="periode_masuk">Periode Masuk</label>
-                                    <input type="text" class="form-control form-control" name="periode_masuk" id="periode_masuk" required>
+                                    <input type="text" class="form-control form-control form-main" name="periode_masuk" id="periode_masuk" required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="tanggal_masuk">Tanggal Masuk</label>
-                                    <input type="date" class="form-control form-control" name="tanggal_masuk" id="tanggal_masuk"  required>
+                                    <input type="date" class="form-control form-control form-main" name="tanggal_masuk" id="tanggal_masuk"  required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="tahun_kurikulum">Tahun Kurikulum</label>
-                                    <input type="number" class="form-control form-control" name="tahun_kurikulum" id="tahun_kurikulum"  required>
+                                    <input type="number" class="form-control form-control form-main" name="tahun_kurikulum" id="tahun_kurikulum"  required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="nomor_tes">Nomor Tes</label>
-                                    <input type="text" class="form-control form-control" name="nomor_tes" onkeypress="return cek_nomor(event)" id="nomor_tes"  required>
+                                    <input type="text" class="form-control form-control form-main" name="nomor_tes" onkeypress="return cek_nomor(event)" id="nomor_tes"  required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="sistem_kuliah">Sistem Kuliah</label>
-                                    <input type="text" class="form-control form-control" name="sistem_kuliah" id="sistem_kuliah"  required>
+                                    <input type="text" class="form-control form-control form-main" name="sistem_kuliah" id="sistem_kuliah"  required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="beasiswa">Beasiswa</label>
-                                    <input type="text" class="form-control form-control" name="beasiswa" id="beasiswa"  required>
+                                    <input type="text" class="form-control form-control form-main" name="beasiswa" id="beasiswa"  required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="stat">Status</label>
-                                    <input type="text" class="form-control form-control" name="status" id="stat" required>
+                                    <input type="text" class="form-control form-control form-main" name="status" id="stat" required>
                                 </div>
                             </div>
                             <div class="text-center">
@@ -787,7 +787,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="surat_rekom_pindah">Surat Rekom. Pindah</label>
-                                                <input type="text" class="form-control form-control" name="surat_rekon_pindah" id="surat_rekom_pindah" value="">
+                                                <input type="text" class="form-control form-control" name="surat_rekom_pindah" id="surat_rekom_pindah" value="">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -1082,6 +1082,26 @@
 
 
 
+</script>
+
+<script>
+    function back() {
+        Swal.fire({
+			title: "Keluar dari Form",
+			text: "Anda akan kehilangan data yang belum tersimpan",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#ea1c18",
+			confirmButtonText: "Ya",
+			cancelButtonText: "Batal",
+			closeOnConfirm: false,
+			closeOnCancel: true
+		}).then((result) => {
+			if (result.value) {
+				window.location.href = '{{ route('mahasiswa') }}';
+			}
+		});
+    }
 </script>
 
 <script>

@@ -103,25 +103,25 @@
             </div>
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li>
-                    <a href="{{ route('home') }}" class="waves-effect ">
+                    <a href="{{ route('home') }}" class="waves-effect">
                         <i class="bi bi-display m-0"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('alumni') }}" class="waves-effect ">
+                    <a href="{{  route('alumni') }}" class="waves-effect ">
                         <i class="bi bi-people m-0"></i>
                         <span>Alumni</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('mahasiswa') }}" class="waves-effect active">
+                    <a href="{{ route('mahasiswa') }}" class="waves-effect ">
                         <i class="bi bi-people m-0"></i>
                         <span>Mahasiswa</span>
                     </a>
                 </li>
                 <li>
-                    <a href="back/dosen" class="waves-effect ">
+                    <a href="{{ route('dosen') }}" class="waves-effect ">
                         <i class='bi bi-person-badge-fill'></i>
                         <span>Dosen</span>
                     </a>

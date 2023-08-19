@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nim_asal');
             $table->string('ipk_asal');
             $table->string('sks_asal');
-            $table->string('surat_rekon_pindah');
+            $table->string('surat_rekom_pindah');
             $table->string('transkrip_pindah');
             $table->foreign('mahasiswa_perguruan_id')->references('id')->on('m_input_data_models')->onDelete('cascade');
             $table->timestamps();
