@@ -286,7 +286,6 @@ class EmployeeController extends Controller
 
     public function delete($id_akun) {
         $mahasiswa = MInputDataModel::find($id_akun);
-        // $mahasiswa_umum = InformasiUmum::find($id_akun);
 
         if (!$mahasiswa) {
             return redirect('/mahasiswa')->with('message_error', 'Data Not Found');
@@ -294,7 +293,7 @@ class EmployeeController extends Controller
 
         $mahasiswa->delete();
 
-        return redirect('/mahasiswa')->with('message_error', 'Success Delete');
+        return redirect('/mahasiswa')->with('message', 'Success Delete');
     }
 
     public function edits(Request $request, $id) {

@@ -40,6 +40,14 @@
                 text-align: center;
             }
         }
+
+        #toastr-notifications {
+            position: fixed;
+            top: 20px; /* Sesuaikan posisi notifikasi */
+            right: 20px; /* Sesuaikan posisi notifikasi */
+            z-index: 99999; /* Nilai z-index yang tinggi */
+        }
+
     </style>
 </head>
 
@@ -146,8 +154,21 @@
     }
 </style>
 <div class="row">
+
+    <div id="toastr-notifications"></div>
     <div class="col-md-12">
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+        @if (session('message_error'))
+            <div class="alert alert-danger">
+                {{ session('message_error') }}
+            </div>
+        @endif
         <div class="card">
+
             <div class="card-header list-group-item list-group-item-action active">
                 Data Dosen
                 <div class="toolbar">
@@ -167,14 +188,40 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                            @php
+                                $no = 1;
+                            @endphp
+                           @foreach ($dosen_profile as $row)
+                            <tr>
+                                <th>{{ $no++ }}</th>
+                                <td>{{ $row->nama_dosen }}</td>
+                                <td>{{ $row->keahlian }}</td>
+                                <td>{{ $row->pendidikan_dosen->universitas }}</td>
+                                <td>{{ $row->pendidikan_dosen->tahun_lulus }}</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button class="btn btn-warning" title="Details Dosen" onclick="detailsButton()">
+                                            <i class="bx bxs-detail" ></i>
+                                        </button>
+                                        <button class="btn btn-success" title="Reset Password" onclick="resetPassword()">
+                                            <i class="bx bxs-key"></i>
+                                        </button>
+                                        <button class="btn btn-danger" title="Delete Data Dosen" onclick="deleteData('{{ route('delete.dosen', ['id' => $row->id]) }}')">
+                                            <i class="bx bxs-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                           @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="modal-popout" role="dialog" style="z-index: 999999;">
+<div class="modal fade" id="modal-popout" role="dialog" style="z-index: 9999;">
     <div class="modal-dialog modal-dialog-popout modal-xl">
         <div class="modal-content">
             <div class="loading">
@@ -234,7 +281,8 @@
                     <div class="tab-content" id="myTabContent">
                         <!-- Tab Profil Dosen Start Here -->
                         <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <form action="" method="post" id="form-profil" enctype="multipart/form-data">
+                            <form action="{{ route('dosen.profile') }}" method="post" id="form-profil" enctype="multipart/form-data">
+                                @csrf
                                 <div class="h3 text-primary"><u>Profil Dosen</u></div>
                                 <div class="form-row mt-2">
                                     <div class="form-group col-md-6">
@@ -254,7 +302,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="">Jurusan / Prodi</label>
                                         <select name="id_prodi" id="id_prodi" class="form-control" required="">
-                                            <option value="" selected="" disabled="">- Pilih Jurusan/Prodi --</option>
+                                            <option value="" selected>- Pilih Jurusan/Prodi --</option>
                                                                             <option value="1">S2 Teknologi Pendidikan</option>
                                                                             <option value="25">S2 Pendidikan Matematika</option>
                                                                             <option value="22">S2 Pendidikan Keguruan Guru SD</option>
@@ -310,11 +358,11 @@
                                 <div class="form-row mt-2">
                                     <div class="form-group col-md-6">
                                         <label for="">Pas Foto</label>
-                                        <input type="file" name="pas_foto" id="pas_foto" class="form-control" accept="image/*" required="">
+                                        <input type="file" name="pas_foto" id="pas_foto" class="form-control" accept=".jpeg,.png,.gif,.jfif,.jpg" required="">
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary mb-3">Simpan</button>
+                                <button type="submit" class="submit-form btn btn-primary mb-3" data-form="form-profil" data-route="{{ route('dosen.profile') }}" data-message="Data Profile Dosen Berhasil diSimpan">Simpan</button>
                             </form>
                         </div>
                         <!-- Tab Profil Dosen End Here -->
@@ -323,7 +371,8 @@
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <!-- outer repeater -->
                             <div class="h3 text-primary mb-3"><u>Riwayat Pendidikan</u></div>
-                            <form id="form-pendidikan" class="form_dosen" action="https://egov.phicos.co.id/lampung/unila/back/dosen/store_dosen_detail" method="post">
+                            <form action="{{ route('dosen.pendidikan') }}" id="form-pendidikan" class="form_dosen" method="post">
+                                @csrf
                                 <input type="hidden" name="jenis_input" value="pendidikan">
                                 <div class="col-12">
                                     <div class="row mb-3">
@@ -344,12 +393,12 @@
                                         <div class="col-md-4">
                                             <label for="">Jenjang Pendidikan</label>
                                             <select name="jenjang" id="jenjang" class="form-control">
-                                                <option value="" selected="" disabled="">-- Pilih Jenjang Pendidikan</option>
-                                                <option value="d3">D3</option>
-                                                <option value="d4">D4</option>
-                                                <option value="s1">S1</option>
-                                                <option value="s2">S2</option>
-                                                <option value="s3">S3</option>
+                                                <option value="" selected>-- Pilih Jenjang Pendidikan</option>
+                                                <option value="D3">D3</option>
+                                                <option value="D4">D4</option>
+                                                <option value="S1">S1</option>
+                                                <option value="S2">S2</option>
+                                                <option value="S3">S3</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4">
@@ -358,7 +407,7 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <button type="submit" data-form="form-pendidikan" data-route="{{ route('dosen.pendidikan') }}" class="submit-form btn btn-primary" data-message="Data Pendidikan Dosen Berhasil diSimpan">Simpan</button>
                                     </div>
                                 </div>
                             </form>
@@ -719,67 +768,9 @@
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
 
-                </div></form>
                 </div>
-                    <script>
-                        $(document).ready(function() {
-                            $("#form-profil").submit(function(e) {
-                                e.preventDefault(); // Prevent default form submission
-
-                                var formData = new FormData(this);
-
-                                $.ajax({
-                                    type: "POST",
-                                    url: $(this).attr("action"),
-                                    data: formData,
-                                    processData: false, // Set to false to prevent jQuery from processing the data
-                                    contentType: false, // Set to false, jQuery will not add a Content-Type header
-                                    success: function(response) {
-                                        if (response.success) {
-                                            $('#id_dosen').val(response.id_dosen_baru);
-                                            toastr.success(response.message, "Sukses");
-                                            // $('form').trigger('reset');
-                                        } else {
-                                            toastr.error(response.message, "Error");
-                                        }
-                                    },
-                                    error: function(xhr, status, error) {
-                                        // Handle errors, if any
-                                        console.error(error);
-                                        toastr.error(error, "Error");
-                                    }
-                                });
-                            });
-
-                            $(".form_dosen").submit(function(e) {
-                                e.preventDefault(); // Prevent default form submission
-
-                                var id_dosen = $('#id_dosen').val();
-
-                                var formData = $(this).serialize();
-                                formData += '&id_dosen=' + encodeURIComponent(id_dosen);
-
-                                $.ajax({
-                                    type: "POST",
-                                    url: $(this).attr("action"),
-                                    data: formData,
-                                    success: function(response) {
-                                        if (response.success) {
-                                            toastr.success(response.message, "Sukses");
-                                            $('form').trigger('reset');
-                                        } else {
-                                            toastr.error(response.message, "Error");
-                                        }
-                                    },
-                                    error: function(xhr, status, error) {
-                                        // Handle errors, if any
-                                        console.error(error);
-                                        toastr.error(error, "Error");
-                                    }
-                                });
-                            });
-                        });
-                    </script>
+            </form>
+                </div>
                 </div>
                 </div>
             </div>
@@ -895,7 +886,88 @@
 			}
 		});
 	}
+
+    var table;
+    $(document).ready(function() {
+        table = $('#table-dosen').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data Dosen",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        })
+    });
+
+
+    $(document).ready(function() {
+    $('.submit-form').click(function(event) {
+        event.preventDefault();
+
+        var formId = $(this).data('form');
+        var formData = new FormData(document.getElementById(formId));
+        var route = $(this).data('route');
+        var message = $(this).data('message');
+
+        $.ajax({
+            url: route,
+            method: "POST",
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(response) {
+                if (formId === 'form-profil' && response.message === 'Data Profile Dosen Berhasil diSimpan') {
+                    toastr.success(message, 'Berhasil');
+                } else if (formId === 'form-pendidikan' && response.message === 'Data Pendidikan Dosen Berhasil diSimpan') {
+                    toastr.success(message, 'Berhasil');
+                } else if (response.message === 'Data sudah ada sebelumnya') {
+                    toastr.error('Data sudah ada sebelumnya', 'Gagal');
+                } else {
+                    toastr.error('Terjadi kesalahan', 'Gagal');
+                }
+            },
+            error: function() {
+                toastr.error('Masukan Data Terlebih Dahulu', 'Gagal');
+            }
+        });
+    });
+});
+
+
+function deleteData(url) {
+    Swal.fire({
+            title: 'Are you sure?',
+            text: "Data tidak akan bisa dikembalikan !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+}
+
+
 </script>
+
 </body>
 
 </html>

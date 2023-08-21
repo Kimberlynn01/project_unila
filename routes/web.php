@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
+// Input Data Mahasiswa
 Route::post('/inputdata', [EmployeeController::class, 'inputdata'])->name('inputdata');
 Route::post('/inputdata/general/', [EmployeeController::class, 'inputmahasiswa'])->name('inputmahasiswa');
 Route::post('/inputdata/domisili/', [EmployeeController::class, 'inputdomisili'])->name('inputdomisili');
@@ -54,17 +54,19 @@ Route::post('/inputdata/ortu/', [EmployeeController::class, 'inputortu'])->name(
 Route::post('/inputdata/wali/', [EmployeeController::class, 'inputwali'])->name('inputwali');
 Route::post('/inputdata/sekolah/', [EmployeeController::class, 'inputsekolah'])->name('inputsekolah');
 Route::post('/inputdata/sekolahperguruan/', [EmployeeController::class, 'inputsekolahperguruan'])->name('inputsekolahperguruan');
-
-
 Route::get('/mahasiswa/delete/{id}', [EmployeeController::class, 'delete'])->name('mahasiswa.delete');
-
 Route::get('/mahasiswa/details/{id}', [EmployeeController::class, 'details'])->name('details');
 Route::get('/mahasiswa/edit/{id}', [EmployeeController::class, 'edits'])->name('edits');
 Route::post('/mahasiswa/post/{id}', [EmployeeController::class, 'update'])->name('update.mahasiswa');
-
-
 Route::get('/mahasiswa/details/file/{id}/{type}', [EmployeeController::class, 'detailFile'])->name('details.file');
 
 
 
+// Input Data Alumni
 Route::post('/importexcel', [EmployeeController::class, 'importexcel'])->name('importexcel');
+
+
+// Input Data Dosen
+Route::post('/dosen/profile', [DosenController::class, 'DosenInputProfile'])->name('dosen.profile');
+Route::post('/dosen/pendidikan', [DosenController::class, 'DosenInputPendidikan'])->name('dosen.pendidikan');
+Route::get('/dosen/delete/{id}', [DosenController::class, 'delete'])->name('delete.dosen');
