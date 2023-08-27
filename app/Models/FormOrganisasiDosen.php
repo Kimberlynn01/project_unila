@@ -7,20 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class FormPenelitianDosen extends Model
+class FormOrganisasiDosen extends Model
 {
-    use HasFactory;
-    protected $table = 'form_penelitian_dosen';
-    protected $primaryKery = 'id';
+    protected $table = 'form_organisasi_dosen';
     protected $fillable = [
-        'judul_penelitian',
-        'jabatan',
-        'tahun',
-        'sumber_dana',
-        'kategori',
+    'organisasi',
+    'institusi',
+    'tahun',
     ];
 
     public function profile_dosen() : BelongsToMany {
-        return $this->BelongsToMany(FormProfileDosen::class, 'id');
+        return $this->belongsToMany(FormProfileDosen::class, 'id');
     }
 }

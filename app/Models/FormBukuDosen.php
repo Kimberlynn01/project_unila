@@ -2,21 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\BelongsToManyRelationship;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class FormPenelitianDosen extends Model
+class FormBukuDosen extends Model
 {
-    use HasFactory;
-    protected $table = 'form_penelitian_dosen';
-    protected $primaryKery = 'id';
+    protected $table = 'form_buku_dosen';
     protected $fillable = [
-        'judul_penelitian',
-        'jabatan',
+        'judul_buku',
         'tahun',
-        'sumber_dana',
+        'isbn',
+        'penerbit',
         'kategori',
     ];
 

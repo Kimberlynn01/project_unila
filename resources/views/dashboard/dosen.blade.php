@@ -4,7 +4,6 @@
 
 <head>
     <meta charset="utf-8" />
-    <base href="https://egov.phicos.co.id/lampung/unila/">
     <title>Dosen | Unila</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name='description' content='Unila' />
@@ -12,7 +11,6 @@
     <meta name='keywords' content='Unila'>
     <link rel="apple-touch-icon" href="https://egov.phicos.co.id/lampung/unila/assets/img/logo_unila.png">
     <link rel="shortcut icon" type="image/x-icon/png" href="https://egov.phicos.co.id/lampung/unila/assets/img/logo_unila.png">
-    <base href="https://egov.phicos.co.id/lampung/unila/">
     <link rel="stylesheet" href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/twitter-bootstrap-wizard/prettify.css">
     <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
@@ -197,11 +195,24 @@
                                 <th>{{ $no++ }}</th>
                                 <td>{{ $row->nama_dosen }}</td>
                                 <td>{{ $row->keahlian }}</td>
-                                <td>{{ $row->pendidikan_dosen->universitas }}</td>
-                                <td>{{ $row->pendidikan_dosen->tahun_lulus }}</td>
                                 <td>
+                                    @if ($row->pendidikan_dosen->isNotEmpty())
+                                        {{ $row->pendidikan_dosen[0]->universitas }}
+                                    @else
+                                        <p>-</p>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($row->pendidikan_dosen->isNotEmpty())
+                                        {{ $row->pendidikan_dosen[0]->tahun_lulus }}
+                                    @else
+                                        <p>-</p>
+                                    @endif
+                                </td>
+
+                                <td class="d-flex justify-content-center">
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-warning" title="Details Dosen" onclick="detailsButton()">
+                                        <button class="btn btn-warning" title="Details Dosen" onclick="detailsButton({{ $row->id }})">
                                             <i class="bx bxs-detail" ></i>
                                         </button>
                                         <button class="btn btn-success" title="Reset Password" onclick="resetPassword()">
@@ -362,7 +373,7 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" class="submit-form btn btn-primary mb-3" data-form="form-profil" data-route="{{ route('dosen.profile') }}" data-message="Data Profile Dosen Berhasil diSimpan">Simpan</button>
+                                <button type="submit" class="submit-form btn btn-primary mb-3" data-form="form-profil" data-route="{{ route('dosen.profile') }}" data-message="Data Profile Dosen berhasil disimpan">Simpan</button>
                             </form>
                         </div>
                         <!-- Tab Profil Dosen End Here -->
@@ -374,6 +385,7 @@
                             <form action="{{ route('dosen.pendidikan') }}" id="form-pendidikan" class="form_dosen" method="post">
                                 @csrf
                                 <input type="hidden" name="jenis_input" value="pendidikan">
+                                <input type="hidden" name="form_profile_dosen_id" value="{{ session('form_profile_dosen_id') }}">
                                 <div class="col-12">
                                     <div class="row mb-3">
                                         <div class="col-md-6">
@@ -407,7 +419,7 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <button type="submit" data-form="form-pendidikan" data-route="{{ route('dosen.pendidikan') }}" class="submit-form btn btn-primary" data-message="Data Pendidikan Dosen Berhasil diSimpan">Simpan</button>
+                                        <button type="submit" data-form="form-pendidikan" data-route="{{ route('dosen.pendidikan') }}" class="submit-form btn btn-primary" data-message="Data Pendidikan Dosen berhasil disimpan">Simpan</button>
                                     </div>
                                 </div>
                             </form>
@@ -417,7 +429,8 @@
                         <!-- Tab Penelitian Start Here -->
                         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                             <div class="h3 text-primary"><u>Penelitian</u></div>
-                            <form class="mt-3 form_dosen" id="form-penelitian" action="https://egov.phicos.co.id/lampung/unila/back/dosen/store_dosen_detail" method="post">
+                            <form class="mt-3 form_dosen" action="{{ route('dosen.penelitian') }}" id="form-penelitian"  method="post">
+                                @csrf
                                 <input type="hidden" name="jenis_input" value="penelitian">
                                 <div class="col-12">
                                     <div class="row mb-3">
@@ -454,7 +467,7 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <button type="submit" class="submit-form btn btn-primary" data-form="form-penelitian" data-route="{{ route('dosen.penelitian') }}" data-message="Data Penelitian Dosen berhasil disimpan">Simpan</button>
                                     </div>
 
                         </div></form>
@@ -463,7 +476,8 @@
                     <!-- Tab pengabdian Start Here -->
                     <div class="tab-pane fade" id="pengabdian" role="tabpanel" aria-labelledby="pengabdian-tab">
                         <div class="h3 text-primary"><u>Pengabdian</u></div>
-                        <form class="mt-3 form_dosen" id="form-pengabdian" action="https://egov.phicos.co.id/lampung/unila/back/dosen/store_dosen_detail" method="post">
+                        <form class="mt-3 form_dosen" id="form-pengabdian" action="{{ route('dosen.pengabdian') }}" method="post">
+                            @csrf
                             <input type="hidden" name="jenis_input" value="pengabdian">
                             <div class="col-12">
                                 <div class="row mb-3">
@@ -496,7 +510,7 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="submit" class="submit-form btn btn-primary" data-form="form-pengabdian" data-route="{{ route('dosen.pengabdian') }}" data-message="Data Pengabdian Dosen berhasil disimpan">Simpan</button>
                                 </div>
 
                     </div></form>
@@ -506,7 +520,8 @@
                 <!-- Tab Penghargaan Start Here -->
                 <div class="tab-pane fade" id="penghargaan" role="tabpanel" aria-labelledby="penghargaan-tab">
                     <div class="h3 text-primary"><u>Penghargaan</u></div>
-                    <form class="mt-3 form_dosen" id="form-penghargaan" action="https://egov.phicos.co.id/lampung/unila/back/dosen/store_dosen_detail" method="post">
+                    <form class="mt-3 form_dosen" id="form-penghargaan" action="{{ route('dosen.penghargaan') }}" method="post">
+                        @csrf
                         <input type="hidden" name="jenis_input" value="penghargaan">
                         <div class="col-12">
                             <div class="row mb-3">
@@ -535,7 +550,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="submit-form btn btn-primary" data-route="{{ route('dosen.penghargaan') }}" data-message="Data Penghargaan Dosen berhasil disimpan" data-form="form-penghargaan">Simpan</button>
                             </div>
 
                 </div></form>
@@ -545,7 +560,8 @@
                 <!-- Tab Karya Ilmiah Start Here -->
                 <div class="tab-pane fade" id="karya_ilmiah" role="tabpanel" aria-labelledby="karya_ilmiah-tab">
                     <div class="h3 text-primary"><u>Karya Ilmiah</u></div>
-                    <form class="mt-3 form_dosen" id="form-karya_ilmiah" action="https://egov.phicos.co.id/lampung/unila/back/dosen/store_dosen_detail" method="post">
+                    <form class="mt-3 form_dosen" id="form-karya_ilmiah" action="{{ route('dosen.karyailmiah') }}" method="post">
+                        @csrf
                         <input type="hidden" name="jenis_input" value="karya ilmiah">
                         <div class="col-12">
                             <div class="row mb-3">
@@ -574,7 +590,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="submit-form btn btn-primary" data-form="form-karya_ilmiah" data-route="{{ route('dosen.karyailmiah') }}" data-message="Data Karya Ilmiah Dosen berhasil disimpan">Simpan</button>
                             </div>
 
                 </div></form>
@@ -584,7 +600,8 @@
                 <!-- Tab Kegiatan Start Here -->
                 <div class="tab-pane fade" id="kegiatan" role="tabpanel" aria-labelledby="kegiatan-tab">
                     <div class="h3 text-primary"><u>Kegiatan</u></div>
-                    <form class="mt-3 form_dosen" id="form-karya_ilmiah" action="https://egov.phicos.co.id/lampung/unila/back/dosen/store_dosen_detail" method="post">
+                    <form class="mt-3 form_dosen" id="form-kegiatan" action="{{ route('dosen.kegiatan') }}" method="post">
+                        @csrf
                         <input type="hidden" name="jenis_input" value="kegiatan">
                         <div class="col-12">
                             <div class="row mb-3">
@@ -613,7 +630,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="submit-form btn btn-primary" data-form="form-kegiatan" data-message="Data Kegiatan Dosen berhasil disimpan" data-route="{{ route('dosen.kegiatan') }}">Simpan</button>
                             </div>
 
                 </div></form>
@@ -623,7 +640,8 @@
                 <!-- Tab Jurnal Start Here -->
                 <div class="tab-pane fade" id="jurnal" role="tabpanel" aria-labelledby="jurnal-tab">
                     <div class="h3 text-primary"><u>Jurnal</u></div>
-                    <form class="mt-3 form_dosen" id="form-karya_ilmiah" action="https://egov.phicos.co.id/lampung/unila/back/dosen/store_dosen_detail" method="post">
+                    <form class="mt-3 form_dosen" id="form-jurnal" action="{{ route('dosen.jurnal') }}" method="post">
+                        @csrf
                         <input type="hidden" name="jenis_input" value="jurnal">
                         <div class="col-12">
                             <div class="row mb-3">
@@ -662,7 +680,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="submit-form btn btn-primary" data-form="form-jurnal" data-route="{{ route('dosen.jurnal') }}" data-message="Data Jurnal Dosen berhasil disimpan">Simpan</button>
                             </div>
 
                 </div></form>
@@ -672,7 +690,8 @@
                 <!-- Tab Buku Start Here -->
                 <div class="tab-pane fade" id="buku" role="tabpanel" aria-labelledby="buku-tab">
                     <div class="h3 text-primary"><u>Buku</u></div>
-                    <form class="mt-3 form_dosen" id="form-buku" action="https://egov.phicos.co.id/lampung/unila/back/dosen/store_dosen_detail" method="post">
+                    <form class="mt-3 form_dosen" id="form-buku" action="{{ route('dosen.buku') }}" method="post">
+                        @csrf
                         <input type="hidden" name="jenis_input" value="buku">
                         <div class="col-12">
                             <div class="row mb-3">
@@ -707,7 +726,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="submit-form btn btn-primary" data-form="form-buku" data-message="Data Buku Dosen berhasil disimpan" data-route="{{ route('dosen.buku') }}">Simpan</button>
                             </div>
 
                 </div></form>
@@ -716,7 +735,8 @@
                 <!-- Tab Jabatan Start Here -->
                 <div class="tab-pane fade" id="role-jabatan" role="tabpanel" aria-labelledby="jabatan-tab">
                     <div class="h3 text-primary"><u>Jabatan</u></div>
-                    <form class="mt-3 form_dosen" id="form-jabatan" action="https://egov.phicos.co.id/lampung/unila/back/dosen/store_dosen_detail" method="post">
+                    <form class="mt-3 form_dosen" id="form-jabatan" action="{{ route('dosen.jabatan') }}" method="post">
+                        @csrf
                         <input type="hidden" name="jenis_input" value="jabatan">
                         <div class="col-12">
                             <div class="row mb-3">
@@ -736,7 +756,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="submit-form btn btn-primary" data-form="form-jabatan" data-route="{{ route('dosen.jabatan') }}" data-message="Data Jabatan Dosen berhasil disimpan">Simpan</button>
                             </div>
 
                 </div></form>
@@ -745,7 +765,8 @@
                 <!-- Tab Organisasi Start Here -->
                 <div class="tab-pane fade" id="organisasi" role="tabpanel" aria-labelledby="organisasi-tab">
                     <div class="h3 text-primary"><u>Organisasi</u></div>
-                    <form class="mt-3 form_dosen" id="form-organisasi" action="https://egov.phicos.co.id/lampung/unila/back/dosen/store_dosen_detail" method="post">
+                    <form class="mt-3 form_dosen" id="form-organisasi" action="{{ route('dosen.organisasi') }}" method="post">
+                        @csrf
                         <input type="hidden" name="jenis_input" value="organisasi">
                         <div class="col-12">
                             <div class="row mb-3">
@@ -765,9 +786,8 @@
                                 </div>
                             </div>
                             <div class="row mb-5 ">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="submit-form btn btn-primary" data-form="form-organisasi" data-route="{{ route('dosen.organisasi') }}" data-message="Data Organisasi Dosen berhasil disimpan">Simpan</button>
                             </div>
-
                 </div>
             </form>
                 </div>
@@ -931,13 +951,43 @@
             cache: false,
             processData: false,
             success: function(response) {
-                if (formId === 'form-profil' && response.message === 'Data Profile Dosen Berhasil diSimpan') {
+                if (formId === 'form-profil' && response.message === 'Data Profile Dosen berhasil disimpan') {
                     toastr.success(message, 'Berhasil');
-                } else if (formId === 'form-pendidikan' && response.message === 'Data Pendidikan Dosen Berhasil diSimpan') {
+                }
+                else if (formId === 'form-pendidikan' && response.message === 'Data Pendidikan Dosen berhasil disimpan') {
                     toastr.success(message, 'Berhasil');
-                } else if (response.message === 'Data sudah ada sebelumnya') {
+                }
+                else if (formId === 'form-penelitian' && response.message === 'Data Penelitian Dosen berhasil disimpan') {
+                    toastr.success(message, 'Berhasil');
+                }
+                else if (formId === 'form-pengabdian' && response.message === 'Data Pengabdian Dosen berhasil disimpan') {
+                    toastr.success(message, 'Berhasil');
+                }
+                else if (formId === 'form-penghargaan' && response.message === 'Data Penghargaan Dosen berhasil disimpan') {
+                    toastr.success(message, 'Berhasil');
+                }
+                else if (formId === 'form-karya_ilmiah' && response.message === 'Data Karya Ilmiah Dosen berhasil disimpan') {
+                    toastr.success(message, 'Berhasil');
+                }
+                else if (formId === 'form-kegiatan' && response.message === 'Data Kegiatan Dosen berhasil disimpan') {
+                    toastr.success(message, 'Berhasil');
+                }
+                else if (formId === 'form-jurnal' && response.message === 'Data Jurnal Dosen berhasil disimpan') {
+                    toastr.success(message, 'Berhasil');
+                }
+                else if (formId === 'form-buku' && response.message === 'Data Buku Dosen berhasil disimpan') {
+                    toastr.success(message, 'Berhasil');
+                }
+                else if (formId === 'form-jabatan' && response.message === 'Data Jabatan Dosen berhasil disimpan') {
+                    toastr.success(message, 'Berhasil');
+                }
+                else if (formId === 'form-organisasi' && response.message === 'Data Organisasi Dosen berhasil disimpan') {
+                    toastr.success(message, 'Berhasil');
+                }
+                else if (response.message === 'Data sudah ada sebelumnya') {
                     toastr.error('Data sudah ada sebelumnya', 'Gagal');
-                } else {
+                }
+                else {
                     toastr.error('Terjadi kesalahan', 'Gagal');
                 }
             },
@@ -948,6 +998,9 @@
     });
 });
 
+function detailsButton(id) {
+    window.location.href = '/dosen/details/' + id;
+}
 
 function deleteData(url) {
     Swal.fire({

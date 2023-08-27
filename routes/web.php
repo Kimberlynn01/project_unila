@@ -69,4 +69,38 @@ Route::post('/importexcel', [EmployeeController::class, 'importexcel'])->name('i
 // Input Data Dosen
 Route::post('/dosen/profile', [DosenController::class, 'DosenInputProfile'])->name('dosen.profile');
 Route::post('/dosen/pendidikan', [DosenController::class, 'DosenInputPendidikan'])->name('dosen.pendidikan');
+Route::post('/dosen/penelitian', [DosenController::class, 'DosenInputPenelitian'])->name('dosen.penelitian');
+Route::post('/dosen/pengabdian', [DosenController::class, 'DosenInputPengabdian'])->name('dosen.pengabdian');
+Route::post('/dosen/penghargaan', [DosenController::class, 'DosenInputPenghargaan'])->name('dosen.penghargaan');
+Route::post('/dosen/karyailmiah', [DosenController::class, 'DosenInputKaryaIlmiah'])->name('dosen.karyailmiah');
+Route::post('/dosen/kegiatan', [DosenController::class, 'DosenInputKegiatan'])->name('dosen.kegiatan');
+Route::post('/dosen/jurnal', [DosenController::class, 'DosenInputJurnal'])->name('dosen.jurnal');
+Route::post('/dosen/buku', [DosenController::class, 'DosenInputBuku'])->name('dosen.buku');
+Route::post('/dosen/jabatan', [DosenController::class, 'DosenInputJabatan'])->name('dosen.jabatan');
+Route::post('/dosen/organisasi', [DosenController::class, 'DosenInputOrganisasi'])->name('dosen.organisasi');
+
+
+// Update Data Dosen
+Route::post('/dosen/post/{id}', [DosenController::class, 'DosenUpdate'])->name('dosen.update');
+Route::post('/dosen/foto/{id}', [DosenController::class, 'Update_Foto'])->name('dosen.foto');
+
+
+// Delete Data Dosen
 Route::get('/dosen/delete/{id}', [DosenController::class, 'delete'])->name('delete.dosen');
+Route::get('/dosen/details/delete/{id}', [DosenController::class, 'deleteDetails'])->name('delete.details.dosen');
+
+// Details Data Dosen
+Route::get('/dosen/details/{id}', [DosenController::class, 'showDetails'])->name('details.dosen');
+
+
+// Modal Pop out Dosen
+
+Route::get('/get-modal-content/{id}', [DosenController::class, 'Modal_Foto']);
+// Route::get('/get-modal-pendidikan', [DosenController::class, 'Modal_Pendidikan']);
+Route::get('/dosen/{id}/pendidikan', [DosenController::class, 'Modal_Pendidikan']);
+// Route::post('/dosen/details/pendidikan/', [DosenController::class, 'InputDataPendidikanDetails'])->name('input.data.details.dosen.pendidikan');
+Route::post('/dosen/details/pendidikan', [DosenController::class, 'InputDataPendidikanDetails'])->name('input.data.details.dosen.pendidikan');
+
+
+// Menambah Data Details Dosen
+// Route::post('/dosen/{id}/pendidikan', [DosenController::class, 'InputDataPendidikanDetails'])->name('input.data.details.dosen.pendidikan');

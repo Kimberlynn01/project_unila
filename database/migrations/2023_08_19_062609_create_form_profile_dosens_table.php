@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('form_profile_dosens', function (Blueprint $table) {
+        Schema::create('form_profile_dosen', function (Blueprint $table) {
             $table->id();
-            $table->string('nip_dosen');
+            $table->string('nip_dosen')->unique();
             $table->string('nama_dosen');
             $table->string('ttl_dosen');
             $table->string('id_prodi');
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('form_profile_dosens');
+        Schema::dropIfExists('form_profile_dosen');
     }
 };

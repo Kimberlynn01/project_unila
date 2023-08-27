@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class FormPenelitianDosen extends Model
+class FormJurnalDosen extends Model
 {
-    use HasFactory;
-    protected $table = 'form_penelitian_dosen';
-    protected $primaryKery = 'id';
+    protected $table = 'form_jurnal_dosen';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'judul_penelitian',
-        'jabatan',
+        'judul_jurnal',
+        'nama_jurnal',
         'tahun',
-        'sumber_dana',
+        'volume',
+        'no_registrasi',
         'kategori',
     ];
 

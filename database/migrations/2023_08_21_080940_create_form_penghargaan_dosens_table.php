@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('form_penelitian_dosen', function (Blueprint $table) {
+        Schema::create('form_penghargaan_dosen', function (Blueprint $table) {
             $table->id();
-            $table->string('judul_penelitian');
-            $table->string('jabatan');
+            $table->string('nama_penghargaan');
             $table->string('tahun');
-            $table->string('sumber_dana');
+            $table->string('institusi');
             $table->string('kategori');
             $table->foreign('id')->references('id')->on('form_profile_dosen')->onDelete('cascade');
             $table->timestamps();
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('form_penelitian_dosen');
+        Schema::dropIfExists('form_penghargaan_dosen');
     }
 };

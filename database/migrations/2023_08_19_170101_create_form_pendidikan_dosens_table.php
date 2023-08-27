@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('form_pendidikan_dosens', function (Blueprint $table) {
+        Schema::create('form_pendidikan_dosen', function (Blueprint $table) {
             $table->id();
             $table->string('universitas');
             $table->string('fakultas');
             $table->string('prodi');
             $table->string('jenjang');
             $table->string('tahun_lulus');
-            $table->foreign('id')->references('id')->on('form_profile_dosens')->onDelete('cascade');
+            // $table->foreignId('id')->constrained('form_profile_dosen')->cascadeOnDelete()->default(0);
+            $table->unsignedBigInteger('form_profile_dosen_id');
+            $table->foreign('form_profile_dosen_id')->references('id')->on('form_profile_dosen')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('form_pendidikan_dosens');
+        Schema::dropIfExists('form_pendidikan_dosen');
     }
 };

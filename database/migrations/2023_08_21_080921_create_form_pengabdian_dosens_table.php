@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('form_penelitian_dosen', function (Blueprint $table) {
+        Schema::create('form_pengabdian_dosen', function (Blueprint $table) {
             $table->id();
-            $table->string('judul_penelitian');
+            $table->string('judul_pengabdian');
             $table->string('jabatan');
             $table->string('tahun');
             $table->string('sumber_dana');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('form_penelitian_dosen');
+        Schema::dropIfExists('form_pengabdian_dosen');
     }
 };
