@@ -24,47 +24,48 @@ class DosenController extends Controller
     public function DosenShow() {
         $dosen_profile = FormProfileDosen::all();
 
-        // session(['form_profile_dosen_id' => $dosen_profile->id]);
         return view('dashboard.dosen', compact('dosen_profile'));
     }
 
 
 
     public function DosenInputProfile(Request $request) {
-    try {
+        try {
 
-        $validateData = $request->validate([
-            'nip_dosen' => 'required',
-            'nama_dosen' => 'required',
-            'ttl_dosen' => 'required',
-            'id_prodi' => 'required',
-            'email_dosen' => 'required',
-            'website_dosen' => 'required',
-            'keahlian' => 'required',
-            'judul_desertasi' => 'required',
-            'pas_foto' => 'mimes:jpeg,png,gif,jfif,jpg|max:2042',
-        ]);
+            $validateData = $request->validate([
+                'nip_dosen' => 'required',
+                'nama_dosen' => 'required',
+                'ttl_dosen' => 'required',
+                'id_prodi' => 'required',
+                'email_dosen' => 'required',
+                'website_dosen' => 'required',
+                'keahlian' => 'required',
+                'judul_desertasi' => 'required',
+                'pas_foto' => 'mimes:jpeg,png,gif,jfif,jpg|max:2042',
+            ]);
 
-        $file = $request->file('pas_foto');
+            $file = $request->file('pas_foto');
 
-        if ($file) {
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $fileType = $file->getClientOriginalExtension();
+            if ($file) {
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $fileType = $file->getClientOriginalExtension();
 
-            $file->storeAs('file-dosen', $fileName, 'public');
+                $file->storeAs('file-dosen', $fileName, 'public');
 
-            $validateData['file_name'] = $fileName;
-            $validateData['file_type'] = $fileType;
+                $validateData['file_name'] = $fileName;
+                $validateData['file_type'] = $fileType;
+            }
+
+            $dosen_profile = FormProfileDosen::create($validateData);
+            // $dosen_profile->id;
+            session(['form_profile_dosen_id' => $dosen_profile->id]);
+            session(['form_penelitian_dosen_id' => $dosen_profile->id]);
+            return response()->json(['message' => 'Data Profile Dosen berhasil disimpan', 'Data' => $dosen_profile]);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th]);
         }
+    }
 
-        $dosen_profile = FormProfileDosen::create($validateData);
-        // $dosen_profile->id;
-        session(['form_profile_dosen_id' => $dosen_profile->id]);
-        return response()->json(['message' => 'Data Profile Dosen berhasil disimpan', 'Data' => $dosen_profile]);
-    } catch (\Throwable $th) {
-        return response()->json(['message' => $th]);
-    }
-    }
 
     public function DosenInputPendidikan(Request $request) {
 
@@ -92,10 +93,6 @@ class DosenController extends Controller
     }
 
 
-
-
-
-
     public function DosenInputPenelitian(Request $request) {
         $validateData = $request->validate([
             'judul_penelitian' => 'required',
@@ -104,7 +101,9 @@ class DosenController extends Controller
             'sumber_dana' => 'required',
             'kategori' => 'required',
         ]);
+        $formProfileDosenId = session('form_penelitian_dosen_id');
 
+        $validateData['form_penelitian_dosen_id'] = $formProfileDosenId;
         FormPenelitianDosen::create($validateData);
 
         return response()->json(['message' => 'Data Penelitian Dosen berhasil disimpan']);
@@ -178,6 +177,7 @@ class DosenController extends Controller
         $dosen_profile = FormProfileDosen::findOrFail($id);
         $dosen_profile = FormProfileDosen::where('id', $id)->first();
 
+
         if (!$dosen_profile) {
             abort(404);
         }
@@ -232,14 +232,6 @@ class DosenController extends Controller
     }
 
 
-
-
-
-
-
-
-
-
     public function Update_Foto(Request $request, $id) {
         $dosen_profile = FormProfileDosen::find($id);
         if ($request->hasFile('pas_foto')) {
@@ -272,11 +264,12 @@ class DosenController extends Controller
         }
 
         $dosen_pendidikan = $dosen_profile->pendidikan_dosen; // Mengambil data melalui relasi
+        $dosen_penelitian = $dosen_profile->penelitian_dosen;
 
         $filePath =  'file-dosen/' . $dosen_profile->file_name;
         $fileUrl = asset('storage/' . $filePath);
 
-        return view('dosen.detail', compact('dosen_profile', 'dosen_pendidikan', 'fileUrl', 'filePath'));
+        return view('dosen.detail', compact('dosen_profile', 'dosen_pendidikan', 'fileUrl', 'filePath', 'dosen_penelitian'));
     }
 
 
@@ -310,5 +303,53 @@ class DosenController extends Controller
         $dosen_pendidikan->delete();
         return redirect('/dosen/details/' . $dosen_profile->id)->with('message', 'Data Berhasil di Hapus');
     }
+
+
+    public function deleteDetailsPenelitian($id) {
+        $dosen_penelitian = FormPenelitianDosen::find($id);
+
+        if (!$dosen_penelitian) {
+            return redirect('/dosen/details/' . $id)->with('message_error', 'Data Dosen Not Found');
+        }
+
+        $dosen_profile = FormProfileDosen::where('id', $dosen_penelitian->form_penelitian_dosen_id)->first();
+
+        if (!$dosen_profile) {
+            return redirect('/dosen/details/' . $id)->with('message_error', 'Data Dosen Not Found');
+        }
+
+        $dosen_penelitian->delete();
+        return redirect('/dosen/details/' . $dosen_profile->id)->with('message', 'Data Berhasil di Hapus');
+    }
+
+
+
+    public function Modal_Edit_Pendidikan(Request $request, $id) {
+        $dosen_pendidikan = FormPendidikanDosen::find($id);
+        $dosen_profile = FormProfileDosen::find($id);
+
+        return view('dosen.modal_editpendidikan', compact('dosen_pendidikan', 'dosen_profile'));
+    }
+
+    public function Modal_Edit_Penelitian(Request $request, $id) {
+        $dosen_penelitian = FormPenelitianDosen::find($id);
+        $dosen_profile = FormProfileDosen::find($id);
+
+        return view('dosen.modal_pendidikan');
+    }
+
+    public function DosenDetailsEdits(Request $request, $id) {
+        try {
+            $dosen_pendidikan = FormPendidikanDosen::find($id);
+
+            $dosen_pendidikan->update($request->all());
+
+            return redirect()->back()->with('message', 'Berhasil mengedit Data');
+
+        } catch (QueryException $th) {
+            return response()->json(['message' => $th]);
+        }
+    }
+
 
 }

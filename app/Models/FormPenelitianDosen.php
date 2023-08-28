@@ -18,9 +18,10 @@ class FormPenelitianDosen extends Model
         'tahun',
         'sumber_dana',
         'kategori',
+        'form_penelitian_dosen_id',
     ];
 
     public function profile_dosen() : BelongsToMany {
-        return $this->BelongsToMany(FormProfileDosen::class, 'id');
+        return $this->BelongsToMany(FormProfileDosen::class);
     }
 }

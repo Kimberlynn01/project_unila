@@ -26,14 +26,14 @@ class FormProfileDosen extends Model
         'file_type',
     ];
 
-    public function pendidikan_dosen()
+    public function pendidikan_dosen() : HasMany
     {
         return $this->hasMany(FormPendidikanDosen::class, 'form_profile_dosen_id');
     }
 
-    // public function penelitian_dosen() : HasOne {
-    //     return $this->hasOne(FormPenelitianDosen::class, 'id', 'id');
-    // }
+    public function penelitian_dosen() : HasMany {
+        return $this->hasMany(FormPenelitianDosen::class, 'form_penelitian_dosen_id');
+    }
 
     // public function pengabdian_dosen() : HasOne {
     //     return $this->hasOne(FormPengabdianDosen::class, 'id', 'id');

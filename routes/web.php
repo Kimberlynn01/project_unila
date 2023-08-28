@@ -88,6 +88,7 @@ Route::post('/dosen/foto/{id}', [DosenController::class, 'Update_Foto'])->name('
 // Delete Data Dosen
 Route::get('/dosen/delete/{id}', [DosenController::class, 'delete'])->name('delete.dosen');
 Route::get('/dosen/details/delete/{id}', [DosenController::class, 'deleteDetails'])->name('delete.details.dosen');
+Route::get('/dosen/details/delete/penelitian/{id}', [DosenController::class, 'deleteDetailsPenelitian'])->name('delete.details.dosen.penelitian');
 
 // Details Data Dosen
 Route::get('/dosen/details/{id}', [DosenController::class, 'showDetails'])->name('details.dosen');
@@ -102,5 +103,6 @@ Route::get('/dosen/{id}/pendidikan', [DosenController::class, 'Modal_Pendidikan'
 Route::post('/dosen/details/pendidikan', [DosenController::class, 'InputDataPendidikanDetails'])->name('input.data.details.dosen.pendidikan');
 
 
-// Menambah Data Details Dosen
-// Route::post('/dosen/{id}/pendidikan', [DosenController::class, 'InputDataPendidikanDetails'])->name('input.data.details.dosen.pendidikan');
+// MengEdit Details Dosen
+Route::get('/dosen/edit/{id}/pendidikan', [DosenController::class, 'Modal_Edit_Pendidikan']);
+ROute::post('/details/pendidikan/edit/{id}', [DosenController::class, 'DosenDetailsEdits'])->name('edit.detailsdosen');

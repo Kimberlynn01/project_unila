@@ -279,7 +279,7 @@
                                     <td>{{ $row->tahun_lulus }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary  open-btn-modal-pendidikan-edit" data-id="{{ $row->id }}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </button>
                                             @if ($row)
@@ -317,6 +317,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($dosen_penelitian as $penelitian)
+                                        <tr>
+                                            <th>{{ $no++ }}</th>
+                                            <td>{{ $penelitian->judul_penelitian }}</td>
+                                            <td>{{ $penelitian->jabatan }}</td>
+                                            <td>{{ $penelitian->tahun }}</td>
+                                            <td>{{ $penelitian->sumber_dana }}</td>
+                                            <td>{{ $penelitian->kategori }}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="submit" class="btn btn-primary  open-btn-modal-pendidikan-edit" data-id="{{ $penelitian->id }}">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </button>
+                                                    @if ($penelitian)
+                                                        <button type="submit" class="btn btn-danger" onclick="DeleteDetails('{{ route('delete.details.dosen.penelitian', ['id' => $penelitian->id]) }}')">
+                                                            <i class="bi bi-trash3-fill"></i>
+                                                        </button>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -641,9 +666,9 @@
 		});
 	}
 
-    var table;
+    var table = {};
     $(document).ready(function() {
-        table = $('#table-pendidikan').DataTable({
+        table.formPendidikan = $('#table-pendidikan').DataTable({
             lengthMenu: [
                 [10, 50, 100, -1],
                 [10, 50, 100, 'Semua'],
@@ -664,7 +689,183 @@
                     'previous': '&larr;'
                 }
             },
-        })
+        });
+        table.formPenelitian = $('#table-penelitian').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data Penelitian",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        });
+        table.formPengabdian = $('#table-pengabdian').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data Penelitian",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        });
+        table.formPenghargaan = $('#table-penghargaan').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data Penelitian",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        });
+        table.formKaryaIlmiah = $('#table-karya_ilmiah').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data Penelitian",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        });
+        table.formkegiatan = $('#table-kegiatan').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data Penelitian",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        });
+        table.formJurnal = $('#table-jurnal').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data Penelitian",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        });
+        table.formBuku = $('#table-buku').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data Penelitian",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        });
+        table.formOrganisasi = $('#table-organisasi').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data Penelitian",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        });
     });
 
 
@@ -702,6 +903,19 @@
     $('.open-btn-modal-pendidikan').click(function() {
     var id = $(this).data('id'); // Get the id from the button's data-id attribute
     var url = '/dosen/' + id + '/pendidikan'; // Build the URL with the id parameter
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+    });
+});
+
+$('.open-btn-modal-pendidikan-edit').click(function() {
+    var id = $(this).data('id');
+    var url = '/dosen/edit/' + id + '/pendidikan';
     $.ajax({
         url: url,
         type: 'GET',
