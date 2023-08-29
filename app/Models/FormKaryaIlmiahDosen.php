@@ -17,6 +17,7 @@ class FormKaryaIlmiahDosen extends Model
         'tahun',
         'jenis',
         'kategori',
+        'form_karya_ilmiah_dosen_id'
 
     ];
 

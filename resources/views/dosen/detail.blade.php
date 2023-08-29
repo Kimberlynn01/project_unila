@@ -301,7 +301,7 @@
                     <!-- Penelitian Tab Start Here -->
                     <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                         <div class="d-flex justify-content-end">
-                            <button type="button" id="btn-tambah_penelitian" class="btn btn-success mb-3 ">Tambah Data</button>
+                            <button type="button" id="btn-tambah_penelitian" class="open-btn-modal-penelitian btn btn-success mb-3 " data-id="{{ $dosen_profile->id }}">Tambah Data</button>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="table-penelitian" style="width: 100%;">
@@ -330,7 +330,7 @@
                                             <td>{{ $penelitian->kategori }}</td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <button type="submit" class="btn btn-primary  open-btn-modal-pendidikan-edit" data-id="{{ $penelitian->id }}">
+                                                    <button type="submit" class="btn btn-primary  open-btn-modal-penelitian-edit" data-id="{{ $penelitian->id }}">
                                                         <i class="bi bi-pencil-square"></i>
                                                     </button>
                                                     @if ($penelitian)
@@ -351,7 +351,7 @@
                     <!-- Tab Pengabdian Start Here -->
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                         <div class="d-flex justify-content-end">
-                            <button type="button" id="btn-tambah_pengabdian" class="btn btn-success mb-3 ">Tambah Data</button>
+                            <button type="button" id="btn-tambah_pengabdian" class="btn btn-success mb-3 open-modal-pengabdian" data-id="{{ $dosen_profile->id }}" >Tambah Data</button>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="table-pengabdian" style="width: 100%;">
@@ -367,6 +367,33 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($dosen_pengabdian as $row)
+                                    <tr>
+                                        <th>{{ $no++ }}</th>
+                                        <td>{{ $row->judul_pengabdian }}</td>
+                                        <td>{{ $row->jabatan }}</td>
+                                        <td>{{ $row->tahun }}</td>
+                                        <td>{{ $row->sumber_dana }}</td>
+                                        <td>{{ $row->kategori }}</td>
+                                        <th>
+                                            <div class="btn-group">
+                                               @if ($row)
+                                                    <button type="submit" class="btn btn-primary  open-btn-modal-pengabdian-edit" data-id="{{ $row->id }}">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </button>
+                                               @endif
+                                                @if ($row)
+                                                    <button type="submit" class="btn btn-danger" onclick="DeleteDetails('{{ route('delete.details.dosen.pengabdian', ['id' => $row->id]) }}')">
+                                                        <i class="bi bi-trash3-fill"></i>
+                                                    </button>
+                                                @endif
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -391,6 +418,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($dosen_penghargaan as $row)
+                                    <tr>
+                                        <th>{{ $no++ }}</th>
+                                        <td>{{ $row->nama_penghargaan }}</td>
+                                        <td>{{ $row->tahun }}</td>
+                                        <td>{{ $row->institusi }}</td>
+                                        <td>{{ $row->kategori }}</td>
+                                        <td></td>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -844,6 +884,28 @@
                 }
             },
         });
+        table.formJabatan = $('#table-jabatan').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data Penelitian",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        });
         table.formOrganisasi = $('#table-organisasi').DataTable({
             lengthMenu: [
                 [10, 50, 100, -1],
@@ -901,8 +963,21 @@
     });
 });
     $('.open-btn-modal-pendidikan').click(function() {
-    var id = $(this).data('id'); // Get the id from the button's data-id attribute
-    var url = '/dosen/' + id + '/pendidikan'; // Build the URL with the id parameter
+    var id = $(this).data('id');
+    var url = '/dosen/' + id + '/pendidikan';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+    });
+});
+
+$('.open-btn-modal-penelitian').click(function() {
+    var id = $(this).data('id');
+    var url = '/dosen/' + id + '/penelitian';
     $.ajax({
         url: url,
         type: 'GET',
@@ -926,8 +1001,45 @@ $('.open-btn-modal-pendidikan-edit').click(function() {
     });
 });
 
+$('.open-btn-modal-penelitian-edit').click(function() {
+    var id = $(this).data('id');
+    var url = '/dosen/edit/' + id + '/penelitian';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+    });
+});
 
 
+$('.open-modal-pengabdian').click(function() {
+    var id = $(this).data('id');
+    var url = '/dosen/' + id + '/pengabdian';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+    });
+});
+
+$('.open-btn-modal-pengabdian-edit').click(function() {
+    var id = $(this).data('id');
+    var url = '/dosen/edit/' + id + '/pengabdian';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+    });
+});
 
 
 function DeleteDetails(url) {

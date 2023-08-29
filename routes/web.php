@@ -89,20 +89,26 @@ Route::post('/dosen/foto/{id}', [DosenController::class, 'Update_Foto'])->name('
 Route::get('/dosen/delete/{id}', [DosenController::class, 'delete'])->name('delete.dosen');
 Route::get('/dosen/details/delete/{id}', [DosenController::class, 'deleteDetails'])->name('delete.details.dosen');
 Route::get('/dosen/details/delete/penelitian/{id}', [DosenController::class, 'deleteDetailsPenelitian'])->name('delete.details.dosen.penelitian');
+Route::get('/dosen/details/delete/pengabdian/{id}', [DosenController::class, 'deleteDetailsPengabdian'])->name('delete.details.dosen.pengabdian');
 
 // Details Data Dosen
 Route::get('/dosen/details/{id}', [DosenController::class, 'showDetails'])->name('details.dosen');
 
 
 // Modal Pop out Dosen
-
 Route::get('/get-modal-content/{id}', [DosenController::class, 'Modal_Foto']);
-// Route::get('/get-modal-pendidikan', [DosenController::class, 'Modal_Pendidikan']);
 Route::get('/dosen/{id}/pendidikan', [DosenController::class, 'Modal_Pendidikan']);
-// Route::post('/dosen/details/pendidikan/', [DosenController::class, 'InputDataPendidikanDetails'])->name('input.data.details.dosen.pendidikan');
+Route::get('/dosen/{id}/penelitian', [DosenController::class, 'Modal_Penelitian']);
+Route::get('/dosen/{id}/pengabdian', [DosenController::class, 'Modal_Pengabdian']);
 Route::post('/dosen/details/pendidikan', [DosenController::class, 'InputDataPendidikanDetails'])->name('input.data.details.dosen.pendidikan');
+Route::post('/dosen/details/penelitian', [DosenController::class, 'InputDataPenelitianDetails'])->name('input.data.details.dosen.penelitian');
+Route::post('/dosen/details/pengabdian', [DosenController::class, 'InputDataPengabdianDetails'])->name('input.data.details.dosen.pengabdian');
 
 
 // MengEdit Details Dosen
 Route::get('/dosen/edit/{id}/pendidikan', [DosenController::class, 'Modal_Edit_Pendidikan']);
-ROute::post('/details/pendidikan/edit/{id}', [DosenController::class, 'DosenDetailsEdits'])->name('edit.detailsdosen');
+Route::get('/dosen/edit/{id}/penelitian', [DosenController::class, 'Modal_Edit_Penelitian']);
+Route::get('/dosen/edit/{id}/pengabdian', [DosenController::class, 'Modal_Edit_Pengabdian']);
+Route::post('/details/pendidikan/edit/{id}', [DosenController::class, 'DosenDetailsEdits'])->name('edit.detailsdosen');
+Route::post('/details/penelitian/edir/{id}', [DosenController::class,  'DosenDetailsEditsPenelitian'])->name('edit.details.penelitian');
+Route::post('/details/penelitian/edit/{id}', [DosenController::class,  'DosenDetailsEditsPengabdian'])->name('edit.edit.pengabdian');

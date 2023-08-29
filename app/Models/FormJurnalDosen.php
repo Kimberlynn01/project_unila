@@ -18,6 +18,7 @@ class FormJurnalDosen extends Model
         'volume',
         'no_registrasi',
         'kategori',
+        'form_jurnal_dosen_id'
     ];
 
     public function profile_dosen() : BelongsToMany {

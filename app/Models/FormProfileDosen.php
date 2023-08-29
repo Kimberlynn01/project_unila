@@ -35,33 +35,37 @@ class FormProfileDosen extends Model
         return $this->hasMany(FormPenelitianDosen::class, 'form_penelitian_dosen_id');
     }
 
-    // public function pengabdian_dosen() : HasOne {
-    //     return $this->hasOne(FormPengabdianDosen::class, 'id', 'id');
-    // }
+    public function pengabdian_dosen() : HasMany {
+        return $this->hasMany(FormPengabdianDosen::class, 'form_pengabdian_dosen_id');
+    }
 
-    // public function karya_ilmiah_dosen() : HasOne {
-    //     return $this->hasOne(FormKaryaIlmiahDosen::class, 'id', 'id');
-    // }
+    public function penghargaan_dosen() : HasMany {
+        return $this->hasMany(FormPenghargaanDosen::class, 'form_penghargaan_dosen_id');
+    }
 
-    // public function kegiatan_dosen() : HasOne {
-    //     return $this->hasOne(FormKegiatanDosen::class, 'id', 'id');
-    // }
+    public function karya_ilmiah_dosen() : HasMany {
+        return $this->hasMany(FormKaryaIlmiahDosen::class, 'form_karya_ilmiah_dosen_id');
+    }
 
-    // public function jurnal_dosen() : HasOne {
-    //     return $this->hasOne(FormJurnalDosen::class, 'id', 'id');
-    // }
+    public function kegiatan_dosen() : HasMany {
+        return $this->hasMany(FormKegiatanDosen::class, 'form_kegiatan_dosen_id');
+    }
 
-    // public function buku_dosen() : HasOne {
-    //     return $this->hasOne(FormBukuDosen::class, 'id', 'id');
-    // }
+    public function jurnal_dosen() : HasMany {
+        return $this->hasMany(FormJurnalDosen::class, 'form_jurnal_dosen_id');
+    }
 
-    // public function jabatan_dosen() : HasOne {
-    //     return $this->hasOne(FormJabatanDosen::class, 'id', 'id');
-    // }
+    public function buku_dosen() : HasMany {
+        return $this->hasMany(FormBukuDosen::class, 'form_buku_dosen_id');
+    }
 
-    // public function organisasi_dosen() : HasOne {
-    //     return $this->hasOne(FormOrganisasiDosen::class, 'id', 'id');
-    // }
+    public function jabatan_dosen() : HasMany {
+        return $this->hasMany(FormJabatanDosen::class, 'form_jabatan_dosen_id');
+    }
+
+    public function organisasi_dosen() : HasMany {
+        return $this->hasMany(FormOrganisasiDosen::class, 'form_organisasi_dosen');
+    }
 
 
 

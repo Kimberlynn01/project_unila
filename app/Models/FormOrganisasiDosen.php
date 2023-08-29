@@ -11,9 +11,10 @@ class FormOrganisasiDosen extends Model
 {
     protected $table = 'form_organisasi_dosen';
     protected $fillable = [
-    'organisasi',
-    'institusi',
-    'tahun',
+        'organisasi',
+        'institusi',
+        'tahun',
+        'form_organisasi_dosen'
     ];
 
     public function profile_dosen() : BelongsToMany {

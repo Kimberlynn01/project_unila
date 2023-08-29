@@ -17,6 +17,7 @@ class FormBukuDosen extends Model
         'isbn',
         'penerbit',
         'kategori',
+        'form_buku_dosen_id'
     ];
 
     public function profile_dosen() : BelongsToMany {
