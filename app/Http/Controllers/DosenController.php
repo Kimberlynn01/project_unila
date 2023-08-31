@@ -13,10 +13,12 @@ use App\Models\FormPenelitianDosen;
 use App\Models\FormPengabdianDosen;
 use App\Models\FormPenghargaanDosen;
 use App\Models\FormProfileDosen;
+use App\Models\User;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class DosenController extends Controller
@@ -42,6 +44,8 @@ class DosenController extends Controller
                 'keahlian' => 'required',
                 'judul_desertasi' => 'required',
                 'pas_foto' => 'mimes:jpeg,png,gif,jfif,jpg|max:2042',
+            ], [
+
             ]);
 
             $file = $request->file('pas_foto');
@@ -58,16 +62,16 @@ class DosenController extends Controller
 
             $dosen_profile = FormProfileDosen::create($validateData);
             // $dosen_profile->id;
-            session(['form_profile_dosen_id' => $dosen_profile->id]);
-            session(['form_penelitian_dosen_id' => $dosen_profile->id]);
-            session(['form_pengabdian_dosen_id' => $dosen_profile->id]);
-            session(['form_penghargaan_dosen_id' => $dosen_profile->id]);
-            session(['form_karya_ilmiah_dosen_id' => $dosen_profile->id]);
-            session(['form_kegiatan_dosen_id' => $dosen_profile->id]);
-            session(['form_jurnal_dosen_id' => $dosen_profile->id]);
-            session(['form_buku_dosen_id' => $dosen_profile->id]);
-            session(['form_jabatan_dosen_id' => $dosen_profile->id]);
-            session(['form_organisasi_dosen' => $dosen_profile->id]);
+                session(['form_profile_dosen_id' => $dosen_profile->id]);
+                session(['form_penelitian_dosen_id' => $dosen_profile->id]);
+                session(['form_pengabdian_dosen_id' => $dosen_profile->id]);
+                session(['form_penghargaan_dosen_id' => $dosen_profile->id]);
+                session(['form_karya_ilmiah_dosen_id' => $dosen_profile->id]);
+                session(['form_kegiatan_dosen_id' => $dosen_profile->id]);
+                session(['form_jurnal_dosen_id' => $dosen_profile->id]);
+                session(['form_buku_dosen_id' => $dosen_profile->id]);
+                session(['form_jabatan_dosen_id' => $dosen_profile->id]);
+                session(['form_organisasi_dosen_id' => $dosen_profile->id]);
 
 
 
@@ -322,7 +326,7 @@ class DosenController extends Controller
             abort(404);
         }
 
-        $dosen_pendidikan = $dosen_profile->pendidikan_dosen; // Mengambil data melalui relasi
+        $dosen_pendidikan = $dosen_profile->pendidikan_dosen;
         $dosen_penelitian = $dosen_profile->penelitian_dosen;
         $dosen_pengabdian = $dosen_profile->pengabdian_dosen;
         $dosen_penghargaan = $dosen_profile->penghargaan_dosen;
@@ -486,6 +490,24 @@ class DosenController extends Controller
             return response()->json(['message' => $th]);
         }
     }
+
+
+
+    // create user
+
+
+    // public function CreateUser(Request $request) {
+
+    //     $dosen_profile = DB::table('form_profile_dosen')->select('id', 'nip_dosen')->get();
+    //     $validateData = $request->validate([
+    //         'username' => 'required',
+    //         'email' => 'required',
+    //         'password' => 'required',
+    //     ]);
+
+    //     $user = new User();
+    //     $user->name = $dosen_profile['nip_dosen'];
+    // }
 
 
 }

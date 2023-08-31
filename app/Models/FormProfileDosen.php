@@ -64,9 +64,12 @@ class FormProfileDosen extends Model
     }
 
     public function organisasi_dosen() : HasMany {
-        return $this->hasMany(FormOrganisasiDosen::class, 'form_organisasi_dosen');
+        return $this->hasMany(FormOrganisasiDosen::class, 'form_organisasi_dosen_id');
     }
 
-
+    // public function users() : HasOne
+    // {
+    //     return $this->hasOne(User::class, 'users_id');
+    // }
 
 }

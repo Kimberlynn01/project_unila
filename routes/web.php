@@ -18,13 +18,16 @@ use App\Models\MInputDataModel;
 |
 */
 
-Route::get('/', function () {
-    return view('login.login');
-})->name('login');
+
 
 Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::middleware(['guest'])->group(function() {
+    Route::get('/', function () {
+        return view('login.login');
+    })->name('login');
+});
 
 
 Route::middleware(['auth'])->group(function () {
