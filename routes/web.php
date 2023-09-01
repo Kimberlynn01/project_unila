@@ -45,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
     })->name('form');
 
     Route::get('/dosen', [DosenController::class, 'DosenShow'])->name('dosen');
+
+    Route::get('/dosen/details/{id}', [DosenController::class, 'showDetails'])->name('details.dosen');
+
 });
 
 
@@ -95,7 +98,6 @@ Route::get('/dosen/details/delete/penelitian/{id}', [DosenController::class, 'de
 Route::get('/dosen/details/delete/pengabdian/{id}', [DosenController::class, 'deleteDetailsPengabdian'])->name('delete.details.dosen.pengabdian');
 
 // Details Data Dosen
-Route::get('/dosen/details/{id}', [DosenController::class, 'showDetails'])->name('details.dosen');
 
 
 // Modal Pop out Dosen
@@ -115,3 +117,12 @@ Route::get('/dosen/edit/{id}/pengabdian', [DosenController::class, 'Modal_Edit_P
 Route::post('/details/pendidikan/edit/{id}', [DosenController::class, 'DosenDetailsEdits'])->name('edit.detailsdosen');
 Route::post('/details/penelitian/edir/{id}', [DosenController::class,  'DosenDetailsEditsPenelitian'])->name('edit.details.penelitian');
 Route::post('/details/penelitian/edit/{id}', [DosenController::class,  'DosenDetailsEditsPengabdian'])->name('edit.edit.pengabdian');
+
+
+// Edit Password Dosen
+Route::get('/edit-password/{id}',[DosenController::class, 'FormEditPassword']);
+Route::post('/edit-password/{id}',[DosenController::class, 'EditPassword'])->name('dosen.editpassword');
+
+
+// Reset Password
+Route::post('/reset-password/{id}', [DosenController::class, 'resetPassword'])->name('reset.password.dosen')->withoutMiddleware(['csrf']);

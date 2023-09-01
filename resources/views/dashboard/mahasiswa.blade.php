@@ -76,6 +76,7 @@
                         <i class="bi bi-chevron-down d-none d-xl-inline-block text-dark"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" onclick="ChangePassword()"><i class="bi bi-envelope mr-1"></i>  Change's Password</a>
                         <a class="dropdown-item text-danger" onclick="logout()"><i class="bi bi-power font-size-16 align-middle mr-1 text-danger"></i> <span key="t-logout">Logout</span></a>
                     </div>
                 </div>

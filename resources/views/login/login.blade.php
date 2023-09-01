@@ -55,7 +55,7 @@
                             {{ csrf_field() }}
                             <div class="form-group">
                               <label for="username">Username</label>
-                              <input type="text" class="form-control" required autofocus id="username" name="username" placeholder="Enter username">
+                              <input type="text" class="form-control" required autofocus id="username" name="username" value="{{ old('username') }}" placeholder="Enter username">
                             </div>
                             <div class="form-group">
                                 <label for="userpassword">Password</label>

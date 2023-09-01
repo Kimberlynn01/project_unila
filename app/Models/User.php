@@ -22,7 +22,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'users_id',
+        'user_id',
     ];
 
     /**
@@ -47,6 +47,6 @@ class User extends Authenticatable
 
     public function profile_dosen() : BelongsTo
     {
-        return $this->belongsTo(FormProfileDosen::class);
+        return $this->belongsTo(FormProfileDosen::class, 'user_id');
     }
 }

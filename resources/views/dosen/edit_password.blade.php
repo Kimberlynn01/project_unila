@@ -4,15 +4,13 @@
 
 <head>
     <meta charset="utf-8" />
-    <base href="https://egov.phicos.co.id/lampung/unila/">
-    <title>Alumni | Unila</title>
+    <title>Dosen | Unila</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name='description' content='Unila' />
     <meta name='author' content='unila' />
     <meta name='keywords' content='Unila'>
     <link rel="apple-touch-icon" href="https://egov.phicos.co.id/lampung/unila/assets/img/logo_unila.png">
     <link rel="shortcut icon" type="image/x-icon/png" href="https://egov.phicos.co.id/lampung/unila/assets/img/logo_unila.png">
-    {{-- <base href="https://egov.phicos.co.id/lampung/unila/"> --}}
     <link rel="stylesheet" href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/twitter-bootstrap-wizard/prettify.css">
     <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
@@ -25,8 +23,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-
-
     <!-- Custom Css -->
     <link rel="stylesheet" href="https://egov.phicos.co.id/lampung/unila/assets/css/style.css">
     <style type="text/css">
@@ -36,20 +32,20 @@
             top: 8px;
         }
 
-        .btn_template {
-            height: 40px;
-            font-size: 13px;
-            color: white;
-            padding: 20px auto;
-            width: 40%;
-        }
-
         @media screen and (max-width: 600px) {
             .toolbar {
                 position: unset;
                 text-align: center;
             }
         }
+
+        #toastr-notifications {
+            position: fixed;
+            top: 20px; /* Sesuaikan posisi notifikasi */
+            right: 20px; /* Sesuaikan posisi notifikasi */
+            z-index: 99999; /* Nilai z-index yang tinggi */
+        }
+
     </style>
 </head>
 
@@ -58,9 +54,7 @@
         <header id="page-topbar" class="shadow">
             <div class="navbar-header">
                 <button class="btn btn-primary shadow fs-14" id="vertical-menu-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                      </svg>
+                    <i class="fas fa-bars"></i>
                 </button>
                 <div class="d-flex">
                     <div class="dropdown d-inline-block d-lg-none ml-2">
@@ -84,13 +78,12 @@
                 <div class="dropdown d-inline-block h-100">
                     <button type="button" class="btn header-item waves-effect h-100" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="rounded-circle header-profile-user" src="https://egov.phicos.co.id/lampung/unila/assets/img/profil.png" alt="Header Avatar">
-
-                        <span class="d-none d-xl-inline-block ml-1  font-weight-bold text-dark" key="t-henry">{{ Auth::user()->username }}</span>
-                        <i class="bi bi-chevron-down d-none d-xl-inline-block text-dark"></i>
+                        <span class="d-none d-xl-inline-block ml-1 font-weight-bold text-dark" key="t-henry">{{ Auth::user()->username }}</span>
+                        <i class="mdi mdi-chevron-down d-none d-xl-inline-block text-dark"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item"><i class="bi bi-envelope mr-1"></i>  Change's Password</a>
-                        <a class="dropdown-item text-danger" onclick="logout()"><i class="bi bi-power font-size-16 align-middle mr-1 text-danger"></i> <span key="t-logout">Logout</span></a>
+                        <a class="dropdown-item" onclick="edit_password({{ Auth::user()->id }})"><i class="bi bi-envelope mr-1"></i>  Change's Password</a>
+                        <a class="dropdown-item text-danger" onclick="logout()"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> <span key="t-logout">Logout</span></a>
                     </div>
                 </div>
             </div>
@@ -147,122 +140,42 @@
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid"><style type="text/css">
-   .inline{
-      display: inline-block;
-   }
-   .vtop{
-      vertical-align: top;
-   }
-   .line-through{
-      text-decoration: line-through;
-   }
+    .inline {
+        display: inline-block;
+    }
+
+    .vtop {
+        vertical-align: top;
+    }
+
+    .line-through {
+        text-decoration: line-through;
+    }
 </style>
-@if(session('warning_database'))
-    <div class="alert alert-danger">
-        {{ session('warning_database') }}
-    </div>
-@endif
-@if (session('message_success'))
+
+@if (session('success'))
 <div class="alert alert-success">
-    {{ session('message_success') }}
+    {{ session('success') }}
 </div>
+
 @endif
-<div class="row">
-   <div class="col-12">
-      <div class="card">
-         <div class="card-header py-3">
-            <h4 class="card-title mb-0 text-dark">Data Alumni</h4>
-            <div class="toolbar">
-               <button type="button" data-toggle="modal" data-target="#modal-popout" onclick="do_import()" class="btn btn-primary "><i class="bi bi-plus-lg"></i> Import Data</button>
-            </div>
-         </div>
-         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped" id="myTable" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                    <thead style="background-color: #F1F1F1;">
-                      <tr>
-                        <th class="text-center">No</th>
-                        <th>Nama</th>
-                        <th>NIK</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Progam Studi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $id = 1;
-                        @endphp
-                        @foreach ($data as $row)
-                        <tr>
-                            <th class="text-center">{{ $id++ }}</th>
-                            <td>{{ $row->nama }}</td>
-                            <td>{{ $row->nik }}</td>
-                            <td>{{ $row->jenis_kelamin }}</td>
-                            <td>{{ $row->progam_studi }}</td>
-                          </tr>
-                        @endforeach
-                    </tbody>
-                  </table>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-
-<div class="modal fade " id="modal-popout" role="dialog">
-   <div class="modal-dialog  modal-dialog-popout">
-        <div class="modal-content ">
-            <div id="content_modal">
-
-                    <div class="modal-header border bg-primary">
-                        <div class="modal-title text-light">
-                            <h5>Form Input Alumni</h5>
-                        </div>
-                        <button type="button" class="btn-close" style="bg-transparent"  data-dismiss="modal" aria-label="Close">X</button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('importexcel') }}" method="post" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <p class="text-secondary-emphasis fw-medium">Template<label class="text-danger">*</label></p>
-                                <a href="https://www.mediafire.com/file/1kwtfqflcvin4j3/Buku+3.xlsx/file" class=" btn btn-primary border border-0 rounded-3">Download Template Excel</a>
-                            </div>
-                            <div class="form-group">
-                                <label for="file">Upload File Import</label>
-                                <div class="card-body border p-2">
-                                    <input type="file" name="file" id="file" required>
-                                </div>
-                                <label class="text-danger" style="font-size: 13px">*Max 5MB (xlsx)</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="periode">Pilih Periode kelulusan</label>
-                                <select class="form-select" name="periode" id="periode" aria-label="Default select example">
-                                    <option selected disabled>Pilih Periode kelulusan</option>
-                                    <option value="1">Periode 1</option>
-                                    <option value="2">Periode 2</option>
-                                    <option value="3">Periode 3</option>
-                                    <option value="4">Periode 4</option>
-                                    <option value="5">Periode 5</option>
-                                    <option value="6">Periode 6</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="tahun_kelulusan">Tahun Kelulusan</label>
-                                <input class="w-100 p-2 rounded-3" type="text" name="tahun_kelulusan" id="tahun_kelulusan" placeholder="Masukkan Tahun Kelulusan">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Import</button>
-                            </div>
-                        </form>
-                    </div>
-
-
-
-            </div>
+<div class="d-flex justify-content-center align-items-center">
+    <form action="{{ route('dosen.editpassword', $user->id) }}" method="post" class="bg-white w-75 shadow-sm rounded-5" style="border-radius: 10px;">
+        @csrf
+    <div class="modal-header">
+        <div class="modal-title">
+            <h2>Form Edit Password</h2>
         </div>
-      </div>
     </div>
+    <div class="modal-body">
+        <label for="password">Password</label>
+        <br>
+        <input type="text" class="w-50 " style="border: solid 1px; color: rgba(60, 60, 60, 0.704); border-radius: 5px; height: 30px" name="password" placeholder="Password">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+    </form>
 </div>
 <footer class="footer">
 	<div class="container-fluid">
@@ -304,7 +217,6 @@
 <script src="https://codeseven.github.io/toastr/toastr.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery.repeater@1.2.1/jquery.repeater.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
 	// Navbar sticky onscroll
 	const topbar = document.getElementById('page-topbar');
@@ -321,6 +233,23 @@
 	});
 </script>
 <script type="text/javascript">
+	toastr.options = {
+		"closeButton": true,
+		"debug": false,
+		"progressBar": true,
+		"preventDuplicates": false,
+		"positionClass": "toast-top-right",
+		"onclick": null,
+		"showDuration": "400",
+		"hideDuration": "1000",
+		"timeOut": "2500",
+		"extendedTimeOut": "1000",
+		"showEasing": "swing",
+		"hideEasing": "linear",
+		"showMethod": "fadeIn",
+		"hideMethod": "fadeOut"
+	}
+
 	function logout() {
 		Swal.fire({
 			title: "Keluar dari Sistem?",
@@ -338,49 +267,43 @@
 			}
 		});
 	}
-</script>
-<script>
-    toastr.options = {
-            "positionClass": "toast-top-right",
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-center",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
+
+    var table;
     $(document).ready(function() {
-		$('#myTable').DataTable({
-			language: {
-				search: '<span>Cari:</span> _INPUT_',
-				searchPlaceholder: 'Masukan pencarian...',
-				infoEmpty: "Menampilkan 0 data",
-				zeroRecords: "Tidak Ada Data",
-				info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-				infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
-				lengthMenu: 'Tampilkan: _MENU_',
-				paginate: {
-					'first': 'First',
-					'last': 'Last',
-					'next': '&rarr;',
-					'previous': '&larr;'
-				}
-			}
-		});
-	});
+        table = $('#table-dosen').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data Dosen",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        })
+    });
 
+
+
+
+
+
+ function edit_password(id) {
+    window.location.href = '/edit-password/' + id;
+ }
 
 </script>
-
 
 </body>
 

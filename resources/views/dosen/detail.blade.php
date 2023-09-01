@@ -75,7 +75,7 @@
                 <div class="dropdown d-inline-block h-100">
                     <button type="button" class="btn header-item waves-effect h-100" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="rounded-circle header-profile-user" src="https://egov.phicos.co.id/lampung/unila/assets/img/profil.png" alt="Header Avatar">
-                        <span class="d-none d-xl-inline-block ml-1 text-uppercase font-weight-bold text-dark" key="t-henry">Admin</span>
+                        <span class="d-none d-xl-inline-block ml-1 font-weight-bold text-dark" key="t-henry">{{ Auth::user()->username }}</span>
                         <i class="mdi mdi-chevron-down d-none d-xl-inline-block text-dark"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -186,7 +186,7 @@
                                     {{ $dosen_profile->id_prodi }}
                                 @endif
                                 </div>
-                                <div hidden class="col-md-8 dosen_editor"><input type="prodi" class="form-control" name="prodi" id="prodi" value="@if($dosen_profile->pendidikan_dosen){{$dosen_profile->id_prodi}}@endif"></div>
+                                <div hidden class="col-md-8 dosen_editor"><input type="prodi" class="form-control" name="id_prodi" id="prodi" value="@if($dosen_profile->pendidikan_dosen){{$dosen_profile->id_prodi}}@endif"></div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-4"><strong>Email</strong></div>

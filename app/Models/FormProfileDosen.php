@@ -67,9 +67,9 @@ class FormProfileDosen extends Model
         return $this->hasMany(FormOrganisasiDosen::class, 'form_organisasi_dosen_id');
     }
 
-    // public function users() : HasOne
-    // {
-    //     return $this->hasOne(User::class, 'users_id');
-    // }
+    public function users() : HasOne
+    {
+        return $this->hasOne(User::class, 'user_id');
+    }
 
 }

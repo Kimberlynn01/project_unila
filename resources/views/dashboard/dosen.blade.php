@@ -9,6 +9,7 @@
     <meta name='description' content='Unila' />
     <meta name='author' content='unila' />
     <meta name='keywords' content='Unila'>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="apple-touch-icon" href="https://egov.phicos.co.id/lampung/unila/assets/img/logo_unila.png">
     <link rel="shortcut icon" type="image/x-icon/png" href="https://egov.phicos.co.id/lampung/unila/assets/img/logo_unila.png">
     <link rel="stylesheet" href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/twitter-bootstrap-wizard/prettify.css">
@@ -78,10 +79,11 @@
                 <div class="dropdown d-inline-block h-100">
                     <button type="button" class="btn header-item waves-effect h-100" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="rounded-circle header-profile-user" src="https://egov.phicos.co.id/lampung/unila/assets/img/profil.png" alt="Header Avatar">
-                        <span class="d-none d-xl-inline-block ml-1 text-uppercase font-weight-bold text-dark" key="t-henry">Admin</span>
+                        <span class="d-none d-xl-inline-block ml-1 font-weight-bold text-dark" key="t-henry">{{ Auth::user()->username }}</span>
                         <i class="mdi mdi-chevron-down d-none d-xl-inline-block text-dark"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" onclick="edit_password({{ Auth::user()->id }})"><i class="bi bi-envelope mr-1"></i>  Change's Password</a>
                         <a class="dropdown-item text-danger" onclick="logout()"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> <span key="t-logout">Logout</span></a>
                     </div>
                 </div>
@@ -215,7 +217,7 @@
                                         <button class="btn btn-warning" title="Details Dosen" onclick="detailsButton({{ $row->id }})">
                                             <i class="bx bxs-detail" ></i>
                                         </button>
-                                        <button class="btn btn-success" title="Reset Password" onclick="resetPassword()">
+                                        <button class="btn btn-success" title="Reset Password" onclick="resetPassword({{ $row->users->id }})">
                                             <i class="bx bxs-key"></i>
                                         </button>
                                         <button class="btn btn-danger" title="Delete Data Dosen" onclick="deleteData('{{ route('delete.dosen', ['id' => $row->id]) }}')">
@@ -291,9 +293,17 @@
 
                     <div class="tab-content" id="myTabContent">
                         <!-- Tab Profil Dosen Start Here -->
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                @foreach ($errors as $key => $value)
+                                    <p>{{ $value }}</p>
+                                @endforeach
+                            </div>
+                        @endif
                         <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <form action="{{ route('dosen.profile') }}" method="post" id="form-profil" enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" name="user_id" value="{{ 'user_id' }}">
                                 <div class="h3 text-primary"><u>Profil Dosen</u></div>
                                 <div class="form-row mt-2">
                                     <div class="form-group col-md-6">
@@ -934,6 +944,9 @@
     });
 
 
+
+
+
     $(document).ready(function() {
     $('.submit-form').click(function(event) {
         event.preventDefault();
@@ -1002,6 +1015,39 @@ function detailsButton(id) {
     window.location.href = '/dosen/details/' + id;
 }
 
+function resetPassword(id) {
+    // Ambil token CSRF dari meta tag
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Password akan direset !",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Reset !'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'POST',
+                url: `/reset-password/` + id,
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+                success: function (response) {
+                    Swal.fire('Success Mereset Password', response.success, 'success');
+                },
+                error: function (error) {
+                    Swal.fire('Error', 'Gagal mereset password.', 'error');
+                }
+            });
+        }
+    });
+}
+
+
+
 function deleteData(url) {
     Swal.fire({
             title: 'Are you sure?',
@@ -1018,6 +1064,9 @@ function deleteData(url) {
         });
 }
 
+ function edit_password(id) {
+    window.location.href = '/edit-password/' + id;
+ }
 
 </script>
 

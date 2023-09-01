@@ -14,12 +14,17 @@ use App\Models\FormPengabdianDosen;
 use App\Models\FormPenghargaanDosen;
 use App\Models\FormProfileDosen;
 use App\Models\User;
+use DateTime;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+// use Illuminate\Support\Str;
 
 class DosenController extends Controller
 {
@@ -39,13 +44,13 @@ class DosenController extends Controller
                 'nama_dosen' => 'required',
                 'ttl_dosen' => 'required',
                 'id_prodi' => 'required',
-                'email_dosen' => 'required',
+                'email_dosen' => 'required|email',
                 'website_dosen' => 'required',
                 'keahlian' => 'required',
                 'judul_desertasi' => 'required',
                 'pas_foto' => 'mimes:jpeg,png,gif,jfif,jpg|max:2042',
             ], [
-
+                'email_dosen.required' => 'Masukan Email terlebih dahulu',
             ]);
 
             $file = $request->file('pas_foto');
@@ -60,7 +65,19 @@ class DosenController extends Controller
                 $validateData['file_type'] = $fileType;
             }
 
+            $user = User::create([
+                'username' => $request->nama_dosen,
+                'email' => $request->email_dosen,
+                'password' => bcrypt('Admin'),
+                'remember_token' => Str::random(60),
+            ]);
+
+            // $dosen_profile = FormProfileDosen::create($validateData, $user);
             $dosen_profile = FormProfileDosen::create($validateData);
+            // $dosen_profile->users()->associate($user);
+            $user->profile_dosen()->associate($dosen_profile); // Menghubungkan profil Dosen dengan User
+            $user->save();
+
             // $dosen_profile->id;
                 session(['form_profile_dosen_id' => $dosen_profile->id]);
                 session(['form_penelitian_dosen_id' => $dosen_profile->id]);
@@ -72,12 +89,13 @@ class DosenController extends Controller
                 session(['form_buku_dosen_id' => $dosen_profile->id]);
                 session(['form_jabatan_dosen_id' => $dosen_profile->id]);
                 session(['form_organisasi_dosen_id' => $dosen_profile->id]);
+                session(['user_id' => $dosen_profile->id]);
 
 
 
             return response()->json(['message' => 'Data Profile Dosen berhasil disimpan', 'Data' => $dosen_profile]);
         } catch (\Throwable $th) {
-            return response()->json(['message' => $th]);
+            return response()->json(['message' => 'Terjadi kesalahan: ' . $th->getMessage()]);
         }
     }
 
@@ -206,13 +224,18 @@ class DosenController extends Controller
         $dosen_profile = FormProfileDosen::findOrFail($id);
         $dosen_profile = FormProfileDosen::where('id', $id)->first();
 
+        $user = $dosen_profile->users;
+        // $user = User::find($id);
+
+
+
 
         if (!$dosen_profile) {
             abort(404);
         }
 
         $dosen_profile->update($request->all());
-
+        $user->update(['username' => $dosen_profile->nama_dosen]);
         return redirect()->back()->with('message', 'Berhasil Mengubah Data');
     }
 
@@ -337,8 +360,11 @@ class DosenController extends Controller
         $dosen_jabatan = $dosen_profile->jabatan_dosen;
         $dosen_organisasi = $dosen_profile->organisasi_dosen;
 
+
         $filePath =  'file-dosen/' . $dosen_profile->file_name;
         $fileUrl = asset('storage/' . $filePath);
+
+
 
         return view('dosen.detail', compact('dosen_profile', 'dosen_pendidikan', 'fileUrl', 'filePath', 'dosen_penelitian','dosen_penghargaan','dosen_pengabdian'));
     }
@@ -461,6 +487,7 @@ class DosenController extends Controller
 
             $dosen_pendidikan->update($request->all());
 
+
             return redirect()->back()->with('message', 'Berhasil mengedit Data Pendidikan');
 
         } catch (QueryException $th) {
@@ -493,21 +520,30 @@ class DosenController extends Controller
 
 
 
-    // create user
 
 
-    // public function CreateUser(Request $request) {
+    function FormEditPassword($id) {
+        $user = Auth::user();
+        $user = User::find($id);
+        $dosen_profile = FormProfileDosen::find($user->id);
+        return view('dosen.edit_password', compact('user', 'dosen_profile'));
+    }
 
-    //     $dosen_profile = DB::table('form_profile_dosen')->select('id', 'nip_dosen')->get();
-    //     $validateData = $request->validate([
-    //         'username' => 'required',
-    //         'email' => 'required',
-    //         'password' => 'required',
-    //     ]);
+    function EditPassword($id) {
+        $user = User::find($id);
+        $user->password = Hash::make(request('password'));
+        $user->save();
 
-    //     $user = new User();
-    //     $user->name = $dosen_profile['nip_dosen'];
-    // }
+        return redirect()->back()->with('success', 'Password Berhasil Diubah');
+    }
 
+    function resetPassword($id) {
+        $user = User::find($id);
+
+        $user->password = Hash::make('Admin');
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password Berhasil Direset');
+    }
 
 }

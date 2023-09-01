@@ -75,10 +75,13 @@
                 <div class="dropdown d-inline-block h-100">
                     <button type="button" class="btn header-item waves-effect h-100" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="rounded-circle header-profile-user" src="https://egov.phicos.co.id/lampung/unila/assets/img/profil.png" alt="Header Avatar">
+
                         <span class="d-none d-xl-inline-block ml-1 pe-2 font-weight-bold text-dark" key="t-henry">{{ Auth::user()->username }}</span>
+
                         <i class="bi bi-chevron-down d-none d-xl-inline-block text-dark"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item"><i class="bi bi-envelope mr-1"></i>  Change's Password</a>
                         <a class="dropdown-item text-danger" onclick="logout()" ><i class="bi bi-power user-select-auto font-size-16 align-middle mr-1 text-danger"></i> <span key="t-logout">Logout</span></a>
                     </div>
                 </div>
