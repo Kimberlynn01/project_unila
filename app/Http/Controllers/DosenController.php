@@ -224,7 +224,7 @@ class DosenController extends Controller
         $dosen_profile = FormProfileDosen::findOrFail($id);
         $dosen_profile = FormProfileDosen::where('id', $id)->first();
 
-        $user = $dosen_profile->users;
+        // $user = $dosen_profile->users;
         // $user = User::find($id);
 
 
@@ -235,7 +235,7 @@ class DosenController extends Controller
         }
 
         $dosen_profile->update($request->all());
-        $user->update(['username' => $dosen_profile->nama_dosen]);
+        // $user->update(['username' => $dosen_profile->nama_dosen]);
         return redirect()->back()->with('message', 'Berhasil Mengubah Data');
     }
 
@@ -531,10 +531,12 @@ class DosenController extends Controller
 
     function EditPassword($id) {
         $user = User::find($id);
+        $user->username = request('username');
+        $user->email = request('email');
         $user->password = Hash::make(request('password'));
         $user->save();
 
-        return redirect()->back()->with('success', 'Password Berhasil Diubah');
+        return redirect()->back()->with('success', 'Settings Berhasil Disimpan');
     }
 
     function resetPassword($id) {

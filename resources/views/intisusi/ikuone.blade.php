@@ -1,27 +1,23 @@
-
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <title>Mahasiswa | Unila</title>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>IKU 1 | Unila</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name='description' content='Unila' />
-    <meta name='author' content='unila' />
-    <meta name='keywords' content='Unila'>
+    <meta name="description" content="Unila">
+    <meta name="author" content="unila">
+    <meta name="keywords" content="Unila">
     <link rel="apple-touch-icon" href="https://egov.phicos.co.id/lampung/unila/assets/img/logo_unila.png">
     <link rel="shortcut icon" type="image/x-icon/png" href="https://egov.phicos.co.id/lampung/unila/assets/img/logo_unila.png">
+
     <link rel="stylesheet" href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/twitter-bootstrap-wizard/prettify.css">
-    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
-    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
-    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css">
+    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css">
+    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css">
+    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css">
+    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css">
+    <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="https://codeseven.github.io/toastr/toastr.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <!-- Custom Css -->
     <link rel="stylesheet" href="https://egov.phicos.co.id/lampung/unila/assets/css/style.css">
@@ -38,17 +34,21 @@
                 text-align: center;
             }
         }
+        #table_iku_one {
+            font-size: 13px;
+        }
+
     </style>
-</head>
+
+
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script><style>.cke{visibility:hidden;}</style>
 
 <body data-sidebar="dark">
     <div id="layout-wrapper">
         <header id="page-topbar" class="shadow">
             <div class="navbar-header">
                 <button class="btn btn-primary shadow fs-14" id="vertical-menu-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                      </svg>
+                    <i class="fas fa-bars"></i>
                 </button>
                 <div class="d-flex">
                     <div class="dropdown d-inline-block d-lg-none ml-2">
@@ -73,10 +73,10 @@
                     <button type="button" class="btn header-item waves-effect h-100" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="rounded-circle header-profile-user" src="https://egov.phicos.co.id/lampung/unila/assets/img/profil.png" alt="Header Avatar">
                         <span class="d-none d-xl-inline-block ml-1 text-uppercase font-weight-bold text-dark" key="t-henry">Admin</span>
-                        <i class="bi bi-chevron-down d-none d-xl-inline-block text-dark"></i>
+                        <i class="mdi mdi-chevron-down d-none d-xl-inline-block text-dark"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item text-danger" onclick="logout()"><i class="bi bi-power font-size-16 align-middle mr-1 text-danger"></i> <span key="t-logout">Logout</span></a>
+                        <a class="dropdown-item text-danger" onclick="logout()"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> <span key="t-logout">Logout</span></a>
                     </div>
                 </div>
             </div>
@@ -85,8 +85,8 @@
     <button class="btn btn-primary shadow fs-14 d-lg-none d-flex position-absolute btn-close-sidebar">
         <i class="bx bx-x"></i>
     </button>
-    <div data-simplebar class="h-100">
-        <div id="sidebar-menu">
+    <div data-simplebar="init" class="h-100"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: -20px; bottom: 0px;"><div class="simplebar-content-wrapper" style="height: 100%; padding-right: 20px; padding-bottom: 0px; overflow: hidden scroll;"><div class="simplebar-content" style="padding: 0px;">
+        <div id="sidebar-menu" class="mm-active">
             <div class="d-flex">
                 <div class="navbar-brand-box">
                     <a href="https://egov.phicos.co.id/lampung/unila/" target="_blank" class="d-flex flex-column justify-content-center align-items-center p-2 mb-2" style="background-color: white">
@@ -156,59 +156,156 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </div></div></div></div><div class="simplebar-placeholder" style="width: auto; height: 1404px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 375px; transform: translate3d(0px, 168px, 0px); display: block;"></div></div></div>
 </div>
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid"><style type="text/css">
-   .inline{
+   .inline {
       display: inline-block;
    }
-   .vtop{
+
+   .vtop {
       vertical-align: top;
    }
-   .line-through{
+
+   .line-through {
       text-decoration: line-through;
    }
 </style>
-@if (session('message_success'))
-<div class="alert alert-success">
-    {{ session('message_success') }}
-</div>
-@endif
-@if (session('message_error'))
-<div class="alert alert-danger">
-    {{ session('message_error') }}
-</div>
-@endif
 <div class="row">
+
    <div class="col-12">
+      @if (session('message_error'))
+        <div class="alert alert-danger">
+            {{ session('message_error') }}
+        </div>
+      @endif
+      @if (session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+      @endif
       <div class="card">
          <div class="card-header py-3">
-            <h4 class="card-title mb-0 text-dark">Details File Mahasiswa</h4>
+            <h4 class="card-title mb-0 text-dark">IKU 1</h4>
+
             <div class="toolbar">
-                <a onclick="showDetails({{ $mahasiswa->id }})" class="btn btn-primary">
-                    Kembali
-                </a>
+               <button type="button" data-toggle="modal" data-target="#modal-popout" class="btn btn-success "><i class="fa fa-download"></i> Import Data</button>
+               <button type="button" data-toggle="modal" onclick="_form()" class="btn btn-primary "><i class="fa fa-plus"></i> Tambah Data</button>
             </div>
          </div>
          <div class="card-body">
-            <div class="table-responsive d-flex justify-content-center">
-               {{-- <img class="rounded-circle w-50" src="{{ asset('storage/file-upload/' . $mahasiswa->file_name) }}" alt="Ijazah Sklh"> --}}
-               {{-- <img class="rounded-circle w-50" src="{{ $fileUrl }}" alt=""> --}}
-               <embed src="{{ $fileUrl }}" type="application/pdf" width="100%" height="700px">
+            <label for="klasifikasi">
+               <p color="red">Sub Klasifikasi</p>
+            </label>
+            <select class="form-control col-12" id="klasifikasi" name="klasifikasi">
+               <option value="a">Lulusan mendapatkan pekerjaan yang layak (masa tunggu &lt;6 bulan)</option>
+               <option value="b">Lulusan yang Melanjutkan Studi</option>
+               <option value="c">Lulusan Berwirausaha</option>
+            </select>
+            <br>
+            <div class="table-responsive">
+                <table class="display table table-bordered dataTable no-footer" id="table_iku_one" style="border-collapse: collapse; border-spacing: 0px; width: 0%;" >
+                  <thead style="background-color: #F1F1F1;">
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>NPM</th>
+                        <th>Prodi</th>
+                        <th>Fakultas</th>
+                        <th>No Ijazah</th>
+                        <th>Masa Tunggu</th>
+                        <th>Nama Perusahaan</th>
+                        <th>Provinsi</th>
+                        <th>Gaji</th>
+                        <th>Nama/Bidang Usaha</th>
+                        <th>Pendapatan</th>
+                        <th>Tempa</th>
+                        <th>Melanjutkan Studi Jenjang</th>
+                        <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  @php
+                  $no = 1;
+                  @endphp
+                    <tbody>
+
+                        @foreach ($ikuOne as $row)
+                        <tr data-klasifikasi="{{ $row->klasifikasi }}">
+                            <th>{{ $no++ }}</th>
+                            <td>{{ $row->nama }}</td>
+                            <td>{{ $row->npm }}</td>
+                            <td>{{ $row->prodi }}</td>
+                            <td>{{ $row->fakultas }}</td>
+                            <td>{{ $row->ijasah }}</td>
+                            <td>{{ $row->masa_tggu }}</td>
+                            <td>{{ $row->nama_pt }}</td>
+                            <td>{{ $row->provinsi }}</td>
+                            <td>{{ $row->gaji }}</td>
+                            <td>{{ $row->usaha }}</td>
+                            <td>{{ $row->pendapatan }}</td>
+                            <td>{{ $row->tempa }}</td>
+                            <td>{{ $row->jenjang }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button><i class="fa fa-edit"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+
+                    </tbody>
+               </table>
             </div>
-         </div>
+        </div>
       </div>
-   </div>
+    </div>
 </div>
+
+<form action="{{ route('iku.one.import') }}" method="post" enctype="multipart/form-data">
+    @csrf
+    <div class="modal fade" id="modal-popout" role="dialog">
+        <div class="modal-dialog modal-dialog-popout">
+           <div class="modal-content">
+              <div id="content_modal">
+                 <div class="modal-header bg-primary">
+                     <div class="modal-title">
+                         <h3 class="text-light">Import Data Mahasiswa</h3>
+                     </div>
+                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                 </div>
+                 <div class="modal-body fw-bold">
+                     <h6>Template <label for="template" style="color: red">*</label></h6>
+                     <a href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/excel/iku1.xlsx" class="text-light bg-primary" style="padding: 10px; border-radius: 10px">Download Template Excel</a>
+                     <br>
+                     <label for="input" class="mt-4">Upload File Import</label>
+                     <input type="file" id="file" accept=".xlsx" name="file" class="form-control" style="border: solid 1px rgba(114, 114, 114, 0.281);" required>
+                     <label for="input" style="color: red; font-weight: 400">*Max 5Mb (xlsx)</label>
+                     <br>
+                     <h6 class="mt-2">Sub Klasifikasi</h6>
+                     <select class="form-control col-12" id="klasifikasi" name="klasifikasi">
+                         <option value="a" selected>Lulusan mendapatkan pekerjaan yang layak (masa tunggu &lt;6 bulan)</option>
+                         <option value="b">Lulusan yang Melanjutkan Studi</option>
+                         <option value="c">Lulusan Berwirausaha</option>
+                      </select>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                     <button type="submit" class="btn btn-primary">Import</button>
+                 </div>
+             </div>
+           </div>
+        </div>
+     </div>
+</form>
 <footer class="footer">
 	<div class="container-fluid">
 		<div class="row text-custom" style="font-weight: 400;">
 			<div class="col-sm-12">
 				© <script>
 					document.write(new Date().getFullYear())
-				</script> Universitas Lampung
+				</script>2023 Universitas Lampung
 			</div>
 		</div>
 	</div>
@@ -257,7 +354,72 @@
 		$('body').removeClass('sidebar-enable');
 	});
 </script>
+
 <script type="text/javascript">
+	toastr.options = {
+		"closeButton": true,
+		"debug": false,
+		"progressBar": true,
+		"preventDuplicates": false,
+		"positionClass": "toast-top-right",
+		"onclick": null,
+		"showDuration": "400",
+		"hideDuration": "1000",
+		"timeOut": "2500",
+		"extendedTimeOut": "1000",
+		"showEasing": "swing",
+		"hideEasing": "linear",
+		"showMethod": "fadeIn",
+		"hideMethod": "fadeOut"
+	}
+	$(document).ready(function() {
+		$('.example').DataTable({
+			language: {
+				search: '<span>Cari:</span> _INPUT_',
+				searchPlaceholder: 'Masukan pencarian...',
+				infoEmpty: "Menampilkan 0 data",
+				zeroRecords: "Tidak ada data",
+				info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+				// infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+				lengthMenu: 'Tampilkan: _MENU_',
+				paginate: {
+					'first': 'First',
+					'last': 'Last',
+					'next': '&rarr;',
+					'previous': '&larr;'
+				}
+			}
+		});
+	});
+
+    var table;
+    $(document).ready(function() {
+    var table = $('#table_iku_one').DataTable({
+        // Konfigurasi DataTables
+        lengthMenu: [
+            [10, 50, 100, -1],
+            [10, 50, 100, 'All'],
+        ],
+        stateSave: true,
+        ordering: true,
+        language: {
+            search: '<span>Cari:</span> _INPUT_',
+            searchPlaceholder: 'Masukan pencarian...',
+            infoEmpty: "Menampilkan 0 data",
+            zeroRecords: "Tidak Ada Data",
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+            lengthMenu: 'Tampilkan: _MENU_',
+            paginate: {
+                'first': 'First',
+                'last': 'Last',
+                'next': '&rarr;',
+                'previous': '&larr;'
+            }
+        },
+    });
+
+    });
 
 
 
@@ -279,14 +441,9 @@
 		});
 	}
 
+</script>
 
 
-</script>
-<script>
-    function showDetails(id) {
-        window.location.href = "/mahasiswa/details/" + id;
-    }
-</script>
 
 
 
@@ -294,5 +451,4 @@
 
 
 </body>
-
 </html>

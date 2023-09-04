@@ -104,7 +104,7 @@
             </div>
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li>
-                    <a href="{{ route('home') }}" class="waves-effect">
+                    <a href="{{ route('home') }}" class="waves-effect ">
                         <i class="bi bi-display m-0"></i>
                         <span>Dashboard</span>
                     </a>
@@ -126,6 +126,34 @@
                         <i class='bi bi-person-badge-fill'></i>
                         <span>Dosen</span>
                     </a>
+                </li>
+                <li>
+                    <a href="#" class="waves-effect">
+                        <i class="bx bxs-bar-chart-square"></i>
+                        <span>Rekap Dosen</span>
+                    </a>
+                    <ul class="submenu mm-collapse">
+                        <li><a href="#">Dashboard Dosen</a></li>
+                        <li class=""><a href="back/rekap/jenjang_pendidikan" class="waves-effect">Jenjang Pendidikan</a></li>
+                        <li><a href="back/rekap/jenis_kelamin" class="waves-effect">Jenis Kelamin</a></li>
+                        <li><a href="back/rekap/Belum_strata_dua" class="waves-effect">Belum S2</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="waves-effect" aria-expanded="false">
+                        <i class="bx bxs-bar-chart-square"></i>
+                        <span>Institusi</span>
+                    </a>
+                    <ul class="submenu mm-collapse" style="height: 0px;">
+                        <li><a href="{{ route('iku.one') }}">IKU 1</a></li>
+                        <li><a href="back/institut/iku_2">IKU 2</a></li>
+                        <li><a href="back/institut/iku_3">IKU 3</a></li>
+                        <li><a href="back/institut/iku_4">IKU 4</a></li>
+                        <li><a href="back/institut/iku_5">IKU 5</a></li>
+                        <li><a href="back/institut/iku_6">IKU 6</a></li>
+                        <li><a href="back/institut/iku_7">IKU 7</a></li>
+                        <li><a href="back/institut/iku_8">IKU 8</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>

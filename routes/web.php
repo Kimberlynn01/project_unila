@@ -5,6 +5,7 @@ use App\Models\AlumniModel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\InstitusiController;
 use App\Models\MInputDataModel;
 
 /*
@@ -48,6 +49,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dosen/details/{id}', [DosenController::class, 'showDetails'])->name('details.dosen');
 
+    // Institusi
+    Route::get('/iku/one',[InstitusiController::class, 'ikuOne'])->name('iku.one');
 });
 
 
@@ -126,3 +129,8 @@ Route::post('/edit-password/{id}',[DosenController::class, 'EditPassword'])->nam
 
 // Reset Password
 Route::post('/reset-password/{id}', [DosenController::class, 'resetPassword'])->name('reset.password.dosen')->withoutMiddleware(['csrf']);
+
+
+
+// Institusi
+Route::post('/importikuone', [InstitusiController::class, 'store'])->name('iku.one.import');
