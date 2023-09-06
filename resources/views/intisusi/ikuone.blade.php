@@ -18,6 +18,7 @@
     <link href="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="https://codeseven.github.io/toastr/toastr.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <!-- Custom Css -->
     <link rel="stylesheet" href="https://egov.phicos.co.id/lampung/unila/assets/css/style.css">
@@ -200,7 +201,7 @@
                <p color="red">Sub Klasifikasi</p>
             </label>
             <select class="form-control col-12" id="klasifikasi" name="klasifikasi">
-               <option value="a">Lulusan mendapatkan pekerjaan yang layak (masa tunggu &lt;6 bulan)</option>
+               <option value="a" >Lulusan mendapatkan pekerjaan yang layak (masa tunggu &lt;6 bulan)</option>
                <option value="b">Lulusan yang Melanjutkan Studi</option>
                <option value="c">Lulusan Berwirausaha</option>
             </select>
@@ -226,13 +227,11 @@
                         <th>Aksi</th>
                     </tr>
                   </thead>
-                  @php
-                  $no = 1;
-                  @endphp
+                  <?php $no = 1; ?>
                     <tbody>
 
                         @foreach ($ikuOne as $row)
-                        <tr data-klasifikasi="{{ $row->klasifikasi }}">
+                        <tr data-klasifikasi="a">
                             <th>{{ $no++ }}</th>
                             <td>{{ $row->nama }}</td>
                             <td>{{ $row->npm }}</td>
@@ -249,12 +248,60 @@
                             <td>{{ $row->jenjang }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button><i class="fa fa-edit"></i></button>
+                                    <button class="p-2 btn btn-primary"><i class="fa fa-edit"></i></button>
+                                    <button class="p-2 btn btn-danger"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
                         @endforeach
-
+                        @foreach ($ikuOneb as $row)
+                        <tr data-klasifikasi="b">
+                            <th>{{ $no++ }}</th>
+                            <td>{{ $row->nama }}</td>
+                            <td>{{ $row->npm }}</td>
+                            <td>{{ $row->prodi }}</td>
+                            <td>{{ $row->fakultas }}</td>
+                            <td>{{ $row->ijasah }}</td>
+                            <td>{{ $row->masa_tggu }}</td>
+                            <td>{{ $row->nama_pt }}</td>
+                            <td>{{ $row->provinsi }}</td>
+                            <td>{{ $row->gaji }}</td>
+                            <td>{{ $row->usaha }}</td>
+                            <td>{{ $row->pendapatan }}</td>
+                            <td>{{ $row->tempa }}</td>
+                            <td>{{ $row->jenjang }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="p-2 btn btn-primary"><i class="fa fa-edit"></i></button>
+                                    <button class="p-2 btn btn-danger"><i class="fa fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                        @foreach ($ikuOneC as $row)
+                        <tr data-klasifikasi="c">
+                            <th>{{ $no++ }}</th>
+                            <td>{{ $row->nama }}</td>
+                            <td>{{ $row->npm }}</td>
+                            <td>{{ $row->prodi }}</td>
+                            <td>{{ $row->fakultas }}</td>
+                            <td>{{ $row->ijasah }}</td>
+                            <td>{{ $row->masa_tggu }}</td>
+                            <td>{{ $row->nama_pt }}</td>
+                            <td>{{ $row->provinsi }}</td>
+                            <td>{{ $row->gaji }}</td>
+                            <td>{{ $row->usaha }}</td>
+                            <td>{{ $row->pendapatan }}</td>
+                            <td>{{ $row->tempa }}</td>
+                            <td>{{ $row->jenjang }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="p-2 btn btn-primary"><i class="fa fa-edit"></i></button>
+                                    <button class="p-2 btn btn-danger"><i class="fa fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>
                </table>
             </div>
@@ -339,6 +386,7 @@
 <script src="https://codeseven.github.io/toastr/toastr.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery.repeater@1.2.1/jquery.repeater.min.js"></script>
+
 <script>
 	// Navbar sticky onscroll
 	const topbar = document.getElementById('page-topbar');
@@ -410,6 +458,10 @@
             info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
             infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
             lengthMenu: 'Tampilkan: _MENU_',
+            "order": [[1, 'asc']], // Kolom berapa yang diurutkan secara default (contoh: urutkan berdasarkan kolom kedua secara ascending)
+            "columnDefs": [
+                { "orderable": false, "targets": [0, 4] } // Menonaktifkan pengurutan pada kolom 1 dan 5
+            ],
             paginate: {
                 'first': 'First',
                 'last': 'Last',
@@ -421,6 +473,26 @@
 
     });
 
+    // Event listener untuk elemen select dengan ID "klasifikasi"
+    document.getElementById("klasifikasi").addEventListener("change", function() {
+        var selectElement = this; // Mengambil elemen select yang sedang digunakan
+        var selectedValue = selectElement.value; // Mengambil nilai yang dipilih
+
+        // Ganti teks yang ditampilkan sesuai dengan nilai yang dipilih
+        switch (selectedValue) {
+            case "a":
+                ""
+                break;
+            case "b":
+                selectElement.options[selectElement.selectedIndex].text = "Lulusan yang Melanjutkan Studi";
+                break;
+            case "c":
+                selectElement.options[selectElement.selectedIndex].text = "Lulusan Berwirausaha";
+                break;
+            default:
+                break;
+        }
+    });
 
 
 	function logout() {
@@ -441,12 +513,54 @@
 		});
 	}
 
+
+    // Function Kategori IKU ONE
+    document.addEventListener("DOMContentLoaded", function () {
+        const KlasifikasiSelect = document.getElementById("klasifikasi");
+        const tableRow = document.querySelectorAll("#table_iku_one tbody tr");
+
+        let nomorUrutanA = 1;
+        let nomorUrutanB = 1;
+        let nomorUrutanC = 1;
+
+        KlasifikasiSelect.addEventListener("change", function () {
+            const selectedValue = KlasifikasiSelect.value;
+
+            tableRow.forEach((row) => {
+                row.style.display = "none";
+            });
+
+
+            nomorUrutanA = 1;
+            nomorUrutanB = 1;
+            nomorUrutanC = 1;
+
+            tableRow.forEach((row) => {
+                const dataKlasifikasi = row.getAttribute("data-klasifikasi");
+
+                if (dataKlasifikasi === selectedValue) {
+                    row.style.display = "";
+
+                    switch (selectedValue) {
+                        case "a":
+                            row.querySelector("th").textContent = nomorUrutanA++;
+                            break;
+                        case "b":
+                            row.querySelector("th").textContent = nomorUrutanB++;
+                            break;
+                        case "c":
+                            row.querySelector("th").textContent = nomorUrutanC++;
+                            break;
+                    }
+                }
+            })
+        });
+
+        KlasifikasiSelect.dispatchEvent(new Event("change"));
+    });
+
+
 </script>
-
-
-
-
-
 
 
 

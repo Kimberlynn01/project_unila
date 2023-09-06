@@ -431,7 +431,7 @@
                     <!-- Tab Penghargaan Start Here -->
                     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                         <div class="d-flex justify-content-end">
-                            <button type="button" id="btn-tambah_penghargaan" class="btn btn-success mb-3 ">Tambah Data</button>
+                            <button type="button" id="btn-tambah_penghargaan" class="open-btn-modal-penghargaan btn btn-success mb-3" data-id="{{ $dosen_profile->id }}">Tambah Data</button>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="table-penghargaan" style="width: 100%;">
@@ -456,7 +456,18 @@
                                         <td>{{ $row->tahun }}</td>
                                         <td>{{ $row->institusi }}</td>
                                         <td>{{ $row->kategori }}</td>
-                                        <td></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="submit" class="btn btn-primary  open-btn-modal-penghargaan-edit" data-id="{{ $row->id }}">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                                @if ($row)
+                                                    <button type="submit" class="btn btn-danger" onclick="DeleteDetails('{{ route('delete.details.dosen.penghargaan', ['id' => $row->id]) }}')">
+                                                        <i class="bi bi-trash3-fill"></i>
+                                                    </button>
+                                                @endif
+                                            </div>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -1059,6 +1070,32 @@ $('.open-modal-pengabdian').click(function() {
 $('.open-btn-modal-pengabdian-edit').click(function() {
     var id = $(this).data('id');
     var url = '/dosen/edit/' + id + '/pengabdian';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+    });
+});
+
+$('.open-btn-modal-penghargaan').click(function() {
+    var id = $(this).data('id');
+    var url = '/dosen/' + id + '/penghargaan';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+    });
+});
+
+$('.open-btn-modal-penghargaan-edit').click(function() {
+    var id = $(this).data('id');
+    var url = '/dosen/edit/' + id + '/penghargaan';
     $.ajax({
         url: url,
         type: 'GET',

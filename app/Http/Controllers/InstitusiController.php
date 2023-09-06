@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Imports\IkuOneImport;
 use App\Models\IkuOne;
+use App\Models\IkuOne_b;
+use App\Models\IkuOne_c;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Excel;
@@ -14,7 +16,10 @@ class InstitusiController extends Controller
 {
     public function ikuOne() {
         $ikuOne = IkuOne::all();
-        return view('intisusi.ikuone', compact('ikuOne'));
+        $ikuOneb = IkuOne_b::all();
+        $ikuOneC = IkuOne_c::all();
+
+        return view('intisusi.ikuone', compact('ikuOne', 'ikuOneb', 'ikuOneC'));
     }
 
     // Iku 1 Import

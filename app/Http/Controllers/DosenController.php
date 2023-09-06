@@ -316,6 +316,20 @@ class DosenController extends Controller
         return redirect()->back()->with('message', 'Success Menambah Data Pengabdian');
     }
 
+    public function InputDataPenghargaanDetails(Request $request) {
+        $data = $request->all();
+        $dosen_id = $data['dosen_id'];
+
+        $dosen_profile = FormProfileDosen::find($dosen_id);
+        if (!$dosen_profile) {
+            return redirect()->back()->with('message', 'Dosen profile not found');
+        }
+        $dosen_penghargaan = $dosen_profile->penghargaan_dosen()->create($request->all());
+
+        return redirect()->back()->with('message', 'Success Menambah Data Penghargaan');
+    }
+
+
 
 
     public function Update_Foto(Request $request, $id) {
@@ -335,10 +349,10 @@ class DosenController extends Controller
             $dosen_profile->update($validateData);
         }
 
-
-
         return redirect()->back()->with('message', 'Berhasil mengganti Gambar Profile');
     }
+
+
 
 
 
@@ -435,6 +449,17 @@ class DosenController extends Controller
         return redirect()->back()->with('message', 'Success Delete Datas');
     }
 
+    function deleteDetailsPenghargaan($id) {
+        $dosen_penghargaan = FormPenghargaanDosen::find($id);
+
+        if (!$dosen_penghargaan) {
+            return redirect()->back()->with('message_error', 'Failled');
+        }
+        $dosen_penghargaan->delete();
+
+        return redirect()->back()->with('message', 'Success Delete Penghargaan');
+    }
+
 
 
     public function Modal_Edit_Pendidikan(Request $request, $id) {
@@ -456,6 +481,20 @@ class DosenController extends Controller
         $dosen_profile = FormProfileDosen::find($id);
 
         return view('dosen.modal_edit.modal_editpengabdian', compact('dosen_pengabdian'));
+    }
+
+    function Modal_Edit_Penghargaan($id) {
+        $dosen_penghargaan = FormPenghargaanDosen::find($id);
+        $dosen_profile = FormProfileDosen::find($id);
+
+        return view('dosen.modal_edit.modal_editpenghargaan', compact('dosen_penghargaan', 'dosen_profile'));
+    }
+
+    function Modal_Penghargaan(Request $request, $id) {
+        $dosen_penghargaan = FormPenghargaanDosen::find($id);
+        $dosen_profile = FormProfileDosen::find($id);
+
+        return view('dosen.modal.modal_penghargaan', compact('dosen_penghargaan', 'dosen_profile'));
     }
 
     public function Modal_Penelitian(Request $request, $id) {
@@ -517,6 +556,20 @@ class DosenController extends Controller
             return response()->json(['message' => $th]);
         }
     }
+
+    function DosenDetailsEditsPenghargaan(Request $request, $id) {
+        try {
+            $dosen_penghargaan = FormPenghargaanDosen::find($id);
+            $dosen_penghargaan->update($request->all());
+
+            return redirect()->back()->with('message', 'Success Edit Data');
+        }
+        catch (QueryException $th) {
+            return response()->json(['message' => $th]);
+
+        }
+    }
+
 
 
 
