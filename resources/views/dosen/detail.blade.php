@@ -479,7 +479,7 @@
                     <!-- Tab Kara Ilmiah Start Here -->
                     <div class="tab-pane fade" id="pills-karya_ilmiah" role="tabpanel" aria-labelledby="pills-karya_ilmiah-tab">
                         <div class="d-flex justify-content-end">
-                            <button type="button" id="btn-tambah_karya_ilmiah" class="btn btn-success mb-3 ">Tambah Data</button>
+                            <button type="button" id="btn-tambah_karya_ilmiah" class="btn btn-success mb-3 open-btn-modal-karya" data-id="{{ $dosen_profile->id }}">Tambah Data</button>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="table-karya_ilmiah" style="width: 100%;">
@@ -494,6 +494,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php $no = 1; ?>
+                                    @foreach ($dosen_karyaIlmiah as $row)
+                                    <tr>
+                                        <th>{{ $no++ }}</th>
+                                        <td>{{ $row->judul_karya_ilmiah }}</td>
+                                        <td>{{ $row->tahun }}</td>
+                                        <td>{{ $row->jenis }}</td>
+                                        <td>{{ $row->kategori }}</td>
+                                        <td class="d-flex justify-content-center">
+                                            <div class="btn-group">
+                                                <button type="submit" class="btn btn-primary  open-btn-modal-karya-edit" data-id="{{ $row->id }}">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                                @if ($row)
+                                                    <button type="submit" class="btn btn-danger" onclick="DeleteDetails('{{ route('delete.details.dosen.karyaIlmiah', ['id' => $row->id]) }}')">
+                                                        <i class="bi bi-trash3-fill"></i>
+                                                    </button>
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -503,7 +525,7 @@
                     <!-- Tab Kegiatan Start Here -->
                     <div class="tab-pane fade" id="pills-kegiatan" role="tabpanel" aria-labelledby="pills-kegiatan-tab">
                         <div class="d-flex justify-content-end">
-                            <button type="button" id="btn-tambah_kegiatan" class="btn btn-success mb-3 ">Tambah Data</button>
+                            <button type="button" id="btn-tambah_kegiatan" class="btn btn-success mb-3 open-btn-modal-kegiatan" data-id="{{ $dosen_profile->id }}">Tambah Data</button>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="table-kegiatan" style="width: 100%;">
@@ -517,7 +539,15 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody>
+                                    <?php $no = 1 ?>
+
+                                    @foreach ($dosen_kegiatan as $row)
+                                    <tr>
+                                        <th>{{ $no++ }}</th>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -1106,6 +1136,59 @@ $('.open-btn-modal-penghargaan-edit').click(function() {
     });
 });
 
+
+$('.open-btn-modal-karya').click(function() {
+    var id = $(this).data('id');
+    var url = '/dosen/' + id + '/karya';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+    });
+});
+
+$('.open-btn-modal-karya-edit').click(function() {
+    var id = $(this).data('id');
+    var url = '/dosen/edit/' + id + '/KaryaIlmiah';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+    });
+});
+
+
+$('.open-btn-modal-kegiatan').click(function() {
+    var id = $(this).data('id');
+    var url = '/dosen/' + id + '/kegiatan';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+    });
+});
+
+$('.open-btn-modal-karya-edit').click(function() {
+    var id = $(this).data('id');
+    var url = '/dosen/edit/' + id + '/KaryaIlmiah';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+    });
+});
 
 function DeleteDetails(url) {
     Swal.fire({

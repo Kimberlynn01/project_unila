@@ -258,6 +258,17 @@ class DosenController extends Controller
         return view('dosen.modal.modal_pendidikan', compact('dosen_pendidikan', 'dosen_profile'));
     }
 
+    function Modal_Kegiatan($id) {
+        $dosen_kegiatan = FormKegiatanDosen::find($id);
+        $dosen_profile = FormProfileDosen::find($id);
+
+        if (!$dosen_kegiatan) {
+            $dosen_kegiatan = new FormKegiatanDosen(['id' => $id]);
+        }
+
+        return view('dosen.modal.modal_kegiatan', compact('dosen_kegiatan', 'dosen_profile'));
+    }
+
 
 
 
@@ -322,11 +333,39 @@ class DosenController extends Controller
 
         $dosen_profile = FormProfileDosen::find($dosen_id);
         if (!$dosen_profile) {
-            return redirect()->back()->with('message', 'Dosen profile not found');
+            return redirect()->back()->with('message_error', 'Dosen profile not found');
         }
         $dosen_penghargaan = $dosen_profile->penghargaan_dosen()->create($request->all());
 
         return redirect()->back()->with('message', 'Success Menambah Data Penghargaan');
+    }
+
+    function InputDataKaryaIlmiahDetails(Request $request) {
+        $data = $request->all();
+        $dosen_id = $data['dosen_id'];
+
+        $dosen_profile = FormProfileDosen::find($dosen_id);
+        if (!$dosen_profile) {
+            return redirect()->back()->with('message_error', 'Data failed');
+        }
+        $dosen_karyaIlmiah = $dosen_profile->karya_ilmiah_dosen()->create($request->all());
+
+        return redirect()->back()->with('message', 'Data Input Success');
+    }
+
+    function InputDataKegiatanDetails(Request $request){
+        $data = $request->all();
+        $dosen_id = $data['dosen_id'];
+
+        $dosen_profile = FormProfileDosen::find($dosen_id);
+
+        if(!$dosen_profile) {
+            return redirect()->back()->with('message_error', 'Data Gagal diTambahkan');
+        }
+
+        $dosen_kegiatan = $dosen_profile->kegiatan_dosen()->create($request->all());
+
+        return redirect()->back()->with('message', 'Success Menambah Data Kegiatan');
     }
 
 
@@ -380,7 +419,7 @@ class DosenController extends Controller
 
 
 
-        return view('dosen.detail', compact('dosen_profile', 'dosen_pendidikan', 'fileUrl', 'filePath', 'dosen_penelitian','dosen_penghargaan','dosen_pengabdian'));
+        return view('dosen.detail', compact('dosen_profile', 'dosen_pendidikan', 'fileUrl', 'filePath', 'dosen_penelitian','dosen_penghargaan','dosen_pengabdian', 'dosen_karyaIlmiah', 'dosen_kegiatan', 'dosen_jurnal', 'dosen_buku'));
     }
 
 
@@ -460,6 +499,18 @@ class DosenController extends Controller
         return redirect()->back()->with('message', 'Success Delete Penghargaan');
     }
 
+    function deleteDetailsKaryaIlmiah($id) {
+        $dosen_karyaIlmiah = FormKaryaIlmiahDosen::find($id);
+
+        if (!$dosen_karyaIlmiah) {
+            return redirect()->back()->with('message_error');
+        }
+
+        $dosen_karyaIlmiah->delete();
+
+        return redirect()->back()->with('message', 'Success Delete Data Karya Ilmiah');
+    }
+
 
 
     public function Modal_Edit_Pendidikan(Request $request, $id) {
@@ -490,11 +541,26 @@ class DosenController extends Controller
         return view('dosen.modal_edit.modal_editpenghargaan', compact('dosen_penghargaan', 'dosen_profile'));
     }
 
+    function Modal_Edit_KaryaIlmiah($id) {
+        $dosen_karyaIlmiah = FormKaryaIlmiahDosen::find($id);
+        $dosen_profile = FormProfileDosen::find($id);
+
+        return view('dosen.modal_edit.modal_editKaryaIlmiah', compact('dosen_karyaIlmiah', 'dosen_profile'));
+    }
+
     function Modal_Penghargaan(Request $request, $id) {
         $dosen_penghargaan = FormPenghargaanDosen::find($id);
         $dosen_profile = FormProfileDosen::find($id);
 
         return view('dosen.modal.modal_penghargaan', compact('dosen_penghargaan', 'dosen_profile'));
+    }
+
+    function Modal_KaryaIlmiah($id) {
+        $dosen_karyaIlmiah = FormKaryaIlmiahDosen::find($id);
+        $dosen_profile = FormProfileDosen::find($id);
+
+
+        return view('dosen.modal.modal_karyailmiah', compact('dosen_karyaIlmiah', 'dosen_profile'));
     }
 
     public function Modal_Penelitian(Request $request, $id) {
@@ -569,6 +635,19 @@ class DosenController extends Controller
 
         }
     }
+
+    function DosenDetailsEditsKaryaIlmiah(Request $request, $id) {
+        try {
+            $dosen_karyaIlmiah = FormKaryaIlmiahDosen::find($id);
+            $dosen_karyaIlmiah->update($request->all());
+
+            return redirect()->back()->with('message', 'Success Edit');
+
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th]);
+        }
+    }
+
 
 
 

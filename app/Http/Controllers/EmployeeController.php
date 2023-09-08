@@ -23,7 +23,10 @@ class EmployeeController extends Controller
     public function AlumniController(Request $request) {
         $data = Employee::all();
         return view(
-            'dashboard.alumni',compact('data'));
+            'dashboard.alumni',
+            compact('data'),
+            ['title' => 'Alumni'],
+        );
     }
 
     public function MahasiswaController() {
