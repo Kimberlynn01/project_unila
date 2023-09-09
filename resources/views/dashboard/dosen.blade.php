@@ -331,7 +331,7 @@
                         <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <form action="{{ route('dosen.profile') }}" method="post" id="form-profil" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="user_id" value="{{ 'user_id' }}">
+                                <input type="hidden" name="form_profile_dosen_id" value="{{ 'form_profile_dosen_id' }}">
                                 <div class="h3 text-primary"><u>Profil Dosen</u></div>
                                 <div class="form-row mt-2">
                                     <div class="form-group col-md-6">

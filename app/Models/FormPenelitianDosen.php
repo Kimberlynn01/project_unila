@@ -18,7 +18,7 @@ class FormPenelitianDosen extends Model
         'tahun',
         'sumber_dana',
         'kategori',
-        'form_penelitian_dosen_id',
+        'form_profile_dosen_id',
     ];
 
     public function profile_dosen() : BelongsToMany {

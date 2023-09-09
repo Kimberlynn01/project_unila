@@ -168,7 +168,12 @@
             <div class="alert alert-success">
             {{ session('message') }}
             </div>
-        @endif
+            @endif
+            @if (session('message_error'))
+            <div class="alert alert-danger">
+                {{ session('message_error') }}
+            </div>
+            @endif
     <div class="card">
         <div class="card-body">
             <form action="{{ route('dosen.update', $dosen_profile->id) }}" method="post">
@@ -495,6 +500,7 @@
                                 </thead>
                                 <tbody>
                                     <?php $no = 1; ?>
+
                                     @foreach ($dosen_karyaIlmiah as $row)
                                     <tr>
                                         <th>{{ $no++ }}</th>
@@ -504,10 +510,11 @@
                                         <td>{{ $row->kategori }}</td>
                                         <td class="d-flex justify-content-center">
                                             <div class="btn-group">
-                                                <button type="submit" class="btn btn-primary  open-btn-modal-karya-edit" data-id="{{ $row->id }}">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </button>
-                                                @if ($row)
+
+                                                @if ($row->id)
+                                                    <button type="submit" class="btn btn-primary  open-btn-modal-karya-edit" data-id="{{ $row->id }}">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </button>
                                                     <button type="submit" class="btn btn-danger" onclick="DeleteDetails('{{ route('delete.details.dosen.karyaIlmiah', ['id' => $row->id]) }}')">
                                                         <i class="bi bi-trash3-fill"></i>
                                                     </button>
@@ -545,6 +552,23 @@
                                     @foreach ($dosen_kegiatan as $row)
                                     <tr>
                                         <th>{{ $no++ }}</th>
+                                        <td>{{ $row->kegiatan }}</td>
+                                        <td>{{ $row->tahun }}</td>
+                                        <td>{{ $row->peranan }}</td>
+                                        <td>{{ $row->kategori }}</td>
+                                        <td class="d-flex justify-content-center">
+                                            <div class="btn-group">
+                                               @if ($row->id)
+                                                    <div class="btn btn-primary open-btn-modal-kegiatan-edit" data-id="{{ $row->id }}">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </div>
+
+                                                    <div class="btn btn-danger" onclick="DeleteDetails('{{ route('delete.details.dosen.kegiatan', ['id' => $row->id]) }}')">
+                                                        <i class="bi bi-trash3-fill"></i>
+                                                    </div>
+                                               @endif
+                                            </div>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -1150,18 +1174,7 @@ $('.open-btn-modal-karya').click(function() {
     });
 });
 
-$('.open-btn-modal-karya-edit').click(function() {
-    var id = $(this).data('id');
-    var url = '/dosen/edit/' + id + '/KaryaIlmiah';
-    $.ajax({
-        url: url,
-        type: 'GET',
-        success: function(response) {
-            $('#modal_content').html(response);
-            $('#modal-popout').modal('show');
-        }
-    });
-});
+
 
 
 $('.open-btn-modal-kegiatan').click(function() {
@@ -1177,9 +1190,22 @@ $('.open-btn-modal-kegiatan').click(function() {
     });
 });
 
+$('.open-btn-modal-kegiatan-edit').click(function() {
+    var id = $(this).data('id');
+    var url = '/dosen/edit/' + id + '/kegiatan';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+    });
+});
+
 $('.open-btn-modal-karya-edit').click(function() {
     var id = $(this).data('id');
-    var url = '/dosen/edit/' + id + '/KaryaIlmiah';
+    var url = '/dosen/edit/' + id + '/karyaIlmiah';
     $.ajax({
         url: url,
         type: 'GET',

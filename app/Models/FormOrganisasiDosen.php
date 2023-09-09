@@ -14,7 +14,7 @@ class FormOrganisasiDosen extends Model
         'organisasi',
         'institusi',
         'tahun',
-        'form_organisasi_dosen_id'
+        'form_profile_dosen_id'
     ];
 
     public function profile_dosen() : BelongsToMany {

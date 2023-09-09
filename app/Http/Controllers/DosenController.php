@@ -80,16 +80,16 @@ class DosenController extends Controller
 
             // $dosen_profile->id;
                 session(['form_profile_dosen_id' => $dosen_profile->id]);
-                session(['form_penelitian_dosen_id' => $dosen_profile->id]);
-                session(['form_pengabdian_dosen_id' => $dosen_profile->id]);
-                session(['form_penghargaan_dosen_id' => $dosen_profile->id]);
-                session(['form_karya_ilmiah_dosen_id' => $dosen_profile->id]);
-                session(['form_kegiatan_dosen_id' => $dosen_profile->id]);
-                session(['form_jurnal_dosen_id' => $dosen_profile->id]);
-                session(['form_buku_dosen_id' => $dosen_profile->id]);
-                session(['form_jabatan_dosen_id' => $dosen_profile->id]);
-                session(['form_organisasi_dosen_id' => $dosen_profile->id]);
-                session(['user_id' => $dosen_profile->id]);
+                // session(['form_penelitian_dosen_id' => $dosen_profile->id]);
+                // session(['form_pengabdian_dosen_id' => $dosen_profile->id]);
+                // session(['form_penghargaan_dosen_id' => $dosen_profile->id]);
+                // session(['form_karya_ilmiah_dosen_id' => $dosen_profile->id]);
+                // session(['form_kegiatan_dosen_id' => $dosen_profile->id]);
+                // session(['form_jurnal_dosen_id' => $dosen_profile->id]);
+                // session(['form_buku_dosen_id' => $dosen_profile->id]);
+                // session(['form_jabatan_dosen_id' => $dosen_profile->id]);
+                // session(['form_organisasi_dosen_id' => $dosen_profile->id]);
+                // session(['user_id' => $dosen_profile->id]);
 
 
 
@@ -132,9 +132,9 @@ class DosenController extends Controller
             'sumber_dana' => 'required',
             'kategori' => 'required',
         ]);
-        $formProfileDosenId = session('form_penelitian_dosen_id');
+        $formProfileDosenId = session('form_profile_dosen_id');
 
-        $validateData['form_penelitian_dosen_id'] = $formProfileDosenId;
+        $validateData['form_profile_dosen_id'] = $formProfileDosenId;
         FormPenelitianDosen::create($validateData);
 
         return response()->json(['message' => 'Data Penelitian Dosen berhasil disimpan']);
@@ -149,9 +149,9 @@ class DosenController extends Controller
             'kategori' => 'required',
         ]);
 
-        $formProfileDosenId = session('form_pengabdian_dosen_id');
+        $formProfileDosenId = session('form_profile_dosen_id');
 
-        $validateData['form_pengabdian_dosen_id'] = $formProfileDosenId;
+        $validateData['form_profile_dosen_id'] = $formProfileDosenId;
 
         FormPengabdianDosen::create($validateData);
 
@@ -167,9 +167,9 @@ class DosenController extends Controller
             'kategori' => 'required',
         ]);
 
-        $formProfileDosenId = session('form_penghargaan_dosen_id');
+        $formProfileDosenId = session('form_profile_dosen_id');
 
-        $validateData['form_penghargaan_dosen_id'] = $formProfileDosenId;
+        $validateData['form_profile_dosen_id'] = $formProfileDosenId;
 
         FormPenghargaanDosen::create($validateData);
 
@@ -177,9 +177,9 @@ class DosenController extends Controller
     }
 
     public function DosenInputKaryaIlmiah(Request $request) {
-        $formProfileDosenId = session('form_penghargaan_dosen_id');
+        $formProfileDosenId = session('form_profile_dosen_id');
 
-        $validateData['form_penghargaan_dosen_id'] = $formProfileDosenId;
+        $validateData['form_profile_dosen_id'] = $formProfileDosenId;
 
         FormKaryaIlmiahDosen::create($request->all());
 
@@ -418,8 +418,7 @@ class DosenController extends Controller
         $fileUrl = asset('storage/' . $filePath);
 
 
-
-        return view('dosen.detail', compact('dosen_profile', 'dosen_pendidikan', 'fileUrl', 'filePath', 'dosen_penelitian','dosen_penghargaan','dosen_pengabdian', 'dosen_karyaIlmiah', 'dosen_kegiatan', 'dosen_jurnal', 'dosen_buku'));
+        return view('dosen.detail', compact('dosen_profile', 'dosen_pendidikan', 'fileUrl', 'filePath', 'dosen_penelitian','dosen_penghargaan','dosen_pengabdian', 'dosen_karyaIlmiah', 'dosen_kegiatan', 'dosen_jurnal', 'dosen_buku', 'dosen_jabatan', 'dosen_organisasi'));
     }
 
 
@@ -434,7 +433,7 @@ class DosenController extends Controller
 
         $dosen_profile->delete();
 
-        return redirect('/dosen')->with('message', 'Data Dosen Has Ben Deleted');
+        return redirect('/dosen')->with('message_error', 'Data Dosen Has Ben Deleted');
     }
 
     public function deleteDetails($id) {
@@ -451,7 +450,7 @@ class DosenController extends Controller
         }
 
         $dosen_pendidikan->delete();
-        return redirect('/dosen/details/' . $dosen_profile->id)->with('message', 'Data Berhasil di Hapus');
+        return redirect('/dosen/details/' . $dosen_profile->id)->with('message_error', 'Data Berhasil di Hapus');
     }
 
 
@@ -469,7 +468,7 @@ class DosenController extends Controller
         }
 
         $dosen_penelitian->delete();
-        return redirect('/dosen/details/' . $dosen_profile->id)->with('message', 'Data Berhasil di Hapus');
+        return redirect('/dosen/details/' . $dosen_profile->id)->with('message_error', 'Data Berhasil di Hapus');
     }
 
     public function deleteDetailsPengabdian($id) {
@@ -485,7 +484,7 @@ class DosenController extends Controller
             return redirect()->back()->with('message_error', 'Failed Delete Datas');
         }
         $dosen_pengabdian->delete();
-        return redirect()->back()->with('message', 'Success Delete Datas');
+        return redirect()->back()->with('message_error', 'Success Delete Datas');
     }
 
     function deleteDetailsPenghargaan($id) {
@@ -496,7 +495,7 @@ class DosenController extends Controller
         }
         $dosen_penghargaan->delete();
 
-        return redirect()->back()->with('message', 'Success Delete Penghargaan');
+        return redirect()->back()->with('message_error', 'Success Delete Penghargaan');
     }
 
     function deleteDetailsKaryaIlmiah($id) {
@@ -508,45 +507,58 @@ class DosenController extends Controller
 
         $dosen_karyaIlmiah->delete();
 
-        return redirect()->back()->with('message', 'Success Delete Data Karya Ilmiah');
+        return redirect()->back()->with('message_error', 'Success Delete Data Karya Ilmiah');
     }
 
+    function deleteDetailsKegiatan($id) {
+        $dosen_kegiatan = FormKegiatanDosen::find($id);
 
+        if (!$dosen_kegiatan) {
+            return redirect()->back()->with('message_error', 'Data Tidak Ditemukan');
+        }
 
-    public function Modal_Edit_Pendidikan(Request $request, $id) {
-        $dosen_pendidikan = FormPendidikanDosen::find($id);
+        $dosen_kegiatan->delete();
+
+        return redirect()->back()->with('message_error', 'Berhasil Menghapus Data');
+    }
+
+    public function Modal_Edit(Request $request, $id, $jenis) {
         $dosen_profile = FormProfileDosen::find($id);
+        $data = null;
+        $view = '';
 
-        return view('dosen.modal_edit.modal_editpendidikan', compact('dosen_pendidikan', 'dosen_profile'));
+        switch ($jenis) {
+            case 'pendidikan':
+                $data = FormPendidikanDosen::find($id);
+                $view = 'dosen.modal_edit.modal_editpendidikan';
+                break;
+            case 'penelitian':
+                $data = FormPenelitianDosen::find($id);
+                $view = 'dosen.modal_edit.modal_editpenelitian';
+                break;
+            case 'pengabdian':
+                $data = FormPengabdianDosen::find($id);
+                $view = 'dosen.modal_edit.modal_editpengabdian';
+                break;
+            case 'penghargaan':
+                $data = FormPenghargaanDosen::find($id);
+                $view = 'dosen.modal_edit.modal_editpenghargaan';
+                break;
+            case 'karyaIlmiah':
+                $data = FormKaryaIlmiahDosen::find($id);
+                $view = 'dosen.modal_edit.modal_editkaryaIlmiah';
+                break;
+            case 'kegiatan':
+                $data = FormKegiatanDosen::find($id);
+                $view = 'dosen.modal_edit.modal_editKegiatan';
+                break;
+            default:
+                break;
+        }
+
+        return view($view, compact('data', 'dosen_profile'));
     }
 
-    public function Modal_Edit_Penelitian(Request $request, $id) {
-        $dosen_penelitian = FormPenelitianDosen::find($id);
-        $dosen_profile = FormProfileDosen::find($id);
-
-        return view('dosen.modal_edit.modal_editpenelitian',compact('dosen_penelitian'));
-    }
-
-    public function Modal_Edit_Pengabdian(Request $request, $id) {
-        $dosen_pengabdian = FormPengabdianDosen::find($id);
-        $dosen_profile = FormProfileDosen::find($id);
-
-        return view('dosen.modal_edit.modal_editpengabdian', compact('dosen_pengabdian'));
-    }
-
-    function Modal_Edit_Penghargaan($id) {
-        $dosen_penghargaan = FormPenghargaanDosen::find($id);
-        $dosen_profile = FormProfileDosen::find($id);
-
-        return view('dosen.modal_edit.modal_editpenghargaan', compact('dosen_penghargaan', 'dosen_profile'));
-    }
-
-    function Modal_Edit_KaryaIlmiah($id) {
-        $dosen_karyaIlmiah = FormKaryaIlmiahDosen::find($id);
-        $dosen_profile = FormProfileDosen::find($id);
-
-        return view('dosen.modal_edit.modal_editKaryaIlmiah', compact('dosen_karyaIlmiah', 'dosen_profile'));
-    }
 
     function Modal_Penghargaan(Request $request, $id) {
         $dosen_penghargaan = FormPenghargaanDosen::find($id);
@@ -586,73 +598,69 @@ class DosenController extends Controller
         return view('dosen.modal.modal_pengabdian', compact('dosen_pengabdian', 'dosen_profile'));
     }
 
+
     public function DosenDetailsEdits(Request $request, $id) {
         try {
-            $dosen_pendidikan = FormPendidikanDosen::find($id);
+            $jenis = $request->input('jenis');
+            if ($jenis === 'dosen_pendidikan') {
+                $data = FormPendidikanDosen::find($id);
+                $title = 'Pendidikan Dosen';
+            }
+            elseif ($jenis === 'dosen_penelitian') {
+                $data = FormPenelitianDosen::find($id);
+                $title = 'Penelitian Dosen';
+            }
+            elseif ($jenis === 'dosen_pengabdian') {
+                $data = FormPengabdianDosen::find($id);
+                $title = 'Pengabdian Dosen';
+            }
+            elseif ($jenis === 'dosen_penghargaan') {
+                $data = FormPenghargaanDosen::find($id);
+                $title = 'Penghargaan Dosen';
+            }
+            elseif ($jenis === 'dosen_karya') {
+                $data = FormKaryaIlmiahDosen::find($id);;
+                $title = 'Karya Ilmiah Dosen';
+            }
+            elseif ($jenis === 'dosen_kegiatan') {
+                $data = FormKegiatanDosen::find($id);
+                $title = 'Kegiatan Dosen';
+            }
+            elseif ($jenis === 'dosen_jurnal') {
+                $data = FormJurnalDosen::find($id);
+                $title = 'Jurnal Dosen';
+            }
+            elseif ($jenis === 'dosen_buku') {
+                $data = FormBukuDosen::find($id);
+                $title = 'Buku Dosen';
+            }
+            elseif ($jenis === 'dosen_jabatan') {
+                $data = FormJabatanDosen::find($id);
+                $title = 'Jabatan Dosen';
+            }
+            elseif ($jenis === 'dosen_organisasi') {
+                $data = FormOrganisasiDosen::find($id);
+                $title = 'Organisasi Dosen';
+            }
 
-            $dosen_pendidikan->update($request->all());
+            if ($data) {
+                $data->update($request->all());
 
-
-            return redirect()->back()->with('message', 'Berhasil mengedit Data Pendidikan');
-
-        } catch (QueryException $th) {
-            return response()->json(['message' => $th]);
-        }
-    }
-    public function DosenDetailsEditsPenelitian(Request $request, $id) {
-        try {
-            $dosen_penelitian = FormPenelitianDosen::find($id);
-
-            $dosen_penelitian->update($request->all());
-
-            return redirect()->back()->with('message', 'Berhasil mengedit Data Penelitian');
-
-        } catch (QueryException $th) {
-            return response()->json(['message' => $th]);
-        }
-    }
-
-    public function DosenDetailsEditsPengabdian(Request $request, $id) {
-        try {
-            $dosen_pengabdian = FormPengabdianDosen::find($id);
-            $dosen_pengabdian->update($request->all());
-
-            return redirect()->back()->with('message', 'Success Edit Data');
+                return redirect()->back()->with('message', 'Success Edit  '  .  $title);
+            } else {
+                return redirect()->back()->with('message_error', 'Data tidak ditemukan');
+            }
         } catch (\Throwable $th) {
-            return response()->json(['message' => $th]);
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 
-    function DosenDetailsEditsPenghargaan(Request $request, $id) {
-        try {
-            $dosen_penghargaan = FormPenghargaanDosen::find($id);
-            $dosen_penghargaan->update($request->all());
+    public function EditKaryaIlmiah(Request $request, $id) {
+        $dosen_karyaIlmiah = FormKaryaIlmiahDosen::find($id);
+        $dosen_karyaIlmiah->update($request->all());
 
-            return redirect()->back()->with('message', 'Success Edit Data');
-        }
-        catch (QueryException $th) {
-            return response()->json(['message' => $th]);
-
-        }
+        return redirect()->back()->with('message', 'Success Update');
     }
-
-    function DosenDetailsEditsKaryaIlmiah(Request $request, $id) {
-        try {
-            $dosen_karyaIlmiah = FormKaryaIlmiahDosen::find($id);
-            $dosen_karyaIlmiah->update($request->all());
-
-            return redirect()->back()->with('message', 'Success Edit');
-
-        } catch (\Throwable $th) {
-            return response()->json(['message' => $th]);
-        }
-    }
-
-
-
-
-
-
 
     function FormEditPassword($id) {
         $user = Auth::user();

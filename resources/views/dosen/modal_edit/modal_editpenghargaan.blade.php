@@ -1,4 +1,4 @@
-<form action="{{ route('edit.edit.penghargaan', $dosen_penghargaan->id) }}" method="post">
+<form action="{{ route('edit.details', ['jenis' => 'dosen_penghargaan', $data->id]) }}" method="post">
     @csrf
     {{-- <input type="hidden" name="dosen_id" value="{{ $dosen_pendidikan->id }}"> --}}
     {{-- <input type="hidden" name="dosen_id" value="{{ $dosen_profile->id }}"> --}}
@@ -14,25 +14,25 @@
                 <div class="col-md-6">
                     <label class="fw-bold">Nama Penghargaan</label>
                     <br>
-                    <input class="w-100 p-2" style="border: solid 1px; color: rgba(128, 128, 128, 0.704); border-radius: 5px;" type="text" name="nama_penghargaan" placeholder="Nama Penghargaan" value="{{ $dosen_penghargaan->nama_penghargaan }}">
+                    <input class="w-100 p-2" style="border: solid 1px; color: rgba(128, 128, 128, 0.704); border-radius: 5px;" type="text" name="nama_penghargaan" placeholder="Nama Penghargaan" value="{{ $data->nama_penghargaan }}">
                 </div>
                 <div class="col-md-6">
                     <label class="fw-bold">Tahun</label>
                     <br>
-                    <input class="w-100 p-2" style="border: solid 1px; color: rgba(128, 128, 128, 0.704); border-radius: 5px;" type="text" name="tahun" placeholder="Tahun" value="{{ $dosen_penghargaan->tahun }}">
+                    <input class="w-100 p-2" style="border: solid 1px; color: rgba(128, 128, 128, 0.704); border-radius: 5px;" type="text" name="tahun" placeholder="Tahun" value="{{ $data->tahun }}">
                 </div>
                 <div class="col-md-4 pt-3">
                     <label class="fw-bold">Institusi</label>
                     <br>
-                    <input class="w-100 p-2" style="border: solid 1px; color: rgba(128, 128, 128, 0.704); border-radius: 5px;" type="text" name="institusi" placeholder="Institusi" value="{{ $dosen_penghargaan->institusi }}">
+                    <input class="w-100 p-2" style="border: solid 1px; color: rgba(128, 128, 128, 0.704); border-radius: 5px;" type="text" name="institusi" placeholder="Institusi" value="{{ $data->institusi }}">
                 </div>
                 <div class="col-md-4 pt-3">
                     <label class="fw-bold">Kategori</label>
                     <select name="kategori" id="kategori" class="form-control" required="">
                         <option value="" selected="" disabled="">-- Pilih Kategori Penghargaan --</option>
-                        <option {{ $dosen_penghargaan->kategori === 'nasional' ? 'selected' : '' }} value="nasional">Nasional</option>
-                        <option {{ $dosen_penghargaan->kategori === 'internasional' ? 'selected' : '' }} value="internasional">Internasional</option>
-                        <option {{ $dosen_penghargaan->kategori === 'lokal' ? 'selected' : '' }} value="lokal">Lokal</option>
+                        <option {{ $data->kategori === 'nasional' ? 'selected' : '' }} value="nasional">Nasional</option>
+                        <option {{ $data->kategori === 'internasional' ? 'selected' : '' }} value="internasional">Internasional</option>
+                        <option {{ $data->kategori === 'lokal' ? 'selected' : '' }} value="lokal">Lokal</option>
                     </select>
                     <br>
                 </div>
@@ -40,7 +40,7 @@
         </div>
 
         <div class="modal-footer">
-            <button class="btn btn-primary" type="submit">Tambah Data</button>
+            <button class="btn btn-primary" type="submit">Update Data</button>
         </div>
     </div>
 </form>

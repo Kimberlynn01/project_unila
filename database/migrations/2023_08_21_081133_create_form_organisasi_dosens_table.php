@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('organisasi');
             $table->string('institusi');
             $table->string('tahun');
-            $table->unsignedBigInteger('form_organisasi_dosen_id');
-            $table->foreign('form_organisasi_dosen_id')->references('id')->on('form_profile_dosen')->onDelete('cascade');
+            $table->unsignedBigInteger('form_profile_dosen_id');
+            $table->foreign('form_profile_dosen_id')->references('id')->on('form_profile_dosen')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class FormKaryaIlmiahDosen extends Model
 {
-    use HasFactory;
     protected $table = 'form_karya_ilmiah_dosen';
     protected $primaryKey = 'id';
     protected $fillable = [
@@ -17,11 +16,10 @@ class FormKaryaIlmiahDosen extends Model
         'tahun',
         'jenis',
         'kategori',
-        'form_karya_ilmiah_dosen_id'
-
     ];
+    protected $guarded = ['form_profile_dosen_id'];
 
-    public function profile_dosen() : BelongsToMany {
-        return $this->belongsToMany(FormProfileDosen::class, 'id');
+    public function profile_dosen() : BelongsTo {
+        return $this->belongsTo(FormProfileDosen::class, 'id');
     }
 }

@@ -32,44 +32,44 @@ class FormProfileDosen extends Model
     }
 
     public function penelitian_dosen() : HasMany {
-        return $this->hasMany(FormPenelitianDosen::class, 'form_penelitian_dosen_id');
+        return $this->hasMany(FormPenelitianDosen::class, 'form_profile_dosen_id');
     }
 
     public function pengabdian_dosen() : HasMany {
-        return $this->hasMany(FormPengabdianDosen::class, 'form_pengabdian_dosen_id');
+        return $this->hasMany(FormPengabdianDosen::class, 'form_profile_dosen_id');
     }
 
     public function penghargaan_dosen() : HasMany {
-        return $this->hasMany(FormPenghargaanDosen::class, 'form_penghargaan_dosen_id');
+        return $this->hasMany(FormPenghargaanDosen::class, 'form_profile_dosen_id');
     }
 
     public function karya_ilmiah_dosen() : HasMany {
-        return $this->hasMany(FormKaryaIlmiahDosen::class, 'form_karya_ilmiah_dosen_id');
+        return $this->hasMany(FormKaryaIlmiahDosen::class, 'form_profile_dosen_id');
     }
 
     public function kegiatan_dosen() : HasMany {
-        return $this->hasMany(FormKegiatanDosen::class, 'form_kegiatan_dosen_id');
+        return $this->hasMany(FormKegiatanDosen::class, 'form_profile_dosen_id');
     }
 
     public function jurnal_dosen() : HasMany {
-        return $this->hasMany(FormJurnalDosen::class, 'form_jurnal_dosen_id');
+        return $this->hasMany(FormJurnalDosen::class, 'form_profile_dosen_id');
     }
 
     public function buku_dosen() : HasMany {
-        return $this->hasMany(FormBukuDosen::class, 'form_buku_dosen_id');
+        return $this->hasMany(FormBukuDosen::class, 'form_profile_dosen_id');
     }
 
     public function jabatan_dosen() : HasMany {
-        return $this->hasMany(FormJabatanDosen::class, 'form_jabatan_dosen_id');
+        return $this->hasMany(FormJabatanDosen::class, 'form_profile_dosen_id');
     }
 
     public function organisasi_dosen() : HasMany {
-        return $this->hasMany(FormOrganisasiDosen::class, 'form_organisasi_dosen_id');
+        return $this->hasMany(FormOrganisasiDosen::class, 'form_profile_dosen_id');
     }
 
     public function users() : HasOne
     {
-        return $this->hasOne(User::class, 'user_id');
+        return $this->hasOne(User::class, 'form_profile_dosen_id');
     }
 
 }
