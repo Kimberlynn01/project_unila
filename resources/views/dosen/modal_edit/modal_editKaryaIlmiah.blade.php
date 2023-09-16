@@ -1,11 +1,11 @@
-<form action="{{ route('edit.details', ['jenis' => 'dosen_karya', 'id' => $data->id]) }}" method="post">
+<form action="{{ route('edit.details', ['id' => $data->id, 'jenis' => 'dosen_karya']) }}" method="post">
     @csrf
     <div class="modal-content">
         <div class="modal-header">
             <div class="modal-title">
                 <h2>Karya Ilmiah</h2>
             </div>
-            <button type="button" class="btn btn-close" data-bs-dismiss="modal">x</button>
+            <button type="button" class="btn btn-close" data-dismiss="modal">x</button>
         </div>
         <div class="modal-body row">
                 <div class="col-md-6">

@@ -22,6 +22,6 @@ class FormJurnalDosen extends Model
     ];
 
     public function profile_dosen() : BelongsToMany {
-        return $this->BelongsToMany(FormProfileDosen::class, 'id');
+        return $this->BelongsToMany(FormProfileDosen::class);
     }
 }

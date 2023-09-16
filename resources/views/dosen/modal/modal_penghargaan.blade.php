@@ -1,4 +1,4 @@
-<form action="{{ route('input.data.details.dosen.penghargaan') }}" method="post">
+<form action="{{ route('modal.send', ['id' => $dosen_profile->id, 'jenis' => 'penghargaan']) }}" method="post">
     @csrf
     {{-- <input type="hidden" name="dosen_id" value="{{ $dosen_pendidikan->id }}"> --}}
     <input type="hidden" name="dosen_id" value="{{ $dosen_profile->id }}">

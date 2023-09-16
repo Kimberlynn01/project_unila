@@ -52,7 +52,7 @@
                      </div>
                      <div class="p-2">
                         <form class="form-horizontal" method="post" action="{{ route('postlogin') }}">
-                            {{ csrf_field() }}
+                            @csrf
                             <div class="form-group">
                               <label for="username">Username</label>
                               <input type="text" class="form-control" required autofocus id="username" name="username" value="{{ old('username') }}" placeholder="Enter username">

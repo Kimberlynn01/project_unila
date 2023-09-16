@@ -22,6 +22,6 @@ class FormPendidikanDosen extends Model
 
     public function profile_dosen() : BelongsTo
     {
-        return $this->belongsTo(FormProfileDosen::class);
+        return $this->belongsTo(FormProfileDosen::class, 'id');
     }
 }

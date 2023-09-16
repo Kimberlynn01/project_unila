@@ -31,7 +31,10 @@ class EmployeeController extends Controller
 
     public function MahasiswaController() {
         $DataMahasiswa = MInputDataModel::all();
-        return view('dashboard.mahasiswa',compact('DataMahasiswa'));
+        return view(
+            'dashboard.mahasiswa',
+        compact('DataMahasiswa'),
+        ['title' => 'Mahasiswa'],);
     }
 
 
@@ -203,7 +206,7 @@ class EmployeeController extends Controller
                 'alamat_sekolah' => 'required',
                 'telp_sekolah' => 'required',
                 'nomor_ijasah_sekolah' => 'required',
-                'image' => 'mimes:jpeg,png,jpg,pdf,gif',
+                'image' => 'mimes:jpeg,png,jpg,pdf,gif,xlsx|max:2048',
                 ]);
 
                 $file = $request->file('image');
@@ -224,7 +227,7 @@ class EmployeeController extends Controller
                 return response()->json(['message' => 'Data 6']);
         } catch (QueryException $e) {
             if ($e->getCode() == 23000) {
-                return response()->json(['message_error', '']);
+                return response()->json(['message_error', $e->getMessage()]);
             }
         }
     }
@@ -263,7 +266,7 @@ class EmployeeController extends Controller
             abort(404);
         }
 
-        return view('mahasiswa.detail', compact('mahasiswa', 'mahasiswa_umum', 'mahasiswa_domisili', 'mahasiswa_ortu', 'mahasiswa_wali', 'mahasiswa_sekolah', 'mahasiswa_perguruan'));
+        return view('mahasiswa.detail', compact('mahasiswa', 'mahasiswa_umum', 'mahasiswa_domisili', 'mahasiswa_ortu', 'mahasiswa_wali', 'mahasiswa_sekolah', 'mahasiswa_perguruan'), ['title' => 'Mahasiswa']);
 
     }
 
@@ -296,7 +299,7 @@ class EmployeeController extends Controller
 
         $mahasiswa->delete();
 
-        return redirect('/mahasiswa')->with('message', 'Success Delete');
+        return redirect()->back()->with('message', 'Success Delete');
     }
 
     public function edits(Request $request, $id) {
@@ -320,7 +323,7 @@ class EmployeeController extends Controller
 
 
 
-        return view('mahasiswa.edit', compact('mahasiswa', 'mahasiswa_umum', 'mahasiswa_domisili', 'mahasiswa_ortu', 'mahasiswa_wali', 'mahasiswa_sekolah', 'mahasiswa_perguruan'));
+        return view('mahasiswa.edit', compact('mahasiswa', 'mahasiswa_umum', 'mahasiswa_domisili', 'mahasiswa_ortu', 'mahasiswa_wali', 'mahasiswa_sekolah', 'mahasiswa_perguruan'), ['title' => 'Mahasiswa']);
     }
 
     public function update(Request $request, $id)

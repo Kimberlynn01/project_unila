@@ -16,8 +16,8 @@ class FormKaryaIlmiahDosen extends Model
         'tahun',
         'jenis',
         'kategori',
+        'form_profile_dosen_id'
     ];
-    protected $guarded = ['form_profile_dosen_id'];
 
     public function profile_dosen() : BelongsTo {
         return $this->belongsTo(FormProfileDosen::class, 'id');

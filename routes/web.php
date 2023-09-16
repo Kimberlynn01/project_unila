@@ -33,7 +33,8 @@ Route::middleware(['guest'])->group(function() {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', function () {
-        return view('dashboard.home'
+        return view('dashboard.home',
+        ['title' => 'Dashboard']
     );
     })->name('home');
 
@@ -42,7 +43,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mahasiswa', [EmployeeController::class, 'MahasiswaController'])->name('mahasiswa');
 
     Route::get('/form', function() {
-        return view('mahasiswa.form');
+        return view('mahasiswa.form', [
+            'title' => 'Form Mahasiswa'
+        ]);
+
     })->name('form');
 
     Route::get('/dosen', [DosenController::class, 'DosenShow'])->name('dosen');
@@ -77,16 +81,6 @@ Route::post('/importexcel', [EmployeeController::class, 'importexcel'])->name('i
 
 // Input Data Dosen
 Route::post('/dosen/profile', [DosenController::class, 'DosenInputProfile'])->name('dosen.profile');
-Route::post('/dosen/pendidikan', [DosenController::class, 'DosenInputPendidikan'])->name('dosen.pendidikan');
-Route::post('/dosen/penelitian', [DosenController::class, 'DosenInputPenelitian'])->name('dosen.penelitian');
-Route::post('/dosen/pengabdian', [DosenController::class, 'DosenInputPengabdian'])->name('dosen.pengabdian');
-Route::post('/dosen/penghargaan', [DosenController::class, 'DosenInputPenghargaan'])->name('dosen.penghargaan');
-Route::post('/dosen/karyailmiah', [DosenController::class, 'DosenInputKaryaIlmiah'])->name('dosen.karyailmiah');
-Route::post('/dosen/kegiatan', [DosenController::class, 'DosenInputKegiatan'])->name('dosen.kegiatan');
-Route::post('/dosen/jurnal', [DosenController::class, 'DosenInputJurnal'])->name('dosen.jurnal');
-Route::post('/dosen/buku', [DosenController::class, 'DosenInputBuku'])->name('dosen.buku');
-Route::post('/dosen/jabatan', [DosenController::class, 'DosenInputJabatan'])->name('dosen.jabatan');
-Route::post('/dosen/organisasi', [DosenController::class, 'DosenInputOrganisasi'])->name('dosen.organisasi');
 
 
 // Update Data Dosen
@@ -95,46 +89,17 @@ Route::post('/dosen/foto/{id}', [DosenController::class, 'Update_Foto'])->name('
 
 
 // Delete Data Dosen
-Route::get('/dosen/delete/{id}', [DosenController::class, 'delete'])->name('delete.dosen');
-Route::get('/dosen/details/delete/{id}', [DosenController::class, 'deleteDetails'])->name('delete.details.dosen');
-Route::get('/dosen/details/delete/penelitian/{id}', [DosenController::class, 'deleteDetailsPenelitian'])->name('delete.details.dosen.penelitian');
-Route::get('/dosen/details/delete/pengabdian/{id}', [DosenController::class, 'deleteDetailsPengabdian'])->name('delete.details.dosen.pengabdian');
-Route::get('/dosen/details/delete/penghargaan/{id}', [DosenController::class, 'deleteDetailsPenghargaan'])->name('delete.details.dosen.penghargaan');
-Route::get('/dosen/details/delete/karyaIlmiah/{id}', [DosenController::class, 'deleteDetailsKaryaIlmiah'])->name('delete.details.dosen.karyaIlmiah');
-Route::get('/dosen/details/delete/kegiatan/{id}', [DosenController::class, 'deleteDetailsKegiatan'])->name('delete.details.dosen.kegiatan');
-
+Route::get('/get-id-dosen/{id}', [DosenController::class, 'delete'])->name('delete.dosen');
+Route::get('/delete/{id}/{type}', [DosenController::class, 'destroy'])->name('dosen.delete');
 // Details Data Dosen
 
-
 // Modal Pop out Dosen
-Route::get('/get-modal-content/{id}', [DosenController::class, 'Modal_Foto']);
-Route::get('/dosen/{id}/pendidikan', [DosenController::class, 'Modal_Pendidikan']);
-Route::get('/dosen/{id}/penelitian', [DosenController::class, 'Modal_Penelitian']);
-Route::get('/dosen/{id}/pengabdian', [DosenController::class, 'Modal_Pengabdian']);
-Route::get('/dosen/{id}/penghargaan', [DosenController::class, 'Modal_Penghargaan']);
-Route::get('/dosen/{id}/karya', [DosenController::class, 'Modal_KaryaIlmiah']);
-Route::get('/dosen/{id}/kegiatan', [DosenController::class, 'Modal_Kegiatan']);
-Route::post('/dosen/details/pendidikan', [DosenController::class, 'InputDataPendidikanDetails'])->name('input.data.details.dosen.pendidikan');
-Route::post('/dosen/details/penelitian', [DosenController::class, 'InputDataPenelitianDetails'])->name('input.data.details.dosen.penelitian');
-Route::post('/dosen/details/pengabdian', [DosenController::class, 'InputDataPengabdianDetails'])->name('input.data.details.dosen.pengabdian');
-Route::post('/dosen/details/penghargaan', [DosenController::class, 'InputDataPenghargaanDetails'])->name('input.data.details.dosen.penghargaan');
-Route::post('/dosen/details/karyaIlmiah', [DosenController::class, 'InputDataKaryaIlmiahDetails'])->name('input.data.details.dosen.karyaIlmiah');
-Route::post('/dosen/details/kegiatan', [DosenController::class, 'InputDataKegiatanDetails'])->name('input.data.details.dosen.kegiatan');
-
-
-// MengEdit Details Dosen
-// Route::get('/dosen/edit/{id}/pendidikan', [DosenController::class, 'Modal_Edit_Pendidikan']);
-// Route::get('/dosen/edit/{id}/penelitian', [DosenController::class, 'Modal_Edit_Penelitian']);
-// Route::get('/dosen/edit/{id}/pengabdian', [DosenController::class, 'Modal_Edit_Pengabdian']);
-// Route::get('/dosen/edit/{id}/penghargaan', [DosenController::class, 'Modal_Edit_Penghargaan']);
-// Route::get('/dosen/edit/{id}/KaryaIlmiah', [DosenController::class, 'Modal_Edit_KaryaIlmiah']);
-// Route::get('/dosen/edit/{id}/kegiatan', [DosenController::class, 'Modal_Edit_Kegiatan']);
-// Route::post('/details/pendidikan/edit/{id}', [DosenController::class, 'DosenDetailsEdits'])->name('edit.detailsdosen');
-// Route::post('/details/penelitian/edir/{id}', [DosenController::class,  'DosenDetailsEditsPenelitian'])->name('edit.details.penelitian');
-// Route::post('/details/penelitian/edit/{id}', [DosenController::class,  'DosenDetailsEditsPengabdian'])->name('edit.edit.pengabdian');
-// Route::post('/details/penghargaan/edit/{id}', [DosenController::class,  'DosenDetailsEditsPenghargaan'])->name('edit.edit.penghargaan');
-// Route::post('/details/KaryaIlmiah/edit/{id}', [DosenController::class,  'EditKaryaIlmiah'])->name('edit.edit.karyaIlmiah');
-// Route::post('/details/kegiatan/edit/{id}', [DosenController::class,  'DosenDetailsEditsKegiatan'])->name('edit.edit.kegiatan');
+// Route::get('/get-modal-content/{id}', [DosenController::class, 'Modal_Foto']);
+Route::get('/modal-popout/{id}/{jenis}', [DosenController::class, 'Modal_Popout']);
+Route::post('/karyailmiah', [DosenController::class, 'InputDataKaryaIlmiahDetails'])->name('karya.send');
+Route::post('/modal-send/{id}', [DosenController::class, 'Modal_Send'])->name('modal.send');
+// Edit Details Dosen
+Route::post('/details/KaryaIlmiah/edit/{id}', [DosenController::class,  'EditKaryaIlmiah'])->name('edit.edit.karyaIlmiah');
 Route::get('/dosen/edit/{id}/{jenis}', [DosenController::class, 'Modal_Edit']);
 Route::post('/details/edit/{id}', [DosenController::class, 'DosenDetailsEdits'])->name('edit.details');
 
