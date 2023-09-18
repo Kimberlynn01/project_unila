@@ -150,6 +150,10 @@ class DosenController extends Controller
                 $data = FormJabatanDosen::find($id);
                 $view = 'dosen.modal.modal_jabatan';
                 break;
+            case 'organisasi':
+                $data = FormOrganisasiDosen::find($id);
+                $view = 'dosen.modal.modal_organisasi';
+                break;
             default:
                 break;
         }
@@ -243,6 +247,29 @@ class DosenController extends Controller
                 }
 
                 $dosen_buku = $dosen_profile->buku_dosen()->create($request->all());
+                return redirect()->back()->with('message', 'Success Menambahkan Data ' . $jenis);
+            } elseif($jenis === 'jabatan') {
+                $data = $request->all();
+                $dosen_id = $data['dosen_id'];
+
+                $dosen_profile = FormProfileDosen::find($dosen_id);
+                if (!$dosen_profile) {
+                    return redirect()->back()->with('message_error', 'Gagal Menambahkan Data');
+                }
+
+                $dosen_jabatan = $dosen_profile->jabatan_dosen()->create($request->all());
+                return redirect()->back()->with('message', 'Success Menambahkan Data ' . $jenis);
+            } elseif($jenis === 'organisasi') {
+                $data = $request->all();
+                $dosen_id = $data['dosen_id'];
+
+                $dosen_profile = FormProfileDosen::find($dosen_id);
+
+                if (!$dosen_profile) {
+                    return redirect()->back()->with('message_error', 'Gagal Menambahkan Data');
+                }
+
+                $dosen_organisasi = $dosen_profile->organisasi_dosen()->create($request->all());
                 return redirect()->back()->with('message', 'Success Menambahkan Data ' . $jenis);
             }
         } catch (\Throwable $th) {
@@ -439,6 +466,22 @@ class DosenController extends Controller
             $dosen_buku->delete();
 
             return redirect()->back()->with('message_error', 'Berhasil Menghapus data');
+        } elseif($type == 'jabatan') {
+            $dosen_jabatan = FormJabatanDosen::find($id);
+
+            if (!$dosen_jabatan) {
+                return redirect()->back()->with('message_error', 'Data Dosen Tidak ditemukan');
+            }
+
+            $dosen_profile = FormProfileDosen::where('id', $dosen_jabatan->form_profile_dosen_id)->first();
+
+            if (!$dosen_profile) {
+                return redirect()->back()->with('message_error', 'Data Dosen Tidak Ditemukan');
+            }
+
+            $dosen_jabatan->delete();
+
+            return redirect()->back()->with('message_error', 'Berhasil Menghapus data');
         }
     }
 
@@ -496,7 +539,11 @@ class DosenController extends Controller
                 break;
             case 'jabatan':
                 $data = FormJabatanDosen::find($id);
-                $view = 'dosen.modal.modal_jabatan';
+                $view = 'dosen.modal_edit.modal_jabatan';
+                break;
+            case 'organisasi':
+                $data = FormOrganisasiDosen::find($id);
+                $view = 'dosen.modal_edit.modal_organisasi';
                 break;
             default:
                 break;

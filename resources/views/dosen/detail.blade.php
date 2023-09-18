@@ -518,7 +518,7 @@
                     <!-- Tab Jabatan Start Here -->
                     <div class="tab-pane fade" id="pills-jabatan" role="tabpanel" aria-labelledby="pills-jabatan-tab">
                         <div class="d-flex justify-content-end">
-                            <button type="button" id="btn-tambah_jabatan" class="btn btn-success mb-3 open-btn-modal-jurnal">Tambah Data</button>
+                            <button type="button" id="btn-tambah_jabatan" class="btn btn-success mb-3 open-btn-modal-jabatan" data-id="{{ $dosen_profile->id }}">Tambah Data</button>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="table-jabatan" style="width: 100%;">
@@ -531,7 +531,29 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody>
+                                    <?php $no = 1; ?>
+                                    @foreach ($dosen_jabatan as $row)
+                                    <tr>
+                                        <th>{{ $no++ }}</th>
+                                        <td>{{ $row->jabatan }}</td>
+                                        <td>{{ $row->institusi }}</td>
+                                        <td>{{ $row->tahun }}</td>
+                                        <td class="d-flex justify-content-center ">
+                                            @if ($row->id)
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-primary open-btn-modal-jabatan-edit" data-id="{{ $row->id }}">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger" onclick="DeleteDetails('{{ route('dosen.delete', ['id' => $row->id, 'type' => 'jabatan']) }}')">
+                                                        <i class="bi bi-trash3-fill"></i>
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -540,7 +562,7 @@
                     <!-- Tab Organisasi Start Here -->
                     <div class="tab-pane fade" id="pills-organisasi" role="tabpanel" aria-labelledby="pills-organisasi-tab">
                         <div class="d-flex justify-content-end">
-                            <button type="button" id="btn-tambah_organisasi" class="btn btn-success mb-3 ">Tambah Data</button>
+                            <button type="button" id="btn-tambah_organisasi" class="btn btn-success mb-3 open-btn-modal-organisasi" data-id="{{ $dosen_profile->id }} ">Tambah Data</button>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="table-organisasi" style="width: 100%;">
@@ -553,7 +575,27 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody> </tbody>
+                                <tbody>
+                                    <?php $no = 1; ?>
+                                    @foreach ($dosen_organisasi as $row)
+                                        <th>{{ $no++ }}</th>
+                                        <td>{{ $row->organisasi }}</td>
+                                        <td>{{ $row->institusi }}</td>
+                                        <td>{{ $row->tahun }}</td>
+                                        <td class="d-flex justify-content-center ">
+                                            @if ($row->id)
+                                                <div class="btn-group">
+                                                    <button class="btn btn-primary open-btn-modal-organisasi-edit" data-id="{{ $row->id }}">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger" onclick="DeleteDetails('{{ route('dosen.delete', ['id' => $row->id, 'type' => 'organisasi']) }}')">
+                                                        <i class="bi bi-trash3-fill"></i>
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        </td>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>

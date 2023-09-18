@@ -1,22 +1,22 @@
-<form action="{{ route('modal.send', ['id' => $dosen_profile->id, 'jenis' => 'jabatan']) }}" method="post">
+<form action="{{ route('modal.send', ['id' => $dosen_profile->id, 'jenis' => 'organisasi']) }}" method="post">
     @csrf
-    <input type="hidden" name="dosen_id" value="{{ $dosen_profile->id }}">
     <div class="modal-content">
         <div class="modal-header">
             <div class="modal-title">
-                <h2>Jabatan</h2>
+                <h4>Organisasi</h4>
             </div>
-            <button type="button" data-dismiss="modal">x</button>
+            <button class="btn-close" data-dismiss="">x</button>
         </div>
         <div class="modal-body">
+            <input type="hidden" name="dosen_id" value="{{ $dosen_profile->id }}">
             <div class="row">
                 <div class="col-md-6">
-                    <label>Jabatan</label>
-                    <input type="text" name="jabatan" class="form-control" placeholder="Jabatan">
+                    <label>organisasi</label>
+                    <input type="text" name="organisasi" class="form-control" placeholder="Organisasi">
                 </div>
                 <div class="col-md-6">
                     <label>Institusi</label>
-                    <input type="text" name="institusi" class="form-control" placeholder="Institusi">
+                    <input type="text" class="form-control" name="institusi" placeholder="Institusi">
                 </div>
                 <div class="col-md-6">
                     <label>Tahun</label>

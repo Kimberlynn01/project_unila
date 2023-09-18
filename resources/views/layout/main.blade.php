@@ -1191,6 +1191,45 @@ success: function(response) {
 });
 });
 
+$('.open-btn-modal-jabatan-edit').click(function() {
+var id = $(this).data('id');
+var url = '/dosen/edit/' + id + '/jabatan';
+$.ajax({
+url: url,
+type: 'GET',
+success: function(response) {
+    $('#modal_content').html(response);
+    $('#modal-popout').modal('show');
+}
+});
+});
+
+$('.open-btn-modal-organisasi').click(function() {
+var id = $(this).data('id');
+var url = '/modal-popout/' + id + '/organisasi';
+$.ajax({
+url: url,
+type: 'GET',
+success: function(response) {
+    $('#modal_content').html(response);
+    $('#modal-popout').modal('show');
+}
+});
+});
+
+$('.open-btn-modal-organisasi-edit').click(function() {
+var id = $(this).data('id');
+var url = '/dosen/edit/' + id + '/organisasi';
+$.ajax({
+url: url,
+type: 'GET',
+success: function(response) {
+    $('#modal_content').html(response);
+    $('#modal-popout').modal('show');
+}
+});
+});
+
 
 function DeleteDetails(url) {
 Swal.fire({
