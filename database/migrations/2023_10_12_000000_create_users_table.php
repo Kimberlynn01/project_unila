@@ -20,6 +20,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->unsignedBigInteger('form_profile_dosen_id')->nullable();
             $table->foreign('form_profile_dosen_id')->references('id')->on('form_profile_dosen')->onDelete('cascade');
+            $table->unsignedBigInteger('pegawai_model_id')->nullable();
+            $table->foreign('pegawai_model_id')->references('id')->on('pegawai_model')->onDelete('cascade');
             $table->timestamps();
         });
     }

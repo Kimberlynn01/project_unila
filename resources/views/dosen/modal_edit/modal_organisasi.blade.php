@@ -5,7 +5,7 @@
             <div class="modal-title">
                 <h4>Organisasi</h4>
             </div>
-            <button class="btn-close" data-dismiss="">x</button>
+            <button class="btn-close" data-dismiss="modal">x</button>
         </div>
         <div class="modal-body">
             {{-- <input type="hidden" name="dosen_id" value="{{ $dosen_profile->id }}"> --}}

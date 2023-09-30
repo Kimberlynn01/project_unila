@@ -12,6 +12,7 @@ use App\Models\FormPendidikanDosen;
 use App\Models\FormPenelitianDosen;
 use App\Models\FormPengabdianDosen;
 use App\Models\FormPenghargaanDosen;
+use App\Models\FormPrestasiDosen;
 use App\Models\FormProfileDosen;
 use App\Models\User;
 use DateTime;
@@ -154,6 +155,10 @@ class DosenController extends Controller
                 $data = FormOrganisasiDosen::find($id);
                 $view = 'dosen.modal.modal_organisasi';
                 break;
+            case 'prestasi':
+                $data = FormPrestasiDosen::find($id);
+                $view = 'dosen.modal.modal_prestasi';
+                break;
             default:
                 break;
         }
@@ -271,6 +276,19 @@ class DosenController extends Controller
 
                 $dosen_organisasi = $dosen_profile->organisasi_dosen()->create($request->all());
                 return redirect()->back()->with('message', 'Success Menambahkan Data ' . $jenis);
+            } elseif($jenis === 'prestasi') {
+                $data = $request->all();
+                $dosen_id = $data['dosen_id'];
+
+                $dosen_profile = FormProfileDosen::find($dosen_id);
+
+                if (!$dosen_profile) {
+                    return redirect()->back()->with('message_error', 'Gagal Menambahkan Data');
+                }
+
+                $dosen_prestasi = $dosen_profile->prestasi_dosen()->create($request->all());
+
+                return redirect()->back()->with('message', 'Success Menambahkan Data ' . $jenis);
             }
         } catch (\Throwable $th) {
             return redirect()->back()->with('message_error', $th->getMessage());
@@ -303,7 +321,7 @@ class DosenController extends Controller
 
             $file->storeAs('file-dosen', $fileName, 'public');
 
-            $validateData['file_name'] = $fileName;
+            $validateDsata['file_name'] = $fileName;
             $validateData['file_type'] = $fileType;
             $dosen_profile->update($validateData);
         }
@@ -332,13 +350,14 @@ class DosenController extends Controller
         $dosen_buku = $dosen_profile->buku_dosen;
         $dosen_jabatan = $dosen_profile->jabatan_dosen;
         $dosen_organisasi = $dosen_profile->organisasi_dosen;
+        $dosen_prestasi = $dosen_profile->prestasi_dosen;
 
 
         $filePath =  'file-dosen/' . $dosen_profile->file_name;
         $fileUrl = asset('storage/' . $filePath);
 
 
-        return view('dosen.detail', compact('dosen_profile', 'dosen_pendidikan', 'fileUrl', 'filePath', 'dosen_penelitian','dosen_penghargaan','dosen_pengabdian', 'dosen_karyaIlmiah', 'dosen_kegiatan', 'dosen_jurnal', 'dosen_buku', 'dosen_jabatan', 'dosen_organisasi'), ['title' => 'Details']);
+        return view('dosen.detail', compact('dosen_profile', 'dosen_pendidikan', 'fileUrl', 'filePath', 'dosen_penelitian','dosen_penghargaan','dosen_pengabdian', 'dosen_karyaIlmiah', 'dosen_kegiatan', 'dosen_jurnal', 'dosen_buku', 'dosen_jabatan', 'dosen_organisasi', 'dosen_prestasi'), ['title' => 'Details']);
     }
 
 
@@ -482,6 +501,38 @@ class DosenController extends Controller
             $dosen_jabatan->delete();
 
             return redirect()->back()->with('message_error', 'Berhasil Menghapus data');
+        } elseif($type == 'organisasi') {
+            $dosen_organisasi = FormOrganisasiDosen::find($id);
+
+            if (!$dosen_organisasi) {
+                return redirect()->back()->with('message_error', 'Data Dosen Tidak ditemukan');
+            }
+
+            $dosen_profile = FormProfileDosen::where('id', $dosen_organisasi->form_profile_dosen_id)->first();
+
+            if (!$dosen_profile) {
+                return redirect()->back()->with('message_error', 'Data Dosen Tidak Ditemukan');
+            }
+
+            $dosen_organisasi->delete();
+
+            return redirect()->back()->with('message_error', 'Berhasil Menghapus data');
+        } elseif($type == 'prestasi') {
+            $dosen_prestasi = FormPrestasiDosen::find($id);
+
+            if (!$dosen_prestasi) {
+                return redirect()->back()->with('message_error', 'Data Dosen Tidak ditemukan');
+            }
+
+            $dosen_profile = FormProfileDosen::where('id', $dosen_prestasi->form_profile_dosen_id)->first();
+
+            if (!$dosen_profile) {
+                return redirect()->back()->with('message_error', 'Data Dosen Tidak Ditemukan');
+            }
+
+            $dosen_prestasi->delete();
+
+            return redirect()->back()->with('message_error', 'Berhasil Menghapus data');
         }
     }
 
@@ -545,6 +596,10 @@ class DosenController extends Controller
                 $data = FormOrganisasiDosen::find($id);
                 $view = 'dosen.modal_edit.modal_organisasi';
                 break;
+            case 'prestasi':
+                $data = FormPrestasiDosen::find($id);
+                $view = 'dosen.modal_edit.modal_prestasi';
+                break;
             default:
                 break;
         }
@@ -598,6 +653,9 @@ class DosenController extends Controller
             elseif ($jenis === 'dosen_organisasi') {
                 $data = FormOrganisasiDosen::find($id);
                 $title = 'Organisasi Dosen';
+            } elseif ($jenis === 'dosen_prestasi') {
+                $data = FormPrestasiDosen::find($id);
+                $title = 'Prestasi Dosen';
             }
 
             if ($data) {
@@ -623,7 +681,7 @@ class DosenController extends Controller
         $user = Auth::user();
         $user = User::find($id);
         $dosen_profile = FormProfileDosen::find($user->id);
-        return view('dosen.edit_password', compact('user', 'dosen_profile'));
+        return view('layout.settings', compact('user', 'dosen_profile'));
     }
 
     function EditPassword($id) {

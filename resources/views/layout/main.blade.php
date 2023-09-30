@@ -49,7 +49,6 @@
 
     </style>
 </head>
-
 <body data-sidebar="dark">
     <div id="layout-wrapper">
         <header id="page-topbar" class="shadow">
@@ -146,10 +145,16 @@
                         <li><a href="back/rekap/Belum_strata_dua" class="waves-effect">Belum S2</a></li>
                     </ul>
                 </li>
+                <li class="">
+                    <a href="{{ route('pegawai') }}" class="waves-effect">
+                        <i class="bx bxs-id-card"></i>
+                        <span>Pegawai</span>
+                    </a>
+                </li>
                 <li>
                     <a href="#" class="waves-effect" aria-expanded="false">
                         <i class="bx bxs-bar-chart-square"></i>
-                        <span>Institusi</span>
+                        <span>Indikator Kinerja Utama</span>
                     </a>
                     <ul class="submenu mm-collapse" style="height: 0px;">
                         <li><a href="{{ route('iku.one') }}">IKU 1</a></li>
@@ -162,6 +167,7 @@
                         <li><a href="back/institut/iku_8">IKU 8</a></li>
                     </ul>
                 </li>
+
             </ul>
         </div>
     </div>
@@ -191,6 +197,13 @@
     {{-- Dosen --}}
     @yield('dosen')
     {{-- End Dosen --}}
+
+    {{-- Pegawai --}}
+    @yield('pegawai')
+    {{-- End Pegawai --}}
+
+    @yield('main')
+    @yield('modal')
 
     <footer class="footer">
 	<div class="container-fluid">
@@ -943,7 +956,7 @@ $('#btn-edit-profil').click(function(e) {
 
     $('.dosen_editor').removeAttr('hidden');
     $('.label_dosen').attr('hidden', 'hidden');
-    $('#btn-selesai').removeClass('d-none')
+    $('#btn-selesai').removeClass('d-none');
     $('#btn-edit-profil').hide();
 
 });
@@ -1230,6 +1243,32 @@ success: function(response) {
 });
 });
 
+$('.open-btn-modal-prestasi').click(function() {
+var id = $(this).data('id');
+var url = '/modal-popout/' + id + '/prestasi';
+$.ajax({
+url: url,
+type: 'GET',
+success: function(response) {
+    $('#modal_content').html(response);
+    $('#modal-popout').modal('show');
+}
+});
+});
+
+$('.open-btn-modal-prestasi-edit').click(function() {
+var id = $(this).data('id');
+var url = '/dosen/edit/' + id + '/prestasi';
+$.ajax({
+url: url,
+type: 'GET',
+success: function(response) {
+    $('#modal_content').html(response);
+    $('#modal-popout').modal('show');
+}
+});
+});
+
 
 function DeleteDetails(url) {
 Swal.fire({
@@ -1326,7 +1365,7 @@ Swal.fire({
                 search: '<span>Cari:</span> _INPUT_',
                 searchPlaceholder: 'Masukan pencarian...',
                 infoEmpty: "Menampilkan 0 data",
-                zeroRecords: "Tidak Ada Data Penelitian",
+                zeroRecords: "Tidak Ada Data",
                 info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
                 infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
                 lengthMenu: 'Tampilkan: _MENU_',
@@ -1348,7 +1387,7 @@ Swal.fire({
                 search: '<span>Cari:</span> _INPUT_',
                 searchPlaceholder: 'Masukan pencarian...',
                 infoEmpty: "Menampilkan 0 data",
-                zeroRecords: "Tidak Ada Data Penelitian",
+                zeroRecords: "Tidak Ada Data",
                 info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
                 infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
                 lengthMenu: 'Tampilkan: _MENU_',
@@ -1370,7 +1409,7 @@ Swal.fire({
                 search: '<span>Cari:</span> _INPUT_',
                 searchPlaceholder: 'Masukan pencarian...',
                 infoEmpty: "Menampilkan 0 data",
-                zeroRecords: "Tidak Ada Data Penelitian",
+                zeroRecords: "Tidak Ada Data",
                 info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
                 infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
                 lengthMenu: 'Tampilkan: _MENU_',
@@ -1392,7 +1431,7 @@ Swal.fire({
                 search: '<span>Cari:</span> _INPUT_',
                 searchPlaceholder: 'Masukan pencarian...',
                 infoEmpty: "Menampilkan 0 data",
-                zeroRecords: "Tidak Ada Data Penelitian",
+                zeroRecords: "Tidak Ada Data",
                 info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
                 infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
                 lengthMenu: 'Tampilkan: _MENU_',
@@ -1414,7 +1453,7 @@ Swal.fire({
                 search: '<span>Cari:</span> _INPUT_',
                 searchPlaceholder: 'Masukan pencarian...',
                 infoEmpty: "Menampilkan 0 data",
-                zeroRecords: "Tidak Ada Data Penelitian",
+                zeroRecords: "Tidak Ada Data",
                 info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
                 infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
                 lengthMenu: 'Tampilkan: _MENU_',
@@ -1436,7 +1475,7 @@ Swal.fire({
                 search: '<span>Cari:</span> _INPUT_',
                 searchPlaceholder: 'Masukan pencarian...',
                 infoEmpty: "Menampilkan 0 data",
-                zeroRecords: "Tidak Ada Data Penelitian",
+                zeroRecords: "Tidak Ada Data ",
                 info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
                 infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
                 lengthMenu: 'Tampilkan: _MENU_',
@@ -1458,7 +1497,29 @@ Swal.fire({
                 search: '<span>Cari:</span> _INPUT_',
                 searchPlaceholder: 'Masukan pencarian...',
                 infoEmpty: "Menampilkan 0 data",
-                zeroRecords: "Tidak Ada Data Penelitian",
+                zeroRecords: "Tidak Ada Data ",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        });
+        table.formPrestasi = $('#table-prestasi').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data",
                 info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
                 infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
                 lengthMenu: 'Tampilkan: _MENU_',
@@ -1471,6 +1532,265 @@ Swal.fire({
             },
         });
     });
+
+</script>
+{{-- Settings --}}
+<script>
+    function edit_password(id) {
+    window.location.href = '/edit-password/' + id;
+ }
+</script>
+<script>
+    // Js Pegawai
+
+    var table;
+    $(document).ready(function() {
+        table = $('#table-pegawai').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Data tidak ada",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        })
+    });
+
+    // Detail
+
+    var table;
+    $(document).ready(function() {
+        table = $('#table-pendidikan_pegawai').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Menampilkan 0 data",
+                zeroRecords: "Tidak Ada Data",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        })
+    });
+
+    $('#btn-edit-profil-pegawai').click(function(e) {
+
+    e.preventDefault();
+
+    $('.pegawai_editor').removeAttr('hidden');
+    $('.label_pegawai').attr('hidden', 'hidden');
+    $('#btn-selesai').removeClass('d-none');
+    $('#btn-edit-profil-pegawai').hide();
+
+
+
+
+
+});
+// $(document).ready(function() {
+// $('.tombol-foto').click(function() {
+// var id = $(this).data('id');
+
+// $.ajax({
+//     url: '/modal-popout/' + id + '/pasfoto',
+//     type: 'GET',
+//     success: function(response) {
+//         $('#modal_content').html(response);
+//         $('#modal-popout').modal('show');
+//     }
+// });
+// });
+// });
+
+</script>
+<script>
+    function tombol_detail(id) {
+        window.location.href = 'pegawai/details/' + id;
+    }
+    $(document).ready(function() {
+        $('.tombol-edit').click(function() {
+        var id = $(this).data('id');
+        var type = $(this).data('type');
+        var url = '/pegawai/details/modal/' + id + '/' + type;
+        $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+        });
+        });
+        $('.tombol-hapus').click(function() {
+            var id = $(this).data('id');
+            var type = $(this).data('type');
+            var url = '/pegawai/details/' + id + '/' + type;
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: 'Data ini akan dihapus!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Tidak',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            Swal.fire('Berhasil!', response.success, 'success').then(() => {
+                                window.location.href = response.redirect;
+                            });
+                        },
+                        error: function(response) {
+                            console.error(response);
+                            Swal.fire('Gagal!', 'Terjadi kesalahan.', 'error');
+                        }
+                    });
+                }
+            });
+        });
+
+
+    });
+
+    </script>
+
+{{-- IKU ONE --}}
+<script type="text/javascript">
+
+    var table;
+    $(document).ready(function() {
+    var table = $('#table_iku_one').DataTable({
+        // Konfigurasi DataTables
+        lengthMenu: [
+            [10, 50, 100, -1],
+            [10, 50, 100, 'All'],
+        ],
+        stateSave: true,
+        ordering: true,
+        language: {
+            search: '<span>Cari:</span> _INPUT_',
+            searchPlaceholder: 'Masukan pencarian...',
+            infoEmpty: "Menampilkan 0 data",
+            zeroRecords: "Tidak Ada Data",
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+            lengthMenu: 'Tampilkan: _MENU_',
+            "order": [[1, 'asc']], // Kolom berapa yang diurutkan secara default (contoh: urutkan berdasarkan kolom kedua secara ascending)
+            "columnDefs": [
+                { "orderable": false, "targets": [0, 4] } // Menonaktifkan pengurutan pada kolom 1 dan 5
+            ],
+            paginate: {
+                'first': 'First',
+                'last': 'Last',
+                'next': '&rarr;',
+                'previous': '&larr;'
+            }
+        },
+    });
+
+    });
+
+    // Event listener untuk elemen select dengan ID "klasifikasi"
+    document.getElementById("klasifikasi").addEventListener("change", function() {
+        var selectElement = this; // Mengambil elemen select yang sedang digunakan
+        var selectedValue = selectElement.value; // Mengambil nilai yang dipilih
+
+        // Ganti teks yang ditampilkan sesuai dengan nilai yang dipilih
+        switch (selectedValue) {
+            case "a":
+                ""
+                break;
+            case "b":
+                selectElement.options[selectElement.selectedIndex].text = "Lulusan yang Melanjutkan Studi";
+                break;
+            case "c":
+                selectElement.options[selectElement.selectedIndex].text = "Lulusan Berwirausaha";
+                break;
+            default:
+                break;
+        }
+    });
+
+
+
+
+    // Function Kategori IKU ONE
+    document.addEventListener("DOMContentLoaded", function () {
+        const KlasifikasiSelect = document.getElementById("klasifikasi");
+        const tableRow = document.querySelectorAll("#table_iku_one tbody tr");
+
+        let nomorUrutanA = 1;
+        let nomorUrutanB = 1;
+        let nomorUrutanC = 1;
+
+        KlasifikasiSelect.addEventListener("change", function () {
+            const selectedValue = KlasifikasiSelect.value;
+
+            tableRow.forEach((row) => {
+                row.style.display = "none";
+            });
+
+
+            nomorUrutanA = 1;
+            nomorUrutanB = 1;
+            nomorUrutanC = 1;
+
+            tableRow.forEach((row) => {
+                const dataKlasifikasi = row.getAttribute("data-klasifikasi");
+
+                if (dataKlasifikasi === selectedValue) {
+                    row.style.display = "";
+
+                    switch (selectedValue) {
+                        case "a":
+                            row.querySelector("th").textContent = nomorUrutanA++;
+                            break;
+                        case "b":
+                            row.querySelector("th").textContent = nomorUrutanB++;
+                            break;
+                        case "c":
+                            row.querySelector("th").textContent = nomorUrutanC++;
+                            break;
+                    }
+                }
+            })
+        });
+
+        KlasifikasiSelect.dispatchEvent(new Event("change"));
+    });
+
 
 </script>
 </body>

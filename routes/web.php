@@ -1,12 +1,16 @@
 <?php
 
 use App\Http\Controllers\DosenController;
-use App\Models\AlumniModel;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InstitusiController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\PegawaiDetailsController;
+use App\Http\Controllers\PegawaiModalController;
+use App\Models\AlumniModel;
 use App\Models\MInputDataModel;
+use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +59,25 @@ Route::middleware(['auth'])->group(function () {
 
     // Institusi
     Route::get('/iku/one',[InstitusiController::class, 'ikuOne'])->name('iku.one');
+
+    /*
+    **********************
+     * Pegawai
+    **********************
+    **/
+    Route::prefix('/pegawai')->group(function(){
+        Route::get('/', [PegawaiController::class, 'index'])->name('pegawai');
+        Route::post('/store', [PegawaiController::class, 'store'])->name('store');
+        Route::prefix('/details')->group(function(){
+            Route::get('/{id}', [PegawaiDetailsController::class, 'index'])->name('index');
+            Route::post('/store/{id}', [PegawaiDetailsController::class, 'store'])->name('pegawai.detail.store');
+            Route::get('/{id}/{type}', [PegawaiDetailsController::class, 'destroy'])->name('delete');
+            Route::prefix('/modal')->group(function() {
+                Route::get('/{id}/{type}', [PegawaiModalController::class, 'index'])->name('modal.index');
+                Route::post('/{id}/{type}', [PegawaiModalController::class, 'store'])->name('modal.store');
+            });
+        });
+    });
 });
 
 

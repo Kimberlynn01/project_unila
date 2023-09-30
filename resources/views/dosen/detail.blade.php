@@ -115,6 +115,9 @@
                     <li class="nav-item">
                         <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-organisasi" role="tab" aria-controls="pills-organisasi" aria-selected="false">Organisasi</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-prestasi" role="tab" aria-controls="pills-prestasi" aria-selected="false">Prestasi</a>
+                    </li>
                 </ul>
 
                 <div class="tab-content" id="pills-tabContent">
@@ -578,28 +581,74 @@
                                 <tbody>
                                     <?php $no = 1; ?>
                                     @foreach ($dosen_organisasi as $row)
-                                        <th>{{ $no++ }}</th>
-                                        <td>{{ $row->organisasi }}</td>
-                                        <td>{{ $row->institusi }}</td>
-                                        <td>{{ $row->tahun }}</td>
-                                        <td class="d-flex justify-content-center ">
-                                            @if ($row->id)
-                                                <div class="btn-group">
-                                                    <button class="btn btn-primary open-btn-modal-organisasi-edit" data-id="{{ $row->id }}">
-                                                        <i class="bi bi-pencil-square"></i>
-                                                    </button>
-                                                    <button class="btn btn-danger" onclick="DeleteDetails('{{ route('dosen.delete', ['id' => $row->id, 'type' => 'organisasi']) }}')">
-                                                        <i class="bi bi-trash3-fill"></i>
-                                                    </button>
-                                                </div>
-                                            @endif
-                                        </td>
+                                        <tr>
+                                            <th>{{ $no++ }}</th>
+                                            <td>{{ $row->organisasi }}</td>
+                                            <td>{{ $row->institusi }}</td>
+                                            <td>{{ $row->tahun }}</td>
+                                            <td class="d-flex justify-content-center ">
+                                                @if ($row->id)
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-primary open-btn-modal-organisasi-edit" data-id="{{ $row->id }}">
+                                                            <i class="bi bi-pencil-square"></i>
+                                                        </button>
+                                                        <button class="btn btn-danger" onclick="DeleteDetails('{{ route('dosen.delete', ['id' => $row->id, 'type' => 'organisasi']) }}')">
+                                                            <i class="bi bi-trash3-fill"></i>
+                                                        </button>
+                                                    </div>
+                                                @endif
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <!-- Tab Organisasi End Here -->
+
+                    <!-- Tab Prestasi Start Here -->
+                    <div class="tab-pane fade" id="pills-prestasi" role="tabpanel" aria-labelledby="pills-prestasi-tab">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-success mb-3 open-btn-modal-prestasi" data-id="{{ $dosen_profile->id }} ">Tambah Data</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover" id="table-prestasi" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Prestasi</th>
+                                        <th>Keterangan</th>
+                                        <th>Tahun</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $no = 1; ?>
+                                    @foreach ($dosen_prestasi as $row)
+                                        <tr>
+                                            <th>{{ $no++ }}</th>
+                                            <td>{{ $row->prestasi }}</td>
+                                            <td>{{ $row->keterangan }}</td>
+                                            <td>{{ $row->tahun }}</td>
+                                            <td class="d-flex justify-content-center ">
+                                                @if ($row->id)
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-primary open-btn-modal-prestasi-edit" data-id="{{ $row->id }}">
+                                                            <i class="bi bi-pencil-square"></i>
+                                                        </button>
+                                                        <button class="btn btn-danger" onclick="DeleteDetails('{{ route('dosen.delete', ['id' => $row->id, 'type' => 'prestasi']) }}')">
+                                                            <i class="bi bi-trash3-fill"></i>
+                                                        </button>
+                                                    </div>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Tab Prestasi End Here -->
 
                     <!-- Modal -->
                     <div class="modal fade" id="modal-popout" role="dialog" style="z-index: 999999;">
