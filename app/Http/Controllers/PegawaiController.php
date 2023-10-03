@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\PegawaiModel;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Mockery\Matcher\HasKey;
 
 class PegawaiController extends Controller
 {
-    public function index() {
+    public function index() : View {
         $pegawai = PegawaiModel::all();
         return view('dashboard.pegawai',[
             'title' => 'Pegawai'
@@ -53,4 +56,18 @@ class PegawaiController extends Controller
 
         return redirect()->back()->with('message', 'Success Menambah Data Pegawai');
     }
+
+    public function destroy($id) {
+        $pegawai = PegawaiModel::find($id);
+
+        if (!$pegawai) {
+            return redirect()->back()->with('message_error', 'Data Pegawai Tidak Ditemukan');
+        }
+
+        $pegawai->delete();
+
+        return redirect()->back()->with('message_error', 'Data berhasil dihapus');
+    }
+
+
 }

@@ -14,12 +14,13 @@ use Maatwebsite\Excel\Facades\Excel as FacadesExcel;
 
 class InstitusiController extends Controller
 {
-    public function ikuOne() {
+    public function index() {
         $ikuOne = IkuOne::all();
         $ikuOneb = IkuOne_b::all();
         $ikuOneC = IkuOne_c::all();
+        $title = 'Iku One';
 
-        return view('intisusi.ikuone', compact('ikuOne', 'ikuOneb', 'ikuOneC'));
+        return view('intisusi.One.ikuone', compact('ikuOne', 'ikuOneb', 'ikuOneC', 'title'));
     }
 
     // Iku 1 Import
@@ -49,5 +50,18 @@ class InstitusiController extends Controller
                 return redirect()->back()->with('message_error', 'Failed To Import Iku One: '.$th->getMessage());
             }
         }
+    }
+
+
+    public function destroy($id) {
+        $ikuOne = IkuOne::find($id);
+
+        if (!$ikuOne) {
+            return redirect()->back()->with('message_error', 'Failed To Find Iku One');
+        }
+
+        $ikuOne->delete();
+
+        return redirect()->back()->with('message', 'Data berhasil dihapus');
     }
 }

@@ -7,6 +7,12 @@
     {{ session('message') }}
 </div>
 @endif
+
+@if (session('message_error'))
+<div class="alert alert-danger">
+    {{ session('message_error') }}
+</div>
+@endif
 <div class="card">
     <div class="card-header list-group-item list-group-item-action active">
         Data Pegawai
@@ -17,7 +23,7 @@
 
     <div class="modal fade" id="modal-popout" tabindex="-1" style="z-index: 9999">
         <div class="modal-dialog modal-dialog-popout modal-xl">
-            <form action="{{ route('store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('store', ['type' => 'store']) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -99,13 +105,13 @@
                             <td>{{ $row->email }}</td>
                             <td class="d-flex justify-content-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-warning" onclick="tombol_detail({{ $row->id }})" title="Details Dosen {{ $row->nama_pegawai }}"  data-id="{{ $row->id }}">
+                                    <button type="button" class="btn btn-warning" onclick="tombol_detail({{ $row->id }})" title="Details Pegawai {{ $row->nama_pegawai }}"  data-id="{{ $row->id }}">
                                         <i class="bx bxs-detail" ></i>
                                     </button>
-                                    <button class="btn btn-success" title="Reset Password">
+                                    <button class="btn btn-success " onclick="tombol_reset({{ $row->users->id }})" title="Reset Password {{ $row->id }}">
                                         <i class="bx bxs-key"></i>
                                     </button>
-                                    <button class="btn btn-danger" title="Delete Data Dosen">
+                                    <button class="btn btn-danger" onclick="tombol_hapus({{ $row->id }})" title="Details Pegawai {{ $row->nama_pegawai }}"  data-id="{{ $row->id }}">
                                         <i class="bx bxs-trash"></i>
                                     </button>
                                 </div>

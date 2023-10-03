@@ -157,14 +157,14 @@
                         <span>Indikator Kinerja Utama</span>
                     </a>
                     <ul class="submenu mm-collapse" style="height: 0px;">
-                        <li><a href="{{ route('iku.one') }}">IKU 1</a></li>
-                        <li><a href="back/institut/iku_2">IKU 2</a></li>
-                        <li><a href="back/institut/iku_3">IKU 3</a></li>
-                        <li><a href="back/institut/iku_4">IKU 4</a></li>
-                        <li><a href="back/institut/iku_5">IKU 5</a></li>
-                        <li><a href="back/institut/iku_6">IKU 6</a></li>
-                        <li><a href="back/institut/iku_7">IKU 7</a></li>
-                        <li><a href="back/institut/iku_8">IKU 8</a></li>
+                        <li><a href="/iku/one">IKU 1</a></li>
+                        <li><a href="{{ route('iku.two') }}">IKU 2</a></li>
+                        <li><a href="#">IKU 3</a></li>
+                        <li><a href="#">IKU 4</a></li>
+                        <li><a href="#">IKU 5</a></li>
+                        <li><a href="#">IKU 6</a></li>
+                        <li><a href="#">IKU 7</a></li>
+                        <li><a href="#">IKU 8</a></li>
                     </ul>
                 </li>
 
@@ -1539,6 +1539,52 @@ Swal.fire({
     function edit_password(id) {
     window.location.href = '/edit-password/' + id;
  }
+    function tombol_hapus(id) {
+        Swal.fire({
+            title: 'Are You Sure?',
+            text: "Data Tidak Dapat Dikembalikan !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!, Delete it!.',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/pegawai/destroy/' + id;
+            }
+        });
+    }
+</script>
+<script>
+    function tombol_reset(id) {
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Password akan direset !",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes !'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'POST',
+                url: `/pegawai/reset/` + id,
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+                success: function (response) {
+                    Swal.fire('Success Mereset Password', response.success, 'success');
+                },
+                error: function (error) {
+                    Swal.fire('Error', 'Gagal mereset password.', 'error');
+                }
+            });
+        }
+    });
+}
 </script>
 <script>
     // Js Pegawai
@@ -1611,20 +1657,6 @@ Swal.fire({
 
 
 });
-// $(document).ready(function() {
-// $('.tombol-foto').click(function() {
-// var id = $(this).data('id');
-
-// $.ajax({
-//     url: '/modal-popout/' + id + '/pasfoto',
-//     type: 'GET',
-//     success: function(response) {
-//         $('#modal_content').html(response);
-//         $('#modal-popout').modal('show');
-//     }
-// });
-// });
-// });
 
 </script>
 <script>
@@ -1680,13 +1712,25 @@ Swal.fire({
                 }
             });
         });
-
-
     });
 
     </script>
 
 {{-- IKU ONE --}}
+
+<script>
+    function _form() {
+        window.location.href = '/iku/one/form';
+    }
+
+    function _edit(id) {
+        window.location.href = '/iku/one/edit/' + id;
+    }
+
+    function _destroy(id) {
+        window.location.href = '/iku/one/delete/' + id;
+    }
+</script>
 <script type="text/javascript">
 
     var table;

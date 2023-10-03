@@ -74,8 +74,8 @@
                             <td>{{ $row->jenjang }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button class="p-2 btn btn-primary"><i class="fa fa-edit"></i></button>
-                                    <button class="p-2 btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    <button class="p-2 btn btn-primary" onclick="_edit({{$row->id}})"><i class="fa fa-edit"></i></button>
+                                    <button class="p-2 btn btn-danger" onclick="_destroy({{ $row->id }})"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -98,7 +98,7 @@
                             <td>{{ $row->jenjang }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button class="p-2 btn btn-primary"><i class="fa fa-edit"></i></button>
+                                    <button class="p-2 btn btn-primary" onclick="_edit({{$row->id}})"><i class="fa fa-edit"></i></button>
                                     <button class="p-2 btn btn-danger"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
@@ -122,7 +122,7 @@
                             <td>{{ $row->jenjang }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button class="p-2 btn btn-primary"><i class="fa fa-edit"></i></button>
+                                    <button class="p-2 btn btn-primary" onclick="_edit({{$row->id}})"><i class="fa fa-edit"></i></button>
                                     <button class="p-2 btn btn-danger"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
@@ -136,7 +136,7 @@
     </div>
 </div>
 
-<form action="{{ route('iku.one.import') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('store') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="modal fade" id="modal-popout" role="dialog">
         <div class="modal-dialog modal-dialog-popout">
@@ -144,7 +144,7 @@
               <div id="content_modal">
                  <div class="modal-header bg-primary">
                      <div class="modal-title">
-                         <h3 class="text-light">Import Data Mahasiswa</h3>
+                         <h3 class="text-light">Import Data</h3>
                      </div>
                      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                  </div>

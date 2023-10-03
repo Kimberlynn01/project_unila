@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\EditInstitusiOne;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeIkueTwo;
+use App\Http\Controllers\EmployeePegawai;
+use App\Http\Controllers\FormInstitusiOne;
 use App\Http\Controllers\InstitusiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PegawaiController;
@@ -10,6 +14,8 @@ use App\Http\Controllers\PegawaiModalController;
 use App\Models\AlumniModel;
 use App\Models\MInputDataModel;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 /*
@@ -58,7 +64,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dosen/details/{id}', [DosenController::class, 'showDetails'])->name('details.dosen');
 
     // Institusi
-    Route::get('/iku/one',[InstitusiController::class, 'ikuOne'])->name('iku.one');
 
     /*
     **********************
@@ -68,6 +73,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/pegawai')->group(function(){
         Route::get('/', [PegawaiController::class, 'index'])->name('pegawai');
         Route::post('/store', [PegawaiController::class, 'store'])->name('store');
+        Route::post('/reset/{id}', [EmployeePegawai::class, 'reset'])->name('reset')->withoutMiddleware(['csrf']);
+        Route::get('/destroy/{id}', [PegawaiController::class, 'destroy'])->name('destroy');
         Route::prefix('/details')->group(function(){
             Route::get('/{id}', [PegawaiDetailsController::class, 'index'])->name('index');
             Route::post('/store/{id}', [PegawaiDetailsController::class, 'store'])->name('pegawai.detail.store');
@@ -77,6 +84,33 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/{id}/{type}', [PegawaiModalController::class, 'store'])->name('modal.store');
             });
         });
+    });
+    Route::prefix('/iku')->group(function(){
+
+        // Iku One
+        Route::prefix('/one')->group(function(){
+            Route::get('/',[InstitusiController::class, 'index'])->name('index');
+            Route::post('/store', [InstitusiController::class, 'store'])->name('iku.one.store');
+            Route::get('/delete/{id}', [InstitusiController::class, 'destroy'])->name('destroy');
+
+            Route::prefix('/form')->group(function(){
+                Route::get('/', [FormInstitusiOne::class, 'index'])->name('index');
+                Route::post('/store', [FormInstitusiOne::class, 'store'])->name('store.form.one');
+            });
+            Route::prefix('/edit')->group(function(){
+                Route::get('/{id}', [EditInstitusiOne::class, 'index'])->name('index');
+                Route::post('/store/{id}', [EditInstitusiOne::class, 'store'])->name('store.edit.one');
+            });
+        });
+
+        // Iku Two
+        Route::prefix('/two')->group(function(){
+            Route::get('/',[EmployeeIkueTwo::class, 'index'])->name('iku.two');
+            Route::post('/store', [EmployeeIkueTwo::class, 'store'])->name('store');
+        });
+
+
+        // Iku Three
     });
 });
 
@@ -138,5 +172,4 @@ Route::post('/reset-password/{id}', [DosenController::class, 'resetPassword'])->
 
 
 // Institusi
-Route::post('/importikuone', [InstitusiController::class, 'store'])->name('iku.one.import');
 

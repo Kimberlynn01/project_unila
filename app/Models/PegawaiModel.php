@@ -6,6 +6,7 @@ use App\Models\PegawaiOrganisasi;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class PegawaiModel extends Model
 {
@@ -67,7 +68,7 @@ class PegawaiModel extends Model
         return $this->hasMany(PegawaiPrestasi::class, 'pegawai_model_id');
     }
 
-    public function users() : HasMany {
-        return $this->hasMany(User::class, 'pegawai_model_id');
+    public function users() : HasOne {
+        return $this->hasOne(User::class, 'pegawai_model_id');
     }
 }
