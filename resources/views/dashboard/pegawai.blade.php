@@ -23,7 +23,7 @@
 
     <div class="modal fade" id="modal-popout" tabindex="-1" style="z-index: 9999">
         <div class="modal-dialog modal-dialog-popout modal-xl">
-            <form action="{{ route('store', ['type' => 'store']) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('store.pegawai') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">

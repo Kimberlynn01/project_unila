@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class IkuOne extends Model
 {
@@ -24,4 +25,13 @@ class IkuOne extends Model
         'jenjang',
         'klasifikasi',
     ];
+
+
+
+    // public function b () : HasOne {
+    //     return $this->hasOne(IkuOne_b::class, 'kategori_id');
+    // }
+    // public function c () : HasOne {
+    //     return $this->hasOne(IkuOne_c::class, 'kategori_id');
+    // }
 }

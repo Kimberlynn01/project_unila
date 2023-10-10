@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\DetailsLaporanAuditController;
+use App\Http\Controllers\DokumenMutuController;
+use App\Http\Controllers\DokumenMutuEditController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\EditInstitusiOne;
 use App\Http\Controllers\EmployeeController;
@@ -7,6 +10,7 @@ use App\Http\Controllers\EmployeeIkueTwo;
 use App\Http\Controllers\EmployeePegawai;
 use App\Http\Controllers\FormInstitusiOne;
 use App\Http\Controllers\InstitusiController;
+use App\Http\Controllers\LaporanAuditController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PegawaiDetailsController;
@@ -14,6 +18,8 @@ use App\Http\Controllers\PegawaiModalController;
 use App\Models\AlumniModel;
 use App\Models\MInputDataModel;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -72,7 +78,7 @@ Route::middleware(['auth'])->group(function () {
     **/
     Route::prefix('/pegawai')->group(function(){
         Route::get('/', [PegawaiController::class, 'index'])->name('pegawai');
-        Route::post('/store', [PegawaiController::class, 'store'])->name('store');
+        Route::post('/store', [PegawaiController::class, 'store'])->name('store.pegawai');
         Route::post('/reset/{id}', [EmployeePegawai::class, 'reset'])->name('reset')->withoutMiddleware(['csrf']);
         Route::get('/destroy/{id}', [PegawaiController::class, 'destroy'])->name('destroy');
         Route::prefix('/details')->group(function(){
@@ -101,6 +107,9 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/{id}', [EditInstitusiOne::class, 'index'])->name('index');
                 Route::post('/store/{id}', [EditInstitusiOne::class, 'store'])->name('store.edit.one');
             });
+            Route::prefix('/b')->group(function() {
+                Route::get('/', [InstitusiController::class, 'index'])->name('index');
+            });
         });
 
         // Iku Two
@@ -108,9 +117,24 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/',[EmployeeIkueTwo::class, 'index'])->name('iku.two');
             Route::post('/store', [EmployeeIkueTwo::class, 'store'])->name('store');
         });
+    });
 
-
-        // Iku Three
+    Route::prefix('/dokumen_mutu')->group(function(){
+        Route::get('/', [DokumenMutuController::class, 'index'])->name('index.dokumen');
+        Route::post('/store', [DokumenMutuController::class, 'store'])->name('store.dokumen');
+        Route::get('/destroy/{id}', [DokumenMutuController::class, 'destroy'])->name('destroy.dokumen');
+        Route::prefix('/modal')->group(function() {
+            Route::get('/get/{id}/{type}', [DokumenMutuEditController::class, 'index'])->name('modal.index');
+            Route::post('/store/{id}', [DokumenMutuEditController::class, 'store'])->name('modal.store');
+        });
+    });
+    Route::prefix('/laporan_audit')->group(function(){
+        Route::get('/', [LaporanAuditController::class, 'index'])->name('index.laporan');
+        Route::post('/store', [LaporanAuditController::class, 'store'])->name('store.laporan');
+        Route::get('/destroy/{id}', [LaporanAuditController::class, 'destroy'])->name('destroy.laporan');
+        Route::prefix('/detail')->group(function(){
+            Route::get('/{id}', [DetailsLaporanAuditController::class, 'index'])->name('detail.laporan');
+        });
     });
 });
 

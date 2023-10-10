@@ -167,7 +167,18 @@
                         <li><a href="#">IKU 8</a></li>
                     </ul>
                 </li>
-
+                <li>
+                    <a href="{{ route('index.dokumen') }}" class="waves-effect ">
+                        <i class='bx bxs-user-badge'></i>
+                        <span>Dokumen Penjamin Mutu</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('index.laporan') }}" class="waves-effect">
+                        <i class="bx bxs-file"></i>
+                        <span>Laporan Audit Penjamin Mutu</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -380,6 +391,8 @@
 function detailsButton(id) {
     window.location.href = '/dosen/details/' + id;
 }
+
+
 
 function resetPassword(id) {
     // Ambil token CSRF dari meta tag
@@ -701,6 +714,35 @@ function deleteData(url) {
     });
 
 </script>
+
+
+<script>
+    var table;
+    $(document).ready(function() {
+        table = $('#table-all').DataTable({
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, 'Semua'],
+            ],
+            stateSave: true,
+            language: {
+                search: '<span>Cari:</span> _INPUT_',
+                searchPlaceholder: 'Masukan pencarian...',
+                infoEmpty: "Tidak ada data yang tersedia",
+                zeroRecords: "Tidak Ada Data",
+                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                infoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                lengthMenu: 'Tampilkan: _MENU_',
+                paginate: {
+                    'first': 'First',
+                    'last': 'Last',
+                    'next': '&rarr;',
+                    'previous': '&larr;'
+                }
+            },
+        })
+    });
+   </script>
 
 <script>
     function cek_nomor(evt) {
@@ -1509,6 +1551,7 @@ Swal.fire({
                 }
             },
         });
+
         table.formPrestasi = $('#table-prestasi').DataTable({
             lengthMenu: [
                 [10, 50, 100, -1],
@@ -1531,6 +1574,9 @@ Swal.fire({
                 }
             },
         });
+
+
+
     });
 
 </script>
@@ -1724,7 +1770,11 @@ Swal.fire({
     }
 
     function _edit(id) {
-        window.location.href = '/iku/one/edit/' + id;
+        window.location.href = '/iku/one/edit/a/' + id;
+    }
+
+    function _edit_b(id) {
+        window.location.href = '/iku/one/edit/b/' + id;
     }
 
     function _destroy(id) {
@@ -1836,6 +1886,36 @@ Swal.fire({
     });
 
 
+</script>
+
+
+
+{{-- Dokumen Penjamin Mutu --}}
+
+
+<script>
+    $(document).ready(function() {
+        $('.modal-edit').click(function() {
+        var id = $(this).data('id');
+        var type = $(this).data('type');
+        var url = '/dokumen_mutu/modal/get/' + id + '/' + type;
+        $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            $('#modal_content').html(response);
+            $('#modal-popout').modal('show');
+        }
+        });
+        });
+    });
+</script>
+{{-- Laporan Audit --}}
+
+<script>
+    function detailsButtonLaporan(id) {
+    window.location.href = '/laporan_audit/detail/' + id;
+}
 </script>
 </body>
 

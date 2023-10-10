@@ -28,7 +28,7 @@ class PegawaiController extends Controller
             'email' => 'required',
             'website' => 'required',
             'keahlian' => 'required',
-            'foto' => 'mimes:jpeg,png,gif,jfif,jpg|max:14929',
+            'foto' => 'max:14929',
         ]);
 
         $file = $request->file('foto');

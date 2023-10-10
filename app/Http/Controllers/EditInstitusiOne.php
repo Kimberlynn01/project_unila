@@ -31,15 +31,10 @@ class EditInstitusiOne extends Controller
 
         if ($ikuOne) {
             $ikuOne->update($request->all());
-        return redirect()->back()->with('message', 'Success Edit Iku One');
 
-        } elseif ($ikuOneb) {
-            $ikuOneb->update($request->all());
-        return redirect()->back()->with('message', 'Success Edit Iku One');
+            $ikuOneb->create($request->all());
 
-        } elseif ($ikuOneC) {
-            $ikuOneC->update($request->all());
-        return redirect()->back()->with('message', 'Success Edit Iku One');
+            return redirect()->back()->with('message', 'Success Edit Iku One');
 
         }
 
