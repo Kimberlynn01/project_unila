@@ -59,9 +59,7 @@ class DosenController extends Controller
             if ($file) {
                 $fileName = time() . '_' . $file->getClientOriginalName();
                 $fileType = $file->getClientOriginalExtension();
-
                 $file->storeAs('file-dosen', $fileName, 'public');
-
                 $validateData['file_name'] = $fileName;
                 $validateData['file_type'] = $fileType;
             }
@@ -320,7 +318,6 @@ class DosenController extends Controller
             $fileType = $file->getClientOriginalExtension();
 
             $file->storeAs('file-dosen', $fileName, 'public');
-
             $validateDsata['file_name'] = $fileName;
             $validateData['file_type'] = $fileType;
             $dosen_profile->update($validateData);

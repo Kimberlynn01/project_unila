@@ -33,7 +33,7 @@
                             </tr>
                         </thead>
                         @php
-                            $no = 1;
+                            $no = 1;    
                         @endphp
                         <tbody role="grid">
                             @foreach ($data as $row)

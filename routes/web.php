@@ -1,23 +1,24 @@
 <?php
 
-use App\Http\Controllers\DetailsLaporanAuditController;
-use App\Http\Controllers\DokumenMutuController;
-use App\Http\Controllers\DokumenMutuEditController;
-use App\Http\Controllers\DosenController;
-use App\Http\Controllers\EditInstitusiOne;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\EmployeeIkueTwo;
-use App\Http\Controllers\EmployeePegawai;
-use App\Http\Controllers\FormInstitusiOne;
-use App\Http\Controllers\InstitusiController;
-use App\Http\Controllers\LaporanAuditController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PegawaiController;
-use App\Http\Controllers\PegawaiDetailsController;
-use App\Http\Controllers\PegawaiModalController;
 use App\Models\AlumniModel;
 use App\Models\MInputDataModel;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DosenController;
+use App\Http\Controllers\EmployeeIkueTwo;
+use App\Http\Controllers\EmployeePegawai;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MonevController;
+use App\Http\Controllers\EditInstitusiOne;
+use App\Http\Controllers\FormInstitusiOne;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\InstitusiController;
+use App\Http\Controllers\DokumenMutuController;
+use App\Http\Controllers\LaporanAuditController;
+use App\Http\Controllers\PegawaiModalController;
+use App\Http\Controllers\PegawaiDetailsController;
+use App\Http\Controllers\DokumenMutuEditController;
+use App\Http\Controllers\DetailsLaporanAuditController;
 
 
 
@@ -136,6 +137,19 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}', [DetailsLaporanAuditController::class, 'index'])->name('detail.laporan');
         });
     });
+
+
+});
+//monev pembelajaran
+Route::prefix('/monev')->group(function(){
+    Route::get('/', [MonevController::class, 'index'])->name('index.monev');
+Route::post('/store', [MonevController::class, 'store'])->name('monev.store');
+// Route::post('/update', [MonevController::class, 'update'])->name('monev.update');
+Route::prefix('/modal')->group(function() {
+    Route::get('/{id}', [MonevController::class, 'modal']);
+    Route::get('/delete/{id}', [MonevController::class, 'delete'])->name('monev.delete');
+    Route::post('/update/{id}', [MonevController::class, 'update'])->name('monev.update');
+});
 });
 
 
