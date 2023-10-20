@@ -16,15 +16,15 @@ class MonevController extends Controller
 
     public function store(Request $request) {
 
-            $validateData = $request->validate([
-                'prodi' => 'required',
-                'semester' => 'required',
-                'priode' => 'required',
-                'tahun' => 'required',
-                'pas_file' => 'mimes:pdf,png,jpg,jpeg|max:2049',
-            ]);
+                $validateData = $request->validate([
+                    'prodi' => 'required',
+                    'semester' => 'required',
+                    'priode' => 'required',
+                    'tahun' => 'required',
+                    'pas_file' => 'mimes:pdf,png,jpg,jpeg|max:2049',
+                ]);
 
-            $file = $request->file('pas_file');
+                $file = $request->file('pas_file');
 
             if ($file) {
                 $fileName = time() . '_' . $file->getClientOriginalName();

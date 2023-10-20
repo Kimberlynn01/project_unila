@@ -36,6 +36,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
+
     <!-- Custom Css -->
     <link rel="stylesheet" href="https://egov.phicos.co.id/lampung/unila/assets/css/style.css">
     <style type="text/css">
@@ -172,8 +173,7 @@
                         </a>
                         <ul class="submenu mm-collapse">
                             <li><a href="#">Dashboard Dosen</a></li>
-                            <li class=""><a href="back/rekap/jenjang_pendidikan" class="waves-effect">Jenjang
-                                    Pendidikan</a></li>
+                            <li class=""><a href="back/rekap/jenjang_pendidikan" class="waves-effect">Jenjang Pendidikan</a></li>
                             <li><a href="back/rekap/jenis_kelamin" class="waves-effect">Jenis Kelamin</a></li>
                             <li><a href="back/rekap/Belum_strata_dua" class="waves-effect">Belum S2</a></li>
                         </ul>
@@ -215,8 +215,28 @@
                     <li>
                         <a href="{{ route('index.monev') }}" class="waves-effect">
                             <i class="bx bxs-file"></i>
-                            <span>monev Pembelajaran</span>
+                            <span>Monev Pembelajaran</span>
                         </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('index.survei') }}" class="waves-effect">
+                            <i class="bx bxs-file"></i>
+                            <span>Survei Kepuasan</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="waves-effect">
+                            <i class="bi bi-people m-0"></i>
+                            <span>RTL & RTM</span>
+                        </a>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#">Submenu 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Submenu 2</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -2085,6 +2105,28 @@
                 });
             });
         });
+    </script>
+        <script>
+            $(document).ready(function() {
+                $('.tombol-edit-survei').click(function() {
+                    var id = $(this).data('id');
+                    var url = '/survei/modal/' + id;
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        success: function(response) {
+                            $('.modal-content').html(response);
+                            $('#modal-popout-survei').modal('show');
+                        }
+                    });
+                });
+            });
+        </script>
+
+        {{-- LAPORAN RTL RTM --}}
+
+    <script>
+
     </script>
 </body>
 
