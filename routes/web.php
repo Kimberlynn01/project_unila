@@ -4,6 +4,7 @@ use App\Models\AlumniModel;
 use App\Models\SurveiKepuasan;
 use App\Models\MInputDataModel;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RtlController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\EmployeeIkueTwo;
 use App\Http\Controllers\EmployeePegawai;
@@ -162,6 +163,12 @@ Route::prefix('/survei')->group(function(){
         Route::post('/update/{id}', [SurveiController::class, 'update'])->name('update.survei');
         Route::get('/delete/{id}', [SurveiController::class,'delete'])->name('survei.delete');
     });
+});
+
+//Laporan RTL & RTM
+Route::prefix('/rtl')->group(function(){
+    Route::get('/', [RtlController::class, 'index'])->name('index.rtl');
+    Route::post('/store', [RtlController::class, 'store'])->name('store.rtl');
 });
 
 // Input Data Mahasiswa
