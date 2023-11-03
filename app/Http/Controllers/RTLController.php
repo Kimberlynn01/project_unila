@@ -29,7 +29,7 @@ class RTLController extends Controller
     {
         try {
             $valiDate = $request->validate([
-                'program_studi' => 'required',
+                'program_studi' => 'required|unique:rtl,program_studi',
                 'file' => 'required|mimes:png,jpg,pdf,docx|max:2048',
             ]);
 
@@ -56,7 +56,7 @@ class RTLController extends Controller
     public function update(Request $request)
     {
         try {
-            $id = $request->id;
+            $id = $request->id_lama;
 
             $data = RTL::find($id);
 
@@ -76,9 +76,12 @@ class RTLController extends Controller
             $file = $request->file('file');
 
             if ($file) {
-                $filePath = time() . $file->getClientOriginalName();
-                $file->storeAs('rtl', $filePath);
-                $validateData['file'] = $filePath;
+                $oldFilePath = "rtl/{$data->file}";
+                Storage::delete($oldFilePath);
+
+                $newFilePath = time() . $file->getClientOriginalName();
+                $file->storeAs('rtl', $newFilePath);
+                $validateData['file'] = $newFilePath;
             }
 
             $data->update($validateData);

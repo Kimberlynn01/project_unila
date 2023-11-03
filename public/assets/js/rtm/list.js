@@ -4,7 +4,7 @@ $(document).ready(function () {
         serverSide: true,
         processing: true,
         ajax: {
-            url: "rtl/data",
+            url: "rtm/data",
             type: "get",
             dataType: "json",
         },
@@ -27,7 +27,7 @@ $(document).ready(function () {
                 data: "file",
                 render: function (data, type, row) {
                     return `<a href="${
-                        "/storage/rtl/" + data
+                        "/storage/rtm/" + data
                     }" target="_blank" class="btn btn-primary">Lihat File</a>`;
                 },
             },
@@ -141,7 +141,7 @@ $(document).ready(function () {
 
     $("#data-table").on("click", ".button_hapus", function () {
         let data = table.row($(this).closest("tr")).data();
-        console.log(data); // Log the data to the console to inspect its contents
+        console.log(data);
 
         let { id, program_studi } = data;
 
@@ -157,7 +157,7 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.post({
-                    url: `/rtl/delete/${id}`,
+                    url: `/rtm/delete/${id}`,
                     data: {
                         _method: "DELETE",
                     },

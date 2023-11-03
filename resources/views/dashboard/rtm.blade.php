@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h4>Laporan Rencana Tidak Lanjut</h4>
+                <h4>Laporan Rapat Tinjauan Manajemen</h4>
             </div>
             <div class="toolbar">
                 <button class="btn btn-primary button_tambah"> Tambah Data</button>
@@ -18,7 +18,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Program Studi</th>
-                                <th>File Laporan RTL</th>
+                                <th>File Laporan RTM</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -31,10 +31,10 @@
     <div class="modal fade modal-popout" id="modal-tambah">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('rtl.store') }}" method="POST" enctype="multipart/form-data" id="form-tambah">
+                <form action="{{ route('rtm.store') }}" method="POST" enctype="multipart/form-data" id="form-tambah">
                     @csrf
                     <div class="modal-header">
-                        <h4>Tambah Data RTL</h4>
+                        <h4>Tambah Data RTM</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -95,11 +95,11 @@
     <div class="modal fade modal-popout" id="modal-edit">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('rtl.update') }}" method="POST" enctype="multipart/form-data" id="form-edit">
+                <form action="{{ route('rtm.update') }}" method="POST" enctype="multipart/form-data" id="form-edit">
                     @csrf
                     <input type="hidden" name="id_lama" id="id_lama" value="">
                     <div class="modal-header">
-                        <h4>Ubah Data RTL</h4>
+                        <h4>Ubah Data RTM</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -160,5 +160,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('assets/js/rtl/list.js') }}"></script>
+    <script src="{{ asset('assets/js/rtm/list.js') }}"></script>
 @endpush

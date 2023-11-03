@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rtl', function (Blueprint $table) {
+        Schema::create('rtm', function (Blueprint $table) {
             $table->id();
-            $table->string('program_studi')->unique();
+            $table->string('program_studi');
             $table->string('file');
             $table->timestamps();
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rtl');
+        Schema::dropIfExists('rtm');
     }
 };

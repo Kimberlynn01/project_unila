@@ -174,12 +174,14 @@ Route::prefix('/rtl')
 });
 
 
-Route::prefix('/trm')
+Route::prefix('/rtm')
 ->name('rtm.')
 ->group(function() {
     Route::get('/', [RTMController::class, 'index'])->name('index');
-    // Route::get('/data', [::class, 'data'])->name('data');
-
+    Route::get('/data', [RTMController::class, 'data'])->name('data');
+    Route::post('/store', [RTMController::class, 'store'])->name('store');
+    Route::post('/update', [RTMController::class, 'update'])->name('update');
+    Route::delete('/delete/{id}', [RTMController::class, 'destroy'])->name('delete');
 });
 
 // Input Data Mahasiswa
