@@ -1,30 +1,28 @@
 <?php
 
-use App\Models\AlumniModel;
-use App\Models\SurveiKepuasan;
-use App\Models\MInputDataModel;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DetailsLaporanAuditController;
+use App\Http\Controllers\DokumenMutuController;
+use App\Http\Controllers\DokumenMutuEditController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\EditInstitusiOne;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeIkueTwo;
 use App\Http\Controllers\EmployeePegawai;
+use App\Http\Controllers\FormInstitusiOne;
+use App\Http\Controllers\InstitusiController;
+use App\Http\Controllers\LaporanAuditController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MonevController;
-use App\Http\Controllers\EditInstitusiOne;
-use App\Http\Controllers\FormInstitusiOne;
-use App\Http\Controllers\SurveiController;
 use App\Http\Controllers\PegawaiController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\InstitusiController;
-use App\Http\Controllers\DokumenMutuController;
-use App\Http\Controllers\LaporanAuditController;
-use App\Http\Controllers\PegawaiModalController;
 use App\Http\Controllers\PegawaiDetailsController;
-use App\Http\Controllers\DokumenMutuEditController;
-use App\Http\Controllers\DetailsLaporanAuditController;
-
-
-
-
+use App\Http\Controllers\PegawaiModalController;
+use App\Http\Controllers\RTLController;
+use App\Http\Controllers\RTMController;
+use App\Http\Controllers\SurveiController;
+use App\Models\AlumniModel;
+use App\Models\MInputDataModel;
+use App\Models\SurveiKepuasan;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -162,6 +160,26 @@ Route::prefix('/survei')->group(function(){
         Route::post('/update/{id}', [SurveiController::class, 'update'])->name('update.survei');
         Route::get('/delete/{id}', [SurveiController::class,'delete'])->name('survei.delete');
     });
+});
+
+Route::prefix('/rtl')
+->name('rtl.')
+->group(function() {
+    Route::get('/', [RTLController::class, 'index'])->name('index');
+    Route::get('/data', [RTLController::class, 'data'])->name('data');
+    Route::post('/store', [RTLController::class, 'store'])->name('store');
+    Route::post('/update', [RTLController::class, 'update'])->name('update');
+    Route::delete('/delete/{id}', [RTLController::class, 'destroy'])->name('delete');
+
+});
+
+
+Route::prefix('/trm')
+->name('rtm.')
+->group(function() {
+    Route::get('/', [RTMController::class, 'index'])->name('index');
+    // Route::get('/data', [::class, 'data'])->name('data');
+
 });
 
 // Input Data Mahasiswa

@@ -8,6 +8,7 @@
     <meta name='description' content='Unila' />
     <meta name='author' content='unila' />
     <meta name='keywords' content='Unila'>
+    <meta content="{{ url('/') }}/" name="base_url" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="apple-touch-icon" href="https://egov.phicos.co.id/lampung/unila/assets/img/logo_unila.png">
     <link rel="shortcut icon" type="image/x-icon/png"
@@ -225,17 +226,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="waves-effect">
-                            <i class="bi bi-people m-0"></i>
-                            <span>RTL & RTM</span>
+                        <a href="#" class="waves-effect" aria-expanded="true">
+                            <i class="bx bx-layer"></i>
+                            <span>RTL dan RTM</span>
                         </a>
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="#">Submenu 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Submenu 2</a>
-                            </li>
+                        <ul class="submenu mm-collapse mm-show" style="">
+                            <li><a href="{{ route('rtl.index') }}" class="bx bxs-file">Laporan RTL</a></li>
+                            <li><a href="{{ route('rtm.index') }}" class="bx bxs-file">Laporan RTM</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -278,6 +275,8 @@
                 @yield('main')
                 @yield('modal')
 
+
+
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="row text-custom" style="font-weight: 400;">
@@ -293,7 +292,9 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('assets/js/rtl/list.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/jquery/jquery.min.js"></script>
     <script
         src="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/bootstrap/js/bootstrap.bundle.min.js">
@@ -352,6 +353,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jquery.repeater@1.2.1/jquery.repeater.min.js"></script>
+    @stack('scripts')
     <script>
         // Navbar sticky onscroll
         const topbar = document.getElementById('page-topbar');
