@@ -55,41 +55,41 @@ class RTLController extends Controller
 
     public function update(Request $request)
     {
-        try {
-            $id = $request->id_lama;
+            try {
+                $id = $request->id_lama;
 
-            $data = RTL::find($id);
+                $data = RTL::find($id);
 
-            if (!$data) {
-                return response()->json(['status' => false, 'message' => 'Data not found'], 404);
+                if (!$data) {
+                    return response()->json(['status' => false, 'message' => 'Data not found'], 404);
+                }
+
+                $validateData = $request->validate([
+                    'program_studi' => 'required',
+                    'file' => 'required|mimes:png,jpg,pdf,docx|max:2048',
+                ],
+                [
+                    'program_studi.required' => 'Program Studi is required',
+                    'file.required' => 'File is required',
+                ]);
+
+                $file = $request->file('file');
+
+                if ($file) {
+                    $oldFilePath = "rtl/{$data->file}";
+                    Storage::delete($oldFilePath);
+
+                    $newFilePath = time() . $file->getClientOriginalName();
+                    $file->storeAs('rtl', $newFilePath);
+                    $validateData['file'] = $newFilePath;
+                }
+
+                $data->update($validateData);
+
+                return response()->json(['status' => true], 200);
+            } catch (\Exception $e) {
+                return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
             }
-
-            $validateData = $request->validate([
-                'program_studi' => 'required',
-                'file' => 'required|mimes:png,jpg,pdf,docx|max:2048',
-            ],
-            [
-                'program_studi.required' => 'Program Studi is required',
-                'file.required' => 'File is required',
-            ]);
-
-            $file = $request->file('file');
-
-            if ($file) {
-                $oldFilePath = "rtl/{$data->file}";
-                Storage::delete($oldFilePath);
-
-                $newFilePath = time() . $file->getClientOriginalName();
-                $file->storeAs('rtl', $newFilePath);
-                $validateData['file'] = $newFilePath;
-            }
-
-            $data->update($validateData);
-
-            return response()->json(['status' => true], 200);
-        } catch (\Exception $e) {
-            return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
-        }
     }
 
     public function destroy(Request $request)

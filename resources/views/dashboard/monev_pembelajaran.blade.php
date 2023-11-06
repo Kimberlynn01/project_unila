@@ -30,8 +30,9 @@
                                 $no = 1;
                             @endphp
                             <tbody>
-                                @foreach ($datamonev as $row)
-                                    <tr>
+                                <tr>
+
+                                        @foreach ($datamonev as $row)
                                         <th>{{ $no++ }}</th>
                                         <td>{{ $row->prodi }}</td>
                                         <td>{{ $row->semester }}</td>
@@ -49,8 +50,9 @@
                                                 </button>
                                             </div>
                                         </td>
-                                    </tr>
                                 @endforeach
+                                </tr>
+
                             </tbody>
                         </table>
                     </div>

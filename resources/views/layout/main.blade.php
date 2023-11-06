@@ -235,6 +235,26 @@
                             <li><a href="{{ route('rtm.index') }}" class="bx bxs-file">Laporan RTM</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="{{ route('external.index') }}" class="waves-effect">
+                            <i class="bx bxs-file"></i>
+                            <span>External Banchmarking</span>
+                        </a>
+                    </li>
+                    <li class="mm-active">
+                        <a href="#" class="waves-effect mm-active">
+                            <i class="bx bxs-bar-chart-square"></i>
+                            <span>Tentang FKIP UNILA </span>
+                        </a>
+                        <ul class="submenu mm-collapse mm-show">
+                            <li class="mm-active"><a href="{{ route('profile.index') }}" class="active">Profile FKIP UNILA</a></li>
+                            <li><a href="back/visi_misi ">Visi &amp; Misi FKIP UNILA</a></li>
+                            <li><a href="back/prodi">Jurusan dan Program Studi</a></li>
+                            <li><a href="back/struktur ">Struktur Organisasi</a></li>
+                            <li><a href="back/unit">Unit</a></li>
+                            <li><a href="back/berita">Kelola Berita</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -353,6 +373,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jquery.repeater@1.2.1/jquery.repeater.min.js"></script>
+    <script src="{{asset('assets/ckeditor/ckeditor.js')}}"></script>
     @stack('scripts')
     <script>
         // Navbar sticky onscroll
@@ -543,7 +564,7 @@
         function edit_password(id) {
             window.location.href = '/edit-password/' + id;
         }
-    </script>
+    </>
 
     <style>
         #chartdiv,

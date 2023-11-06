@@ -8,6 +8,7 @@ use App\Http\Controllers\EditInstitusiOne;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeIkueTwo;
 use App\Http\Controllers\EmployeePegawai;
+use App\Http\Controllers\ExternalBackmarkingController;
 use App\Http\Controllers\FormInstitusiOne;
 use App\Http\Controllers\InstitusiController;
 use App\Http\Controllers\LaporanAuditController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\MonevController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PegawaiDetailsController;
 use App\Http\Controllers\PegawaiModalController;
+use App\Http\Controllers\ProfileFkipController;
 use App\Http\Controllers\RTLController;
 use App\Http\Controllers\RTMController;
 use App\Http\Controllers\SurveiController;
@@ -23,7 +25,7 @@ use App\Models\AlumniModel;
 use App\Models\MInputDataModel;
 use App\Models\SurveiKepuasan;
 use Illuminate\Support\Facades\Route;
-
+use Maatwebsite\Excel\Row;
 
 /*
 |--------------------------------------------------------------------------
@@ -183,6 +185,24 @@ Route::prefix('/rtm')
     Route::post('/update', [RTMController::class, 'update'])->name('update');
     Route::delete('/delete/{id}', [RTMController::class, 'destroy'])->name('delete');
 });
+
+Route::prefix('/external-banchmarking')
+->name('external.')
+->group(function() {
+   Route::get('/', [ExternalBackmarkingController::class, 'index'])->name('index');
+   Route::get('/data', [ExternalBackmarkingController::class, 'data'])->name('data');
+   Route::post('/store', [ExternalBackmarkingController::class, 'store'])->name('store');
+    Route::post('/update', [ExternalBackmarkingController::class, 'update'])->name('update');
+    Route::delete('/delete/{id}', [ExternalBackmarkingController::class, 'destroy'])->name('delete');
+});
+
+
+Route::prefix('/profile-fkip')
+->name('profile.')
+->group(function() {
+    Route::get('/', [ProfileFkipController::class, 'index'])->name('index');
+});
+
 
 // Input Data Mahasiswa
 Route::post('/inputdata', [EmployeeController::class, 'inputdata'])->name('inputdata');
