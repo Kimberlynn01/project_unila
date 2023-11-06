@@ -165,11 +165,7 @@ Route::prefix('/survei')->group(function(){
     });
 });
 
-//Laporan RTL & RTM
-Route::prefix('/rtl')->group(function(){
-    Route::get('/', [RtlController::class, 'index'])->name('index.rtl');
-    Route::post('/store', [RtlController::class, 'store'])->name('store.rtl');
-});
+
 
 // Input Data Mahasiswa
 Route::post('/inputdata', [EmployeeController::class, 'inputdata'])->name('inputdata');
