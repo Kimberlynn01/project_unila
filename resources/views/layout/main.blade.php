@@ -225,20 +225,6 @@
                             <span>Survei Kepuasan</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="waves-effect">
-                            <i class="bi bi-people m-0"></i>
-                            <span>RTL & RTM</span>
-                        </a>
-                        <ul class="list-unstyled submenu mm-collapse">
-                            <li>
-                                <a href="{{ route('index.rtl') }}">Laporan RTL</a>
-                            </li>
-                            <li>
-                                <a href="">Laporan RTM</a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </div>
         </div>

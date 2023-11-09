@@ -16,6 +16,7 @@ use App\Http\Controllers\SurveiController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InstitusiController;
+use App\Http\Controllers\ProfilFkipController;
 use App\Http\Controllers\DokumenMutuController;
 use App\Http\Controllers\LaporanAuditController;
 use App\Http\Controllers\PegawaiModalController;
@@ -164,6 +165,7 @@ Route::prefix('/survei')->group(function(){
         Route::get('/delete/{id}', [SurveiController::class,'delete'])->name('survei.delete');
     });
 });
+
 
 
 
