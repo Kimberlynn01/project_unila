@@ -163,7 +163,44 @@ Route::prefix('/survei')->group(function(){
     });
 });
 
+Route::prefix('/rtl')
+->name('rtl.')
+->group(function() {
+    Route::get('/', [RTLController::class, 'index'])->name('index');
+    Route::get('/data', [RTLController::class, 'data'])->name('data');
+    Route::post('/store', [RTLController::class, 'store'])->name('store');
+    Route::post('/update', [RTLController::class, 'update'])->name('update');
+    Route::delete('/delete/{id}', [RTLController::class, 'destroy'])->name('delete');
 
+});
+
+
+Route::prefix('/rtm')
+->name('rtm.')
+->group(function() {
+    Route::get('/', [RTMController::class, 'index'])->name('index');
+    Route::get('/data', [RTMController::class, 'data'])->name('data');
+    Route::post('/store', [RTMController::class, 'store'])->name('store');
+    Route::post('/update', [RTMController::class, 'update'])->name('update');
+    Route::delete('/delete/{id}', [RTMController::class, 'destroy'])->name('delete');
+});
+
+Route::prefix('/external-banchmarking')
+->name('external.')
+->group(function() {
+   Route::get('/', [ExternalBackmarkingController::class, 'index'])->name('index');
+   Route::get('/data', [ExternalBackmarkingController::class, 'data'])->name('data');
+   Route::post('/store', [ExternalBackmarkingController::class, 'store'])->name('store');
+    Route::post('/update', [ExternalBackmarkingController::class, 'update'])->name('update');
+    Route::delete('/delete/{id}', [ExternalBackmarkingController::class, 'destroy'])->name('delete');
+});
+
+
+Route::prefix('/profile-fkip')
+->name('profile.')
+->group(function() {
+    Route::get('/', [ProfileFkipController::class, 'index'])->name('index');
+});
 
 
 // Input Data Mahasiswa

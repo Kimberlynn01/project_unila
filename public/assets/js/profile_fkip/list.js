@@ -8,14 +8,6 @@ $(document).ready(function () {
             type: "get",
             dataType: "json",
         },
-        columnDefs: [
-            {
-                targets: [2],
-                orderable: false,
-                searchable: false,
-                className: "text-center align-top justify-content-center",
-            },
-        ],
         columns: [
             {
                 data: "DT_RowIndex",
@@ -26,154 +18,144 @@ $(document).ready(function () {
             {
                 data: "id",
                 render: function (data, type, row) {
-                    const button_detail = `<button class="btn btn-primary button_detall" style="margin-right: 10px"> Detail </button>`;
-                    const button_edit = `<button class="btn btn-danger button_edit"> Edit </button>`;
-                    const button_delete = `<button class="btn btn-danger button_hapus"> Hapus </button>`;
+                    const button_detail = `<button class="btn btn-warning button_detall" onclick="detail(${data})"><i class="bx bxs-dashboard bx-spin bx-flip-vertical"></i></button>`;
+                    const button_edit = `<button class="btn btn-primary button_edit"><i class="bx bx-edit"></i></button>`;
+                    const button_delete = `<button class="btn btn-danger button_hapus"><i class="bx bxs-trash"></i></button>`;
+                    const buttonGroup = `<div class="btn-group">${button_detail}${button_edit}${button_delete}</div>`;
 
-                    return (
-                        button_detail + "" + button_edit + "" + button_delete
-                    );
+                    return buttonGroup;
                 },
             },
         ],
     });
 
-    //     $(".button_tambah").click(function () {
-    //         $("#modal-tambah").modal("show");
-    //     });
+    $("#data-table").on("click", ".button_edit", function () {
+        let data = table.row($(this).closest("tr")).data();
+        console.log(data);
+        clearErrorMessage();
+        let { id } = data;
+        window.location.href = "/profile-fkip/edit/" + id;
+    });
 
-    //     $("#data-table").on("click", ".button_edit", function () {
-    //         let data = table.row($(this).closest("tr")).data();
-    //         console.log(data);
-    //         $("#form-edit")[0].reset();
-    //         clearErrorMessage();
-    //         let { id, tahun } = data;
-    //         $("#id_lama").val(id);
-    //         $("#edit_tahun").val(tahun);
-    //         $("#modal-edit").modal("show");
-    //     });
+    $("#form-edit").on("submit", function (e) {
+        e.preventDefault();
 
-    //     $("#form-edit").on("submit", function (e) {
-    //         e.preventDefault();
+        var data = new FormData(this);
 
-    //         var data = new FormData(this);
+        $.ajax({
+            url: $(this).attr("action"),
+            type: $(this).attr("method"),
+            data: data,
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: (res) => {
+                window.location.href = "/profile-fkip";
+            },
+            error: ({ status, responseJSON }) => {
+                if (status == 422) {
+                    generateErrorMessage(responseJSON, true);
+                    return false;
+                }
 
-    //         $.ajax({
-    //             url: $(this).attr("action"),
-    //             type: $(this).attr("method"),
-    //             data: data,
-    //             dataType: "json",
-    //             contentType: false,
-    //             processData: false,
-    //             beforeSend: () => {
-    //                 clearErrorMessage();
-    //                 $("#modal-edit").find(".modal-dialog").LoadingOverlay("show");
-    //             },
-    //             success: (res) => {
-    //                 $("#modal-edit")
-    //                     .find(".modal-dialog")
-    //                     .LoadingOverlay("hide", true);
-    //                 $(this)[0].reset();
-    //                 clearErrorMessage();
-    //                 table.ajax.reload();
-    //                 $("#modal-edit").modal("hide");
-    //             },
-    //             error: ({ status, responseJSON }) => {
-    //                 $("#modal-edit")
-    //                     .find(".modal-dialog")
-    //                     .LoadingOverlay("hide", true);
+                showErrorToastr("oops", responseJSON.msg);
+            },
+        });
+    });
 
-    //                 if (status == 422) {
-    //                     generateErrorMessage(responseJSON, true);
-    //                     return false;
-    //                 }
+    $("#form-tambah").on("submit", function (e) {
+        e.preventDefault();
 
-    //                 showErrorToastr("oops", responseJSON.msg);
-    //             },
-    //         });
-    //     });
+        var data = new FormData(this);
 
-    //     $("#form-tambah").on("submit", function (e) {
-    //         e.preventDefault();
+        $.ajax({
+            url: $(this).attr("action"),
+            type: $(this).attr("method"),
+            data: data,
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            beforeSend: () => {
+                clearErrorMessage();
+                $("#modal-tambah").find(".modal-dialog").LoadingOverlay("show");
+            },
+            success: (res) => {
+                $("#modal-tambah")
+                    .find(".modal-dialog")
+                    .LoadingOverlay("hide", true);
+                $(this)[0].reset();
+                clearErrorMessage();
 
-    //         var data = new FormData(this);
+                showSuccessToastr("Success", res.message);
+                table.ajax.reload();
+                $("#modal-tambah").modal("hide");
+            },
+            error: ({ status, responseJSON }) => {
+                $("#modal-tambah")
+                    .find(".modal-dialog")
+                    .LoadingOverlay("hide", true);
 
-    //         $.ajax({
-    //             url: $(this).attr("action"),
-    //             type: $(this).attr("method"),
-    //             data: data,
-    //             dataType: "json",
-    //             contentType: false,
-    //             processData: false,
-    //             beforeSend: () => {
-    //                 clearErrorMessage();
-    //                 $("#modal-tambah").find(".modal-dialog").LoadingOverlay("show");
-    //             },
-    //             success: (res) => {
-    //                 $("#modal-tambah")
-    //                     .find(".modal-dialog")
-    //                     .LoadingOverlay("hide", true);
-    //                 $(this)[0].reset();
-    //                 clearErrorMessage();
+                if (status == 422) {
+                    generateErrorMessage(responseJSON, true);
+                } else {
+                    showErrorToastr("Oops", responseJSON.message);
+                }
+            },
+        });
+    });
 
-    //                 showSuccessToastr("Success", res.message);
-    //                 table.ajax.reload();
-    //                 $("#modal-tambah").modal("hide");
-    //             },
-    //             error: ({ status, responseJSON }) => {
-    //                 $("#modal-tambah")
-    //                     .find(".modal-dialog")
-    //                     .LoadingOverlay("hide", true);
+    $("#data-table").on("click", ".button_hapus", function () {
+        let data = table.row($(this).closest("tr")).data();
+        console.log(data);
 
-    //                 if (status == 422) {
-    //                     generateErrorMessage(responseJSON, true);
-    //                 } else {
-    //                     showErrorToastr("Oops", responseJSON.message);
-    //                 }
-    //             },
-    //         });
-    //     });
+        let { id } = data;
 
-    //     $("#data-table").on("click", ".button_hapus", function () {
-    //         let data = table.row($(this).closest("tr")).data();
-    //         console.log(data);
-
-    //         let { id, tahun } = data;
-
-    //         Swal.fire({
-    //             title: "Anda yakin?",
-    //             html: `Anda akan menghapus "<b>${id}</b>"!`,
-    //             icon: "warning",
-    //             showCancelButton: true,
-    //             confirmButtonColor: "#d33",
-    //             cancelButtonColor: "#3085d6",
-    //             confirmButtonText: "Ya, Hapus!",
-    //             cancelButtonText: "Batal",
-    //         }).then((result) => {
-    //             if (result.isConfirmed) {
-    //                 $.post({
-    //                     url: `external-banchmarking/delete/${id}`,
-    //                     data: {
-    //                         _method: "DELETE",
-    //                     },
-    //                     headers: {
-    //                         "X-CSRF-TOKEN": $("meta[name=csrf-token]").attr(
-    //                             "content"
-    //                         ),
-    //                     },
-    //                     success: (res) => {
-    //                         showSuccessToastr(
-    //                             "Sukses",
-    //                             `Data : ${id} berhasil dihapus`
-    //                         );
-    //                         table.ajax.reload();
-    //                     },
-    //                     error: (res) => {
-    //                         let { status, responseJSON } = res;
-    //                         showErrorToastr("Oops", responseJSON.message);
-    //                     },
-    //                 });
-    //             }
-    //         });
-    //     });
+        Swal.fire({
+            title: "Anda yakin?",
+            html: `Anda akan menghapus "<b>${id}</b>"!`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Ya, Hapus!",
+            cancelButtonText: "Batal",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post({
+                    url: `profile-fkip/delete/${id}`,
+                    data: {
+                        _method: "DELETE",
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name=csrf-token]").attr(
+                            "content"
+                        ),
+                    },
+                    success: (res) => {
+                        showSuccessToastr(
+                            "Sukses",
+                            `Data : ${id} berhasil dihapus`
+                        );
+                        table.ajax.reload();
+                    },
+                    error: (res) => {
+                        let { status, responseJSON } = res;
+                        showErrorToastr("Oops", responseJSON.message);
+                    },
+                });
+            }
+        });
+    });
 });
+
+ClassicEditor.create(document.querySelector("#uraian")).then((editor) =>
+    console.log(editor.getData())
+);
+
+ClassicEditor.create(document.querySelector("#edit_uraian")).then((editor) =>
+    console.log(editor.getData())
+);
+
+function detail(id) {
+    window.location.href = `/profile-fkip/detail/${id}`;
+}
