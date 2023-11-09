@@ -21,11 +21,13 @@ use App\Http\Controllers\ProfileFkipController;
 use App\Http\Controllers\RTLController;
 use App\Http\Controllers\RTMController;
 use App\Http\Controllers\SurveiController;
+use App\Http\Controllers\VisiMisiController;
 use App\Models\AlumniModel;
 use App\Models\MInputDataModel;
 use App\Models\SurveiKepuasan;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Row;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -208,8 +210,12 @@ Route::prefix('/profile-fkip')
     Route::get('/detail/{id}', [ProfileFkipController::class, 'detail'])->name('details');
     Route::get('/edit/{id}', [ProfileFkipController::class, 'ubah'])->name('ubah');
     Route::post('/update/{id}', [ProfileFkipController::class, 'update'])->name('update');
+});
 
-
+Route::prefix('/visi-misi')
+->name('visi_misi.')
+->group(function() {
+    Route::get('/', [VisiMisiController::class, 'index'])->name('index');
 });
 
 
