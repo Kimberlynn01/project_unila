@@ -8,6 +8,7 @@
     <meta name='description' content='Unila' />
     <meta name='author' content='unila' />
     <meta name='keywords' content='Unila'>
+    <meta content="{{ url('/') }}/" name="base_url" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="apple-touch-icon" href="https://egov.phicos.co.id/lampung/unila/assets/img/logo_unila.png">
     <link rel="shortcut icon" type="image/x-icon/png"
@@ -265,6 +266,8 @@
                 @yield('main')
                 @yield('modal')
 
+
+
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="row text-custom" style="font-weight: 400;">
@@ -280,7 +283,9 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('assets/js/rtl/list.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/jquery/jquery.min.js"></script>
     <script
         src="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/bootstrap/js/bootstrap.bundle.min.js">
@@ -339,6 +344,8 @@
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jquery.repeater@1.2.1/jquery.repeater.min.js"></script>
+    <script src="{{asset('assets/ckeditor/ckeditor.js')}}"></script>
+    @stack('scripts')
     <script>
         // Navbar sticky onscroll
         const topbar = document.getElementById('page-topbar');
@@ -528,7 +535,7 @@
         function edit_password(id) {
             window.location.href = '/edit-password/' + id;
         }
-    </script>
+    </>
 
     <style>
         #chartdiv,

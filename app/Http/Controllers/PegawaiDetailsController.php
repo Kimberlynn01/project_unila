@@ -144,7 +144,6 @@ class PegawaiDetailsController extends Controller
                     return response()->json(['success' => 'Data berhasil dihapus']);
                     break;
                 default:
-                    # code...
                     break;
             }
         } catch (\Exception $e) {

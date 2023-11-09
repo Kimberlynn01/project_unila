@@ -32,6 +32,7 @@
                             <tbody role="grid">
                                 @foreach ($datamonev as $row)
                                     <tr>
+
                                         <th>{{ $no++ }}</th>
                                         <td>{{ $row->prodi }}</td>
                                         <td>{{ $row->semester }}</td>
@@ -49,8 +50,9 @@
                                                 </button>
                                             </div>
                                         </td>
-                                    </tr>
                                 @endforeach
+                                </tr>
+
                             </tbody>
                         </table>
                     </div>
