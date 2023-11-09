@@ -201,6 +201,15 @@ Route::prefix('/profile-fkip')
 ->name('profile.')
 ->group(function() {
     Route::get('/', [ProfileFkipController::class, 'index'])->name('index');
+    Route::delete('/delete/{id}', [ProfileFkipController::class, 'destroy'])->name('delete');
+    Route::get('/data', [ProfileFkipController::class, 'data'])->name('data');
+    Route::get('/form_tambah', [ProfileFkipController::class, 'tambah'])->name('form_tambah');
+    Route::post('/store', [ProfileFkipController::class, 'store'])->name('store');
+    Route::get('/detail/{id}', [ProfileFkipController::class, 'detail'])->name('details');
+    Route::get('/edit/{id}', [ProfileFkipController::class, 'ubah'])->name('ubah');
+    Route::post('/update/{id}', [ProfileFkipController::class, 'update'])->name('update');
+
+
 });
 
 

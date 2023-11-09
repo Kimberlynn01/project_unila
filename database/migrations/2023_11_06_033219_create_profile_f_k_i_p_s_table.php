@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('profile_fkip', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
-            $table->string('uraian', 255);
+            $table->string('uraian', 5000);
             $table->timestamps();
         });
     }
