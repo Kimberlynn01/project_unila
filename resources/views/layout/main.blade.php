@@ -312,7 +312,8 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('assets/js/rtl/list.js') }}"></script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="https://egov.phicos.co.id/tema/Skote_v2.1.0/HTML/Admin/dist/assets/libs/jquery/jquery.min.js"></script>
@@ -564,7 +565,7 @@
         function edit_password(id) {
             window.location.href = '/edit-password/' + id;
         }
-    </>
+    </script>
 
     <style>
         #chartdiv,
