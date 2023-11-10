@@ -216,6 +216,8 @@ Route::prefix('/visi-misi')
 ->name('visi_misi.')
 ->group(function() {
     Route::get('/', [VisiMisiController::class, 'index'])->name('index');
+    Route::get('/data', [VisiMisiController::class, 'data'])->name('data');
+    Route::get('/form_tambah', [VisiMisiController::class, 'form_tambah'])->name('tambah');
 });
 
 
