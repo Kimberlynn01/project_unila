@@ -7,11 +7,10 @@
             <div class="card">
                 <div class="card-header py-3">
                     <h4 class="card-title mb-0 text-dark">Jurusan dan Program Studi</h4>
-
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <div  class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="dataTables_wrapper dt-bootstrap4 no-footer">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="dataTables_length" id="table_length"><label>Tampilkan: <select
