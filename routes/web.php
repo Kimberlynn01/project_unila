@@ -11,6 +11,7 @@ use App\Http\Controllers\EmployeePegawai;
 use App\Http\Controllers\ExternalBackmarkingController;
 use App\Http\Controllers\FormInstitusiOne;
 use App\Http\Controllers\InstitusiController;
+use App\Http\Controllers\JurusanStudiController;
 use App\Http\Controllers\LaporanAuditController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MonevController;
@@ -218,6 +219,16 @@ Route::prefix('/visi-misi')
     Route::get('/', [VisiMisiController::class, 'index'])->name('index');
     Route::get('/data', [VisiMisiController::class, 'data'])->name('data');
     Route::get('/form_tambah', [VisiMisiController::class, 'form_tambah'])->name('tambah');
+    Route::post('/store', [VisiMisiController::class, 'store'])->name('store');
+    Route::post('/update/{id}', [VisiMisiController::class, 'update'])->name('update');
+    Route::get('/edit/{id}', [VisiMisiController::class, 'ubah'])->name('ubah');
+    Route::delete('/delete/{id}', [VisiMisiController::class, 'destroy'])->name('delete');
+});
+
+Route::prefix('/jurusan-progam-studi')
+->name('jurusan.')
+->group(function() {
+    Route::get('/', [JurusanStudiController::class, 'index'])->name('index');
 });
 
 

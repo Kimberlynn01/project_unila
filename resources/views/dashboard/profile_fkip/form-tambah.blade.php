@@ -29,7 +29,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="judul" class="form-label">Uraian</label>
-                                    <textarea id="uraian" name="uraian"></textarea>
+                                    <textarea id="uraian" name="uraian" placeholder="Uraian"></textarea>
                                 </div>
                             </div>
                         </div>

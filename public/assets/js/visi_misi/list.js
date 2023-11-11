@@ -50,7 +50,7 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             success: (res) => {
-                window.location.href = "/visi-misi";
+                showSuccessToastr("Success", res.message);
             },
             error: ({ status, responseJSON }) => {
                 if (status == 422) {

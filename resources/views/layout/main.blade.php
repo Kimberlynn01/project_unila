@@ -174,7 +174,8 @@
                         </a>
                         <ul class="submenu mm-collapse">
                             <li><a href="#">Dashboard Dosen</a></li>
-                            <li class=""><a href="back/rekap/jenjang_pendidikan" class="waves-effect">Jenjang Pendidikan</a></li>
+                            <li class=""><a href="back/rekap/jenjang_pendidikan" class="waves-effect">Jenjang
+                                    Pendidikan</a></li>
                             <li><a href="back/rekap/jenis_kelamin" class="waves-effect">Jenis Kelamin</a></li>
                             <li><a href="back/rekap/Belum_strata_dua" class="waves-effect">Belum S2</a></li>
                         </ul>
@@ -249,7 +250,7 @@
                         <ul class="submenu mm-collapse">
                             <li><a href="{{ route('profile.index') }}">Profile FKIP UNILA</a></li>
                             <li><a href="{{ route('visi_misi.index') }} ">Visi &amp; Misi FKIP UNILA</a></li>
-                            <li><a href="back/prodi">Jurusan dan Program Studi</a></li>
+                            <li><a href="{{ route('jurusan.index') }}">Jurusan dan Program Studi</a></li>
                             <li><a href="back/struktur ">Struktur Organisasi</a></li>
                             <li><a href="back/unit">Unit</a></li>
                             <li><a href="back/berita">Kelola Berita</a></li>
@@ -2130,28 +2131,26 @@
             });
         });
     </script>
-        <script>
-            $(document).ready(function() {
-                $('.tombol-edit-survei').click(function() {
-                    var id = $(this).data('id');
-                    var url = '/survei/modal/' + id;
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        success: function(response) {
-                            $('.modal-content').html(response);
-                            $('#modal-popout-survei').modal('show');
-                        }
-                    });
+    <script>
+        $(document).ready(function() {
+            $('.tombol-edit-survei').click(function() {
+                var id = $(this).data('id');
+                var url = '/survei/modal/' + id;
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(response) {
+                        $('.modal-content').html(response);
+                        $('#modal-popout-survei').modal('show');
+                    }
                 });
             });
-        </script>
-
-        {{-- LAPORAN RTL RTM --}}
-
-    <script>
-
+        });
     </script>
+
+    {{-- LAPORAN RTL RTM --}}
+
+    <script></script>
 </body>
 
 </html>
