@@ -1,8 +1,16 @@
 <?php
 
+<<<<<<< HEAD
 use App\Http\Controllers\DetailsLaporanAuditController;
 use App\Http\Controllers\DokumenMutuController;
 use App\Http\Controllers\DokumenMutuEditController;
+=======
+use App\Models\AlumniModel;
+use App\Models\SurveiKepuasan;
+use App\Models\MInputDataModel;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RtlController;
+>>>>>>> latif
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\EditInstitusiOne;
 use App\Http\Controllers\EmployeeController;
@@ -16,6 +24,15 @@ use App\Http\Controllers\LaporanAuditController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MonevController;
 use App\Http\Controllers\PegawaiController;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\InstitusiController;
+use App\Http\Controllers\ProfilFkipController;
+use App\Http\Controllers\DokumenMutuController;
+use App\Http\Controllers\LaporanAuditController;
+use App\Http\Controllers\PegawaiModalController;
+>>>>>>> latif
 use App\Http\Controllers\PegawaiDetailsController;
 use App\Http\Controllers\PegawaiModalController;
 use App\Http\Controllers\ProfileFkipController;
@@ -167,6 +184,7 @@ Route::prefix('/survei')->group(function(){
     });
 });
 
+<<<<<<< HEAD
 Route::prefix('/rtl')
 ->name('rtl.')
 ->group(function() {
@@ -231,6 +249,10 @@ Route::prefix('/jurusan-progam-studi')
     Route::get('/', [JurusanStudiController::class, 'index'])->name('index');
 });
 
+=======
+
+
+>>>>>>> latif
 
 // Input Data Mahasiswa
 Route::post('/inputdata', [EmployeeController::class, 'inputdata'])->name('inputdata');

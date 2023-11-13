@@ -226,6 +226,7 @@
                             <span>Survei Kepuasan</span>
                         </a>
                     </li>
+<<<<<<< HEAD
                     <li>
                         <a href="#" class="waves-effect" aria-expanded="true">
                             <i class="bx bx-layer"></i>
@@ -256,6 +257,8 @@
                             <li><a href="back/berita">Kelola Berita</a></li>
                         </ul>
                     </li>
+=======
+>>>>>>> latif
                 </ul>
             </div>
         </div>

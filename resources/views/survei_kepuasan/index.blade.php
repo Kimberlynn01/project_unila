@@ -33,7 +33,7 @@
                                     <tr>
                                         <th>{{ $no++ }}</th>
                                         <td>{{ $row->judul }}</td>
-                                        <td>
+                                        <td  class="d-flex justify-content-center">
                                             {{-- <button class="btn btn-primary tombol-edit-survei">Lihat File</button> --}}
                                             <a href="{{ asset('storage/' . $row->pas_file) }}" target="_blank" class="btn btn-primary">Lihat File</a>
                                         </td>

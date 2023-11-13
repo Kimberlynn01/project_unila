@@ -29,10 +29,16 @@
                             @php
                                 $no = 1;
                             @endphp
+<<<<<<< HEAD
                             <tbody>
                                 <tr>
 
                                         @foreach ($datamonev as $row)
+=======
+                            <tbody role="grid">
+                                @foreach ($datamonev as $row)
+                                    <tr>
+>>>>>>> latif
                                         <th>{{ $no++ }}</th>
                                         <td>{{ $row->prodi }}</td>
                                         <td>{{ $row->semester }}</td>
