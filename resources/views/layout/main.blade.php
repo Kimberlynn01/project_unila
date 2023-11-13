@@ -535,7 +535,7 @@
         function edit_password(id) {
             window.location.href = '/edit-password/' + id;
         }
-    </>
+    </script>
 
     <style>
         #chartdiv,
