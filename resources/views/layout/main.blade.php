@@ -226,6 +226,36 @@
                             <span>Survei Kepuasan</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="#" class="waves-effect" aria-expanded="true">
+                            <i class="bx bx-layer"></i>
+                            <span>RTL dan RTM</span>
+                        </a>
+                        <ul class="submenu mm-collapse" style="">
+                            <li><a href="{{ route('rtl.index') }}" class="bx bxs-file">Laporan RTL</a></li>
+                            <li><a href="{{ route('rtm.index') }}" class="bx bxs-file">Laporan RTM</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ route('external.index') }}" class="waves-effect">
+                            <i class="bx bxs-file"></i>
+                            <span>External Banchmarking</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="waves-effect">
+                            <i class="bx bxs-bar-chart-square"></i>
+                            <span>Tentang FKIP UNILA </span>
+                        </a>
+                        <ul class="submenu mm-collapse">
+                            <li><a href="{{ route('profile.index') }}">Profile FKIP UNILA</a></li>
+                            <li><a href="{{ route('visi_misi.index') }} ">Visi &amp; Misi FKIP UNILA</a></li>
+                            <li><a href="back/prodi">Jurusan dan Program Studi</a></li>
+                            <li><a href="back/struktur ">Struktur Organisasi</a></li>
+                            <li><a href="back/unit">Unit</a></li>
+                            <li><a href="back/berita">Kelola Berita</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
